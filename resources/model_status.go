@@ -14,33 +14,33 @@ import (
 	"encoding/json"
 )
 
-// Error struct for Error
-type Error struct {
-	Code  int32  `json:"code"`
-	Error string `json:"error"`
+// Status struct for Status
+type Status struct {
+	Code    int32  `json:"code"`
+	Message string `json:"message"`
 }
 
-// NewError instantiates a new Error object
+// NewStatus instantiates a new Status object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewError(code int32, error_ string) *Error {
-	this := Error{}
+func NewStatus(code int32, message string) *Status {
+	this := Status{}
 	this.Code = code
-	this.Error = error_
+	this.Message = message
 	return &this
 }
 
-// NewErrorWithDefaults instantiates a new Error object
+// NewStatusWithDefaults instantiates a new Status object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewErrorWithDefaults() *Error {
-	this := Error{}
+func NewStatusWithDefaults() *Status {
+	this := Status{}
 	return &this
 }
 
 // GetCode returns the Code field value
-func (o *Error) GetCode() int32 {
+func (o *Status) GetCode() int32 {
 	if o == nil {
 		var ret int32
 		return ret
@@ -51,7 +51,7 @@ func (o *Error) GetCode() int32 {
 
 // GetCodeOk returns a tuple with the Code field value
 // and a boolean to check if the value has been set.
-func (o *Error) GetCodeOk() (*int32, bool) {
+func (o *Status) GetCodeOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -59,77 +59,77 @@ func (o *Error) GetCodeOk() (*int32, bool) {
 }
 
 // SetCode sets field value
-func (o *Error) SetCode(v int32) {
+func (o *Status) SetCode(v int32) {
 	o.Code = v
 }
 
-// GetError returns the Error field value
-func (o *Error) GetError() string {
+// GetMessage returns the Message field value
+func (o *Status) GetMessage() string {
 	if o == nil {
 		var ret string
 		return ret
 	}
 
-	return o.Error
+	return o.Message
 }
 
-// GetErrorOk returns a tuple with the Error field value
+// GetMessageOk returns a tuple with the Message field value
 // and a boolean to check if the value has been set.
-func (o *Error) GetErrorOk() (*string, bool) {
+func (o *Status) GetMessageOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.Error, true
+	return &o.Message, true
 }
 
-// SetError sets field value
-func (o *Error) SetError(v string) {
-	o.Error = v
+// SetMessage sets field value
+func (o *Status) SetMessage(v string) {
+	o.Message = v
 }
 
-func (o Error) MarshalJSON() ([]byte, error) {
+func (o Status) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if true {
 		toSerialize["code"] = o.Code
 	}
 	if true {
-		toSerialize["error"] = o.Error
+		toSerialize["message"] = o.Message
 	}
 	return json.Marshal(toSerialize)
 }
 
-type NullableError struct {
-	value *Error
+type NullableStatus struct {
+	value *Status
 	isSet bool
 }
 
-func (v NullableError) Get() *Error {
+func (v NullableStatus) Get() *Status {
 	return v.value
 }
 
-func (v *NullableError) Set(val *Error) {
+func (v *NullableStatus) Set(val *Status) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableError) IsSet() bool {
+func (v NullableStatus) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableError) Unset() {
+func (v *NullableStatus) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableError(val *Error) *NullableError {
-	return &NullableError{value: val, isSet: true}
+func NewNullableStatus(val *Status) *NullableStatus {
+	return &NullableStatus{value: val, isSet: true}
 }
 
-func (v NullableError) MarshalJSON() ([]byte, error) {
+func (v NullableStatus) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableError) UnmarshalJSON(src []byte) error {
+func (v *NullableStatus) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

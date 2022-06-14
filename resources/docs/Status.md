@@ -1,69 +1,69 @@
-# Error
+# Status
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Code** | **int32** |  | 
-**Error** | **string** |  | 
+**Message** | **string** |  | 
 
 ## Methods
 
-### NewError
+### NewStatus
 
-`func NewError(code int32, error_ string, ) *Error`
+`func NewStatus(code int32, message string, ) *Status`
 
-NewError instantiates a new Error object
+NewStatus instantiates a new Status object
 This constructor will assign default values to properties that have it defined,
 and makes sure properties required by API are set, but the set of arguments
 will change when the set of required properties is changed
 
-### NewErrorWithDefaults
+### NewStatusWithDefaults
 
-`func NewErrorWithDefaults() *Error`
+`func NewStatusWithDefaults() *Status`
 
-NewErrorWithDefaults instantiates a new Error object
+NewStatusWithDefaults instantiates a new Status object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
 ### GetCode
 
-`func (o *Error) GetCode() int32`
+`func (o *Status) GetCode() int32`
 
 GetCode returns the Code field if non-nil, zero value otherwise.
 
 ### GetCodeOk
 
-`func (o *Error) GetCodeOk() (*int32, bool)`
+`func (o *Status) GetCodeOk() (*int32, bool)`
 
 GetCodeOk returns a tuple with the Code field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetCode
 
-`func (o *Error) SetCode(v int32)`
+`func (o *Status) SetCode(v int32)`
 
 SetCode sets Code field to given value.
 
 
-### GetError
+### GetMessage
 
-`func (o *Error) GetError() string`
+`func (o *Status) GetMessage() string`
 
-GetError returns the Error field if non-nil, zero value otherwise.
+GetMessage returns the Message field if non-nil, zero value otherwise.
 
-### GetErrorOk
+### GetMessageOk
 
-`func (o *Error) GetErrorOk() (*string, bool)`
+`func (o *Status) GetMessageOk() (*string, bool)`
 
-GetErrorOk returns a tuple with the Error field if it's non-nil, zero value otherwise
+GetMessageOk returns a tuple with the Message field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetError
+### SetMessage
 
-`func (o *Error) SetError(v string)`
+`func (o *Status) SetMessage(v string)`
 
-SetError sets Error field to given value.
+SetMessage sets Message field to given value.
 
 
 

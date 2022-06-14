@@ -1,6 +1,7 @@
 package cli
 
 import (
+	"github.com/BOOST-2021/boost-app-back/internal/listener"
 	"os"
 
 	"github.com/urfave/cli/v2"
@@ -19,14 +20,17 @@ func Run(args []string) bool {
 		}
 	}()
 
+	svc := listener.New(cfg)
+
 	app := &cli.App{
 		Commands: cli.Commands{
 			{
 				Name:  "run",
-				Usage: "run service daemon",
+				Usage: "run listener daemon",
 				Action: func(c *cli.Context) error {
-					log.Debug("Starting service")
-					panic("Implement me")
+					if err := svc.Listen(); err != nil {
+						return err
+					}
 					return nil
 				},
 			},

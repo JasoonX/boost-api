@@ -3,6 +3,7 @@ module github.com/BOOST-2021/boost-app-back
 go 1.18
 
 require (
+	github.com/go-chi/chi/v5 v5.0.7
 	github.com/pkg/errors v0.9.1
 	github.com/rubenv/sql-migrate v1.1.1
 	github.com/sirupsen/logrus v1.8.1
