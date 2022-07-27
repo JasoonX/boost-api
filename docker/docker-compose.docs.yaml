@@ -1,0 +1,22 @@
+version: "3.9"
+services:
+  swagger-ui:
+    image: swaggerapi/swagger-ui
+    container_name: swagger_ui_container
+    ports:
+      - "9001:8080"
+    volumes:
+      - ../docs/openapi/v1:/docs
+    environment:
+      SWAGGER_JSON: /docs/swagger.yaml
+  swagger-editor:
+    image: swaggerapi/swagger-editor
+    container_name: swagger_editor_container
+    ports:
+      - "9002:8080"
+    volumes:
+      - type: bind
+        source: ../docs/openapi/v1
+        target: /docs
+    environment:
+      SWAGGER_FILE: /docs/swagger.yaml

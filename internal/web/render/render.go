@@ -2,27 +2,28 @@ package render
 
 import (
 	"encoding/json"
+	"net/http"
+
+	"github.com/pkg/errors"
+
 	"github.com/BOOST-2021/boost-app-back/internal/web/responses"
 	"github.com/BOOST-2021/boost-app-back/resources"
-	"github.com/pkg/errors"
-	"net/http"
 )
 
 // Respond valid json respond rendering
-func Respond[D, M json.Marshaler](w http.ResponseWriter, status *resources.Status, data D, meta M) {
+func Respond(w http.ResponseWriter, status *resources.Status, data json.Marshaler, meta json.Marshaler) {
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
-	w.WriteHeader(int(status.GetCode()))
+	w.WriteHeader(int(status.Code))
 
-	if status.GetCode() == http.StatusNoContent {
+	if status.Code == http.StatusNoContent {
 		return
 	}
 
-	res := responses.Response[D, M]{
+	res := responses.Response{
 		Status: status,
 		Data:   data,
 		Meta:   meta,
 	}
-	res.Status = status
 
 	err := json.NewEncoder(w).Encode(res)
 	if err != nil {

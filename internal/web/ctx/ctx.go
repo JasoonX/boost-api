@@ -2,9 +2,11 @@ package ctx
 
 import (
 	"context"
-	"github.com/BOOST-2021/boost-app-back/internal/data/store"
-	"github.com/sirupsen/logrus"
 	"net/http"
+
+	"github.com/sirupsen/logrus"
+
+	"github.com/BOOST-2021/boost-app-back/internal/data/store"
 )
 
 const (

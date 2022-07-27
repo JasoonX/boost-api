@@ -1,5 +1,12 @@
 package postgres
 
 const (
-	Postgres = "querier"
+	Querier = "postgres"
+	ID      = "id"
+)
+
+const (
+	WeightA = "A"
+	WeightB = "B"
+	WeightC = "C"
 )

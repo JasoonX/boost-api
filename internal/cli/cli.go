@@ -1,13 +1,16 @@
 package cli
 
 import (
-	"github.com/BOOST-2021/boost-app-back/internal/listener"
 	"os"
+	"strings"
 
 	"github.com/urfave/cli/v2"
 
 	"github.com/BOOST-2021/boost-app-back/internal/config"
-	"github.com/BOOST-2021/boost-app-back/internal/data/migrate"
+	"github.com/BOOST-2021/boost-app-back/internal/listener"
+	"github.com/BOOST-2021/boost-app-back/util/fake"
+	"github.com/BOOST-2021/boost-app-back/util/migrate"
+	"github.com/BOOST-2021/boost-app-back/util/scripts"
 )
 
 func Run(args []string) bool {
@@ -60,6 +63,60 @@ func Run(args []string) bool {
 							return nil
 						},
 					},
+				},
+			},
+			{
+				Name:  "scripts",
+				Usage: "apply sql scripts to db",
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:    "name",
+						Aliases: []string{"n"},
+						Value:   "default",
+						Usage:   "sql scripts name to apply (default runs all), separated by comma",
+					},
+				},
+				Action: func(c *cli.Context) error {
+					log.Debug("Running scripts...")
+					if fName := c.Args().First(); fName != "default" {
+						if err := scripts.Run(cfg, strings.Split(fName, ",")...); err != nil {
+							return err
+						}
+						return nil
+					}
+					if err := scripts.Run(cfg); err != nil {
+						return err
+					}
+					return nil
+				},
+			},
+			{
+				// TODO: for dev purposes only, consider removing this in the future
+				Name:  "fake",
+				Usage: "fake data in the database",
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:    "mode",
+						Aliases: []string{"m"},
+						Value:   "default",
+						Usage:   "mode of the fake to run",
+					},
+				},
+				Action: func(c *cli.Context) error {
+					log.Debug("generating fake data...")
+					fakeCfg, err := fake.NewConfig(os.Getenv("FAKE_CONFIG"))
+					if err != nil {
+						return err
+					}
+					fakeGenerator := fake.New(cfg, fakeCfg)
+					switch c.Args().First() {
+					// additional fake modes can be added here
+					default:
+						if err := fakeGenerator.Default(); err != nil {
+							return err
+						}
+					}
+					return nil
 				},
 			},
 		},

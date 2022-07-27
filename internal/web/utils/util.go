@@ -2,10 +2,11 @@ package utils
 
 import (
 	"encoding/json"
-	"github.com/BOOST-2021/boost-app-back/internal/data/store"
-	"github.com/BOOST-2021/boost-app-back/internal/web/ctx"
-	"github.com/pkg/errors"
 	"net/http"
+
+	"github.com/pkg/errors"
+
+	"github.com/BOOST-2021/boost-app-back/internal/data/store"
 )
 
 type JSONError struct {
@@ -16,9 +17,7 @@ type JSONError struct {
 type ServerRunInfo map[string]*JSONError
 
 func ServiceRuns(r *http.Request) ServerRunInfo {
-	provider := ctx.Provider(r)
 	providerErr := errors.New("provider not in the context")
-	providerErr = provider.Ping()
 	return ServerRunInfo{
 		store.Store: &JSONError{
 			Code:    0,

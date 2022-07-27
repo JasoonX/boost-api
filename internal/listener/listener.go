@@ -1,11 +1,13 @@
 package listener
 
 import (
-	"github.com/BOOST-2021/boost-app-back/internal/common"
+	"net/http"
+
 	"github.com/go-chi/chi/v5"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
-	"net/http"
+
+	"github.com/BOOST-2021/boost-app-back/internal/common"
 
 	"github.com/BOOST-2021/boost-app-back/internal/config"
 )

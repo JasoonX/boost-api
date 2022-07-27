@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-GENERATOR_IMAGE=openapitools/openapi-generator-cli
+GENERATOR_IMAGE=openapitools/openapi-generator-cli:v6.0.0
 
-GENERATED="/resources"
+GENERATED="/resources/"
 OPENAPI_SPEC="/docs/openapi/v1/swagger.yaml"
 
-function generate {
+function generate_openapi {
   docker run --rm -v "${PWD}:/local" ${GENERATOR_IMAGE} generate \
       -i "/local${OPENAPI_SPEC}" \
       -g go \
@@ -16,7 +16,8 @@ function generate {
 
 function cleanup_pre {
   rm -rf ".${GENERATED}"
+  mkdir -p ".${GENERATED}"
 }
 
 cleanup_pre
-generate
+generate_openapi

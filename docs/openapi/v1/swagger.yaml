@@ -4,16 +4,16 @@ info:
   description: This is a REST API of the Boost App.
   version: 0.0.1-beta1
 servers:
-  - url: http://api.boost.com.ua/v1
+  - url: http://api.boost.net.ua/v1
     description: Main (production) listener
-  - url: http://dev.api.boost.com.ua
+  - url: http://dev.api.boost.net.ua/v1
     description: Test (development) listener
 paths:
   /healthcheck:
     get:
       summary: Returns success if listener runs successfully.
       responses:
-        '200':  # status code
+        '200': # status code
           description: A JSON object with healthcheck result
           content:
             application/json:
@@ -24,8 +24,116 @@ paths:
           content:
             application/json:
               schema:
-                oneOf:
-                  - $ref: '#/components/schemas/Status'
+                $ref: '#/components/schemas/Error'
+  /news/add:
+    post:
+      summary: Add a new news
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - data
+              properties:
+                data:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/News'
+      responses:
+        '201':
+          description: Created successfully status
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/Status'
+                  data:
+                    $ref: '#/components/schemas/News'
+        '400':
+          description: Something is wrong with the data provided
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    $ref: '#/components/schemas/Error'
+        '500':
+          description: Something is wrong on the server
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    $ref: '#/components/schemas/Error'
+  /news/list/:
+    get:
+      parameters:
+        - in: query
+          name: page[offset]
+          schema:
+            type: integer
+          description: The number of items to skip before starting to collect the result set
+        - in: query
+          name: page[limit]
+          schema:
+            type: integer
+          description: The numbers of items to return
+        - in: query
+          name: search[first_name]
+          schema:
+            type: string
+            example: 'Jon'
+          description: First name of an author to return news for
+        - in: query
+          name: search[last_name]
+          schema:
+            type: string
+            example: 'Doe'
+          description: Last name of an author to return news for
+        - in: query
+          name: filter[title]
+          schema:
+            type: string
+            example: 'IPhone'
+          description: Title to filter news by
+        - in: query
+          name: filter[city]
+          schema:
+            type: string
+            example: 'Krzczonow'
+          description: City to filter by
+      responses:
+        '200':
+          description: Search for news
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/Status'
+                  data:
+                    type: object
+                    properties:
+                      cars:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/News'
+        '500':
+          description: Something is wrong on the server
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    $ref: '#/components/schemas/Error'
 components:
   schemas:
     Status:
@@ -54,3 +162,139 @@ components:
         error:
           type: string
           example: 'Server is dead'
+    News:
+      type: object
+      required:
+        - id
+        - created_at
+        - author_id
+      properties:
+        id:
+          type: string
+          example: '123e4567-e89b-12d3-a456-426614174000'
+        author_id:
+          type: string
+          example: '123e4567-e89b-12d3-a456-426614174000'
+        created_at:
+          type: string
+          format: time.Time
+          example: '2020-01-01T00:00:00Z'
+        updated_at:
+          type: string
+          format: time.Time
+          example: '2020-01-01T00:00:00Z'
+        media:
+          type: array
+          items:
+            $ref: '#/components/schemas/NewsMedia'
+    NewsMedia:
+      type: object
+      properties:
+        title:
+          type: string
+          example: 'IPhone'
+        text:
+          type: string
+          example: 'IPhone is a new phone'
+        resources:
+          type: array
+          items:
+            $ref: '#/components/schemas/NewsMediaResource'
+    NewsMediaResource:
+      type: object
+      properties:
+        type:
+          type: string
+          example: 'image'
+        url:
+          type: string
+          example: 'https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png'
+        meta:
+          description: Any meta information
+          type: object
+    User:
+      type: object
+      required:
+        - id
+        - created_at
+        - status
+        - role
+      properties:
+        id:
+          type: string
+          example: '123e4567-e89b-12d3-a456-426614174000'
+        created_at:
+          type: string
+          format: time.Time
+          example: '2020-01-01T00:00:00Z'
+        updated_at:
+          type: string
+          format: time.Time
+          example: '2020-01-01T00:00:00Z'
+        username:
+          type: string
+          example: 'admin'
+        status:
+          type: string
+          enum:
+            - active
+            - inactive
+            - unverified
+          example: 'active'
+        role:
+          type: string
+          enum:
+            - viewer
+            - react_viewer
+            - admin
+          example: 'viewer'
+    Email:
+      type: object
+      required:
+        - id
+        - email
+        - user_id
+      properties:
+        id:
+          type: string
+          example: '123e4567-e89b-12d3-a456-426614174000'
+        email:
+          type: string
+          example: 'jon.doe@example.com'
+        verified:
+          type: boolean
+          example: true
+        primary_flag:
+          type: boolean
+          example: true
+        user_id:
+          type: string
+          example: '123e4567-e89b-12d3-a456-426614174000'
+    Phone:
+      type: object
+      required:
+        - id
+        - subscriber_number
+        - user_id
+      properties:
+        id:
+          type: string
+          example: '123e4567-e89b-12d3-a456-426614174000'
+        subscriber_number:
+          type: string
+          example: '0664023252'
+        country_code:
+          type: string
+          example: '+38'
+        extension:
+          type: string
+          example: '4025'
+        verified:
+          type: boolean
+          example: true
+        primary_flag:
+          type: boolean
+          example: true
+        user_id:
+          type: string
+          example: '123e4567-e89b-12d3-a456-426614174000'

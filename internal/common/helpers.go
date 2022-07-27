@@ -1,8 +1,10 @@
 package common
 
 import (
-	"github.com/pkg/errors"
+	"encoding/json"
 	"time"
+
+	"github.com/pkg/errors"
 )
 
 func RunEvery(d time.Duration, fs ...func() error) error {
@@ -24,4 +26,12 @@ func runFuncs(x time.Time, fs ...func() error) error {
 		}
 	}
 	return nil
+}
+
+func MustMarshal(v interface{}) []byte {
+	b, err := json.Marshal(v)
+	if err != nil {
+		panic(err)
+	}
+	return b
 }
