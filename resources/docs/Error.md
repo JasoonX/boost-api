@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Code** | **int32** |  |
-**Error** | **string** |  |
+**Code** | **int32** |  | 
+**Error** | **string** |  | 
 
 ## Methods
 
@@ -45,6 +45,7 @@ and a boolean to check if the value has been set.
 
 SetCode sets Code field to given value.
 
+
 ### GetError
 
 `func (o *Error) GetError() string`
@@ -63,6 +64,8 @@ and a boolean to check if the value has been set.
 `func (o *Error) SetError(v string)`
 
 SetError sets Error field to given value.
+
+
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

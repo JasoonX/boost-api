@@ -35,3 +35,9 @@ func MustMarshal(v interface{}) []byte {
 	}
 	return b
 }
+
+func MustUnmarshal(b []byte, v interface{}) {
+	if err := json.Unmarshal(b, v); err != nil {
+		panic(err)
+	}
+}

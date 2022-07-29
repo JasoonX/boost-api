@@ -71,7 +71,7 @@ paths:
                 properties:
                   error:
                     $ref: '#/components/schemas/Error'
-  /news/list/:
+  /news:
     get:
       parameters:
         - in: query
@@ -121,7 +121,7 @@ paths:
                   data:
                     type: object
                     properties:
-                      cars:
+                      news:
                         type: array
                         items:
                           $ref: '#/components/schemas/News'
@@ -177,16 +177,14 @@ components:
           example: '123e4567-e89b-12d3-a456-426614174000'
         created_at:
           type: string
-          format: time.Time
+          format: date-time
           example: '2020-01-01T00:00:00Z'
         updated_at:
           type: string
-          format: time.Time
+          format: date-time
           example: '2020-01-01T00:00:00Z'
         media:
-          type: array
-          items:
-            $ref: '#/components/schemas/NewsMedia'
+          $ref: '#/components/schemas/NewsMedia'
     NewsMedia:
       type: object
       properties:
@@ -225,11 +223,11 @@ components:
           example: '123e4567-e89b-12d3-a456-426614174000'
         created_at:
           type: string
-          format: time.Time
+          format: date-time
           example: '2020-01-01T00:00:00Z'
         updated_at:
           type: string
-          format: time.Time
+          format: date-time
           example: '2020-01-01T00:00:00Z'
         username:
           type: string

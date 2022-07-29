@@ -30,3 +30,18 @@ func Respond(w http.ResponseWriter, status *resources.Status, data json.Marshale
 		panic(errors.Wrap(err, "failed to encode json"))
 	}
 }
+
+func Error(w http.ResponseWriter, error *resources.Error, serverErrors *responses.JSONServerErrors, meta json.Marshaler) {
+	w.Header().Set("Content-Type", "application/json; charset=utf-8")
+	w.WriteHeader(int(error.GetCode()))
+
+	res := responses.Response{
+		Errors: serverErrors,
+		Meta:   meta,
+	}
+
+	err := json.NewEncoder(w).Encode(res)
+	if err != nil {
+		panic(errors.Wrap(err, "failed to encode json"))
+	}
+}

@@ -4,11 +4,11 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | **string** |  |
-**Email** | **string** |  |
-**Verified** | Pointer to **bool** |  | [optional]
-**PrimaryFlag** | Pointer to **bool** |  | [optional]
-**UserId** | **string** |  |
+**Id** | **string** |  | 
+**Email** | **string** |  | 
+**Verified** | Pointer to **bool** |  | [optional] 
+**PrimaryFlag** | Pointer to **bool** |  | [optional] 
+**UserId** | **string** |  | 
 
 ## Methods
 
@@ -48,6 +48,7 @@ and a boolean to check if the value has been set.
 
 SetId sets Id field to given value.
 
+
 ### GetEmail
 
 `func (o *Email) GetEmail() string`
@@ -66,6 +67,7 @@ and a boolean to check if the value has been set.
 `func (o *Email) SetEmail(v string)`
 
 SetEmail sets Email field to given value.
+
 
 ### GetVerified
 
@@ -135,6 +137,8 @@ and a boolean to check if the value has been set.
 `func (o *Email) SetUserId(v string)`
 
 SetUserId sets UserId field to given value.
+
+
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

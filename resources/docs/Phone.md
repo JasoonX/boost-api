@@ -4,13 +4,13 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | **string** |  |
-**SubscriberNumber** | **string** |  |
-**CountryCode** | Pointer to **string** |  | [optional]
-**Extension** | Pointer to **string** |  | [optional]
-**Verified** | Pointer to **bool** |  | [optional]
-**PrimaryFlag** | Pointer to **bool** |  | [optional]
-**UserId** | **string** |  |
+**Id** | **string** |  | 
+**SubscriberNumber** | **string** |  | 
+**CountryCode** | Pointer to **string** |  | [optional] 
+**Extension** | Pointer to **string** |  | [optional] 
+**Verified** | Pointer to **bool** |  | [optional] 
+**PrimaryFlag** | Pointer to **bool** |  | [optional] 
+**UserId** | **string** |  | 
 
 ## Methods
 
@@ -50,6 +50,7 @@ and a boolean to check if the value has been set.
 
 SetId sets Id field to given value.
 
+
 ### GetSubscriberNumber
 
 `func (o *Phone) GetSubscriberNumber() string`
@@ -68,6 +69,7 @@ and a boolean to check if the value has been set.
 `func (o *Phone) SetSubscriberNumber(v string)`
 
 SetSubscriberNumber sets SubscriberNumber field to given value.
+
 
 ### GetCountryCode
 
@@ -187,6 +189,8 @@ and a boolean to check if the value has been set.
 `func (o *Phone) SetUserId(v string)`
 
 SetUserId sets UserId field to given value.
+
+
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

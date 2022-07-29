@@ -23,4 +23,6 @@ func (l *service) setupRouter() {
 	)
 
 	l.router.Get("/v1/healthcheck", handlers.GetHealthcheck)
+
+	l.router.Get("/v1/news", handlers.GetNews)
 }

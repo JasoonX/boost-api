@@ -12,22 +12,23 @@ package resources
 
 import (
 	"encoding/json"
+	"time"
 )
 
 // News struct for News
 type News struct {
-	Id        string      `json:"id"`
-	AuthorId  string      `json:"author_id"`
-	CreatedAt string      `json:"created_at"`
-	UpdatedAt *string     `json:"updated_at,omitempty"`
-	Media     []NewsMedia `json:"media,omitempty"`
+	Id        string     `json:"id"`
+	AuthorId  string     `json:"author_id"`
+	CreatedAt time.Time  `json:"created_at"`
+	UpdatedAt *time.Time `json:"updated_at,omitempty"`
+	Media     *NewsMedia `json:"media,omitempty"`
 }
 
 // NewNews instantiates a new News object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewNews(id string, authorId string, createdAt string) *News {
+func NewNews(id string, authorId string, createdAt time.Time) *News {
 	this := News{}
 	this.Id = id
 	this.AuthorId = authorId
@@ -92,9 +93,9 @@ func (o *News) SetAuthorId(v string) {
 }
 
 // GetCreatedAt returns the CreatedAt field value
-func (o *News) GetCreatedAt() string {
+func (o *News) GetCreatedAt() time.Time {
 	if o == nil {
-		var ret string
+		var ret time.Time
 		return ret
 	}
 
@@ -103,7 +104,7 @@ func (o *News) GetCreatedAt() string {
 
 // GetCreatedAtOk returns a tuple with the CreatedAt field value
 // and a boolean to check if the value has been set.
-func (o *News) GetCreatedAtOk() (*string, bool) {
+func (o *News) GetCreatedAtOk() (*time.Time, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -111,14 +112,14 @@ func (o *News) GetCreatedAtOk() (*string, bool) {
 }
 
 // SetCreatedAt sets field value
-func (o *News) SetCreatedAt(v string) {
+func (o *News) SetCreatedAt(v time.Time) {
 	o.CreatedAt = v
 }
 
 // GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise.
-func (o *News) GetUpdatedAt() string {
+func (o *News) GetUpdatedAt() time.Time {
 	if o == nil || o.UpdatedAt == nil {
-		var ret string
+		var ret time.Time
 		return ret
 	}
 	return *o.UpdatedAt
@@ -126,7 +127,7 @@ func (o *News) GetUpdatedAt() string {
 
 // GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *News) GetUpdatedAtOk() (*string, bool) {
+func (o *News) GetUpdatedAtOk() (*time.Time, bool) {
 	if o == nil || o.UpdatedAt == nil {
 		return nil, false
 	}
@@ -142,23 +143,23 @@ func (o *News) HasUpdatedAt() bool {
 	return false
 }
 
-// SetUpdatedAt gets a reference to the given string and assigns it to the UpdatedAt field.
-func (o *News) SetUpdatedAt(v string) {
+// SetUpdatedAt gets a reference to the given time.Time and assigns it to the UpdatedAt field.
+func (o *News) SetUpdatedAt(v time.Time) {
 	o.UpdatedAt = &v
 }
 
 // GetMedia returns the Media field value if set, zero value otherwise.
-func (o *News) GetMedia() []NewsMedia {
+func (o *News) GetMedia() NewsMedia {
 	if o == nil || o.Media == nil {
-		var ret []NewsMedia
+		var ret NewsMedia
 		return ret
 	}
-	return o.Media
+	return *o.Media
 }
 
 // GetMediaOk returns a tuple with the Media field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *News) GetMediaOk() ([]NewsMedia, bool) {
+func (o *News) GetMediaOk() (*NewsMedia, bool) {
 	if o == nil || o.Media == nil {
 		return nil, false
 	}
@@ -174,9 +175,9 @@ func (o *News) HasMedia() bool {
 	return false
 }
 
-// SetMedia gets a reference to the given []NewsMedia and assigns it to the Media field.
-func (o *News) SetMedia(v []NewsMedia) {
-	o.Media = v
+// SetMedia gets a reference to the given NewsMedia and assigns it to the Media field.
+func (o *News) SetMedia(v NewsMedia) {
+	o.Media = &v
 }
 
 func (o News) MarshalJSON() ([]byte, error) {

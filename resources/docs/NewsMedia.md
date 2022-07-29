@@ -4,9 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Title** | Pointer to **string** |  | [optional]
-**Text** | Pointer to **string** |  | [optional]
-**Resources** | Pointer to [**[]NewsMediaResource**](NewsMediaResource.md) |  | [optional]
+**Title** | Pointer to **string** |  | [optional] 
+**Text** | Pointer to **string** |  | [optional] 
+**Resources** | Pointer to [**[]NewsMediaResource**](NewsMediaResource.md) |  | [optional] 
 
 ## Methods
 
@@ -101,6 +101,7 @@ SetResources sets Resources field to given value.
 `func (o *NewsMedia) HasResources() bool`
 
 HasResources returns a boolean if a field has been set.
+
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

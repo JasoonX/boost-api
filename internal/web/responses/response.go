@@ -10,5 +10,5 @@ type Response struct {
 	Data   json.Marshaler    `json:"data,omitempty"`
 	Meta   json.Marshaler    `json:"meta,omitempty"`
 	Status *resources.Status `json:"status,omitempty"`
-	Error  *resources.Error  `json:"error,omitempty"`
+	Errors *JSONServerErrors `json:"error,omitempty"`
 }

@@ -14,31 +14,31 @@ import (
 	"encoding/json"
 )
 
-// NewsListGet200Response struct for NewsListGet200Response
-type NewsListGet200Response struct {
-	Status *Status                     `json:"status,omitempty"`
-	Data   *NewsListGet200ResponseData `json:"data,omitempty"`
+// NewsGet200Response struct for NewsGet200Response
+type NewsGet200Response struct {
+	Status *Status                 `json:"status,omitempty"`
+	Data   *NewsGet200ResponseData `json:"data,omitempty"`
 }
 
-// NewNewsListGet200Response instantiates a new NewsListGet200Response object
+// NewNewsGet200Response instantiates a new NewsGet200Response object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewNewsListGet200Response() *NewsListGet200Response {
-	this := NewsListGet200Response{}
+func NewNewsGet200Response() *NewsGet200Response {
+	this := NewsGet200Response{}
 	return &this
 }
 
-// NewNewsListGet200ResponseWithDefaults instantiates a new NewsListGet200Response object
+// NewNewsGet200ResponseWithDefaults instantiates a new NewsGet200Response object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewNewsListGet200ResponseWithDefaults() *NewsListGet200Response {
-	this := NewsListGet200Response{}
+func NewNewsGet200ResponseWithDefaults() *NewsGet200Response {
+	this := NewsGet200Response{}
 	return &this
 }
 
 // GetStatus returns the Status field value if set, zero value otherwise.
-func (o *NewsListGet200Response) GetStatus() Status {
+func (o *NewsGet200Response) GetStatus() Status {
 	if o == nil || o.Status == nil {
 		var ret Status
 		return ret
@@ -48,7 +48,7 @@ func (o *NewsListGet200Response) GetStatus() Status {
 
 // GetStatusOk returns a tuple with the Status field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *NewsListGet200Response) GetStatusOk() (*Status, bool) {
+func (o *NewsGet200Response) GetStatusOk() (*Status, bool) {
 	if o == nil || o.Status == nil {
 		return nil, false
 	}
@@ -56,7 +56,7 @@ func (o *NewsListGet200Response) GetStatusOk() (*Status, bool) {
 }
 
 // HasStatus returns a boolean if a field has been set.
-func (o *NewsListGet200Response) HasStatus() bool {
+func (o *NewsGet200Response) HasStatus() bool {
 	if o != nil && o.Status != nil {
 		return true
 	}
@@ -65,14 +65,14 @@ func (o *NewsListGet200Response) HasStatus() bool {
 }
 
 // SetStatus gets a reference to the given Status and assigns it to the Status field.
-func (o *NewsListGet200Response) SetStatus(v Status) {
+func (o *NewsGet200Response) SetStatus(v Status) {
 	o.Status = &v
 }
 
 // GetData returns the Data field value if set, zero value otherwise.
-func (o *NewsListGet200Response) GetData() NewsListGet200ResponseData {
+func (o *NewsGet200Response) GetData() NewsGet200ResponseData {
 	if o == nil || o.Data == nil {
-		var ret NewsListGet200ResponseData
+		var ret NewsGet200ResponseData
 		return ret
 	}
 	return *o.Data
@@ -80,7 +80,7 @@ func (o *NewsListGet200Response) GetData() NewsListGet200ResponseData {
 
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *NewsListGet200Response) GetDataOk() (*NewsListGet200ResponseData, bool) {
+func (o *NewsGet200Response) GetDataOk() (*NewsGet200ResponseData, bool) {
 	if o == nil || o.Data == nil {
 		return nil, false
 	}
@@ -88,7 +88,7 @@ func (o *NewsListGet200Response) GetDataOk() (*NewsListGet200ResponseData, bool)
 }
 
 // HasData returns a boolean if a field has been set.
-func (o *NewsListGet200Response) HasData() bool {
+func (o *NewsGet200Response) HasData() bool {
 	if o != nil && o.Data != nil {
 		return true
 	}
@@ -96,12 +96,12 @@ func (o *NewsListGet200Response) HasData() bool {
 	return false
 }
 
-// SetData gets a reference to the given NewsListGet200ResponseData and assigns it to the Data field.
-func (o *NewsListGet200Response) SetData(v NewsListGet200ResponseData) {
+// SetData gets a reference to the given NewsGet200ResponseData and assigns it to the Data field.
+func (o *NewsGet200Response) SetData(v NewsGet200ResponseData) {
 	o.Data = &v
 }
 
-func (o NewsListGet200Response) MarshalJSON() ([]byte, error) {
+func (o NewsGet200Response) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Status != nil {
 		toSerialize["status"] = o.Status
@@ -112,38 +112,38 @@ func (o NewsListGet200Response) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-type NullableNewsListGet200Response struct {
-	value *NewsListGet200Response
+type NullableNewsGet200Response struct {
+	value *NewsGet200Response
 	isSet bool
 }
 
-func (v NullableNewsListGet200Response) Get() *NewsListGet200Response {
+func (v NullableNewsGet200Response) Get() *NewsGet200Response {
 	return v.value
 }
 
-func (v *NullableNewsListGet200Response) Set(val *NewsListGet200Response) {
+func (v *NullableNewsGet200Response) Set(val *NewsGet200Response) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableNewsListGet200Response) IsSet() bool {
+func (v NullableNewsGet200Response) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableNewsListGet200Response) Unset() {
+func (v *NullableNewsGet200Response) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableNewsListGet200Response(val *NewsListGet200Response) *NullableNewsListGet200Response {
-	return &NullableNewsListGet200Response{value: val, isSet: true}
+func NewNullableNewsGet200Response(val *NewsGet200Response) *NullableNewsGet200Response {
+	return &NullableNewsGet200Response{value: val, isSet: true}
 }
 
-func (v NullableNewsListGet200Response) MarshalJSON() ([]byte, error) {
+func (v NullableNewsGet200Response) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableNewsListGet200Response) UnmarshalJSON(src []byte) error {
+func (v *NullableNewsGet200Response) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

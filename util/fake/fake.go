@@ -9,7 +9,6 @@ import (
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 
-	"github.com/BOOST-2021/boost-app-back/internal/common"
 	"github.com/BOOST-2021/boost-app-back/internal/common/convert"
 	"github.com/BOOST-2021/boost-app-back/internal/common/debug"
 	"github.com/BOOST-2021/boost-app-back/internal/config"
@@ -79,10 +78,10 @@ func (g *generator) News(n int) ([]model.News, error) {
 			ReactionsCount:     rand.Int63(),
 			HideViewsCount:     rand.Int()%2 == 0,
 			HideReactionsCount: rand.Int()%2 == 0,
-			Media: common.MustMarshal(&model.NewsMedia{
+			Media: &model.NewsMedia{
 				Title: convert.StringPtr(fmt.Sprintf("%s %s %s", g.faker.Noun(), g.faker.VerbAction(), g.faker.NounConcrete())),
 				Text:  convert.StringPtr(g.faker.Quote()),
-			}),
+			},
 			AuthorID: users[rand.Int()%len(users)].ID,
 		}
 	}
