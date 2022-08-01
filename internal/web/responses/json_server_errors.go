@@ -2,23 +2,22 @@ package responses
 
 import (
 	"encoding/json"
+
+	"github.com/BOOST-2021/boost-app-back/resources"
 )
 
-type JSONServerErrors map[string]error
+type JSONServerErrors []*resources.Error
 
 func (m JSONServerErrors) MarshalJSON() ([]byte, error) {
-	return json.Marshal(map[string]error(m))
+	return json.Marshal([]*resources.Error(m))
 }
 
 func (m JSONServerErrors) Clean() JSONServerErrors {
-	var keysToDelete []string
-	for k, v := range m {
-		if v == nil {
-			keysToDelete = append(keysToDelete, k)
+	var filtered []*resources.Error
+	for _, v := range m {
+		if v != nil {
+			filtered = append(filtered, v)
 		}
-	}
-	for _, k := range keysToDelete {
-		delete(m, k)
 	}
 	return m
 }

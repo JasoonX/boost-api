@@ -17,6 +17,10 @@ import (
 // NewsGet200Response struct for NewsGet200Response
 type NewsGet200Response struct {
 	Status *Status                 `json:"status,omitempty"`
+	Page   *Page                   `json:"page,omitempty"`
+	Links  *Links                  `json:"links,omitempty"`
+	Meta   map[string]interface{}  `json:"meta,omitempty"`
+	Errors []Error                 `json:"errors,omitempty"`
 	Data   *NewsGet200ResponseData `json:"data,omitempty"`
 }
 
@@ -69,6 +73,134 @@ func (o *NewsGet200Response) SetStatus(v Status) {
 	o.Status = &v
 }
 
+// GetPage returns the Page field value if set, zero value otherwise.
+func (o *NewsGet200Response) GetPage() Page {
+	if o == nil || o.Page == nil {
+		var ret Page
+		return ret
+	}
+	return *o.Page
+}
+
+// GetPageOk returns a tuple with the Page field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *NewsGet200Response) GetPageOk() (*Page, bool) {
+	if o == nil || o.Page == nil {
+		return nil, false
+	}
+	return o.Page, true
+}
+
+// HasPage returns a boolean if a field has been set.
+func (o *NewsGet200Response) HasPage() bool {
+	if o != nil && o.Page != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetPage gets a reference to the given Page and assigns it to the Page field.
+func (o *NewsGet200Response) SetPage(v Page) {
+	o.Page = &v
+}
+
+// GetLinks returns the Links field value if set, zero value otherwise.
+func (o *NewsGet200Response) GetLinks() Links {
+	if o == nil || o.Links == nil {
+		var ret Links
+		return ret
+	}
+	return *o.Links
+}
+
+// GetLinksOk returns a tuple with the Links field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *NewsGet200Response) GetLinksOk() (*Links, bool) {
+	if o == nil || o.Links == nil {
+		return nil, false
+	}
+	return o.Links, true
+}
+
+// HasLinks returns a boolean if a field has been set.
+func (o *NewsGet200Response) HasLinks() bool {
+	if o != nil && o.Links != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetLinks gets a reference to the given Links and assigns it to the Links field.
+func (o *NewsGet200Response) SetLinks(v Links) {
+	o.Links = &v
+}
+
+// GetMeta returns the Meta field value if set, zero value otherwise.
+func (o *NewsGet200Response) GetMeta() map[string]interface{} {
+	if o == nil || o.Meta == nil {
+		var ret map[string]interface{}
+		return ret
+	}
+	return o.Meta
+}
+
+// GetMetaOk returns a tuple with the Meta field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *NewsGet200Response) GetMetaOk() (map[string]interface{}, bool) {
+	if o == nil || o.Meta == nil {
+		return nil, false
+	}
+	return o.Meta, true
+}
+
+// HasMeta returns a boolean if a field has been set.
+func (o *NewsGet200Response) HasMeta() bool {
+	if o != nil && o.Meta != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetMeta gets a reference to the given map[string]interface{} and assigns it to the Meta field.
+func (o *NewsGet200Response) SetMeta(v map[string]interface{}) {
+	o.Meta = v
+}
+
+// GetErrors returns the Errors field value if set, zero value otherwise.
+func (o *NewsGet200Response) GetErrors() []Error {
+	if o == nil || o.Errors == nil {
+		var ret []Error
+		return ret
+	}
+	return o.Errors
+}
+
+// GetErrorsOk returns a tuple with the Errors field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *NewsGet200Response) GetErrorsOk() ([]Error, bool) {
+	if o == nil || o.Errors == nil {
+		return nil, false
+	}
+	return o.Errors, true
+}
+
+// HasErrors returns a boolean if a field has been set.
+func (o *NewsGet200Response) HasErrors() bool {
+	if o != nil && o.Errors != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetErrors gets a reference to the given []Error and assigns it to the Errors field.
+func (o *NewsGet200Response) SetErrors(v []Error) {
+	o.Errors = v
+}
+
 // GetData returns the Data field value if set, zero value otherwise.
 func (o *NewsGet200Response) GetData() NewsGet200ResponseData {
 	if o == nil || o.Data == nil {
@@ -105,6 +237,18 @@ func (o NewsGet200Response) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Status != nil {
 		toSerialize["status"] = o.Status
+	}
+	if o.Page != nil {
+		toSerialize["page"] = o.Page
+	}
+	if o.Links != nil {
+		toSerialize["links"] = o.Links
+	}
+	if o.Meta != nil {
+		toSerialize["meta"] = o.Meta
+	}
+	if o.Errors != nil {
+		toSerialize["errors"] = o.Errors
 	}
 	if o.Data != nil {
 		toSerialize["data"] = o.Data

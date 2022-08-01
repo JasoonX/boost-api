@@ -1,3 +1,5 @@
+//go:build fake
+
 package fake
 
 import (

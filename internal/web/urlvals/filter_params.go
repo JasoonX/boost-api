@@ -1,5 +1,5 @@
 package urlvals
 
-type FilterParams struct {
+type FilterNewsParams struct {
 	City []string `filter:"city"`
 }

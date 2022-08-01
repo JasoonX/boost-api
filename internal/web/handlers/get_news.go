@@ -12,6 +12,7 @@ import (
 
 func GetNews(w http.ResponseWriter, r *http.Request) {
 	log := ctx.Log(r)
+	reqCtx := r.Context()
 
 	_, err := requests.NewGetNewsRequest(r)
 	if err != nil {
@@ -22,14 +23,14 @@ func GetNews(w http.ResponseWriter, r *http.Request) {
 
 	provider := ctx.Provider(r)
 
-	news, err := provider.NewsProvider().ListNews(r.Context())
+	news, err := provider.NewsProvider().ListNews(reqCtx)
 	if err != nil {
 		log.WithError(err).Error("failed to get news from provider")
 		render.InternalServerError(w, nil)
 		return
 	}
 
-	render.Respond(w, resources.NewStatus(http.StatusOK, "Request result ok"), &resources.NewsGet200ResponseData{
+	render.Success(w, &resources.NewsGet200ResponseData{
 		News: convert.ToResponseNews(news),
-	}, nil)
+	})
 }

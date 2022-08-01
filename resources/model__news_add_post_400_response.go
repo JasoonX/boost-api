@@ -16,7 +16,7 @@ import (
 
 // NewsAddPost400Response struct for NewsAddPost400Response
 type NewsAddPost400Response struct {
-	Error *Error `json:"error,omitempty"`
+	Error *Status `json:"error,omitempty"`
 }
 
 // NewNewsAddPost400Response instantiates a new NewsAddPost400Response object
@@ -37,9 +37,9 @@ func NewNewsAddPost400ResponseWithDefaults() *NewsAddPost400Response {
 }
 
 // GetError returns the Error field value if set, zero value otherwise.
-func (o *NewsAddPost400Response) GetError() Error {
+func (o *NewsAddPost400Response) GetError() Status {
 	if o == nil || o.Error == nil {
-		var ret Error
+		var ret Status
 		return ret
 	}
 	return *o.Error
@@ -47,7 +47,7 @@ func (o *NewsAddPost400Response) GetError() Error {
 
 // GetErrorOk returns a tuple with the Error field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *NewsAddPost400Response) GetErrorOk() (*Error, bool) {
+func (o *NewsAddPost400Response) GetErrorOk() (*Status, bool) {
 	if o == nil || o.Error == nil {
 		return nil, false
 	}
@@ -63,8 +63,8 @@ func (o *NewsAddPost400Response) HasError() bool {
 	return false
 }
 
-// SetError gets a reference to the given Error and assigns it to the Error field.
-func (o *NewsAddPost400Response) SetError(v Error) {
+// SetError gets a reference to the given Status and assigns it to the Error field.
+func (o *NewsAddPost400Response) SetError(v Status) {
 	o.Error = &v
 }
 

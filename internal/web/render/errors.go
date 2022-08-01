@@ -8,5 +8,8 @@ import (
 )
 
 func InternalServerError(w http.ResponseWriter, meta json.Marshaler) {
-	Error(w, resources.NewError(http.StatusInternalServerError, "Something went wrong"), nil, meta)
+	New(w).
+		WithStatus(resources.NewStatus(http.StatusInternalServerError, "Something went wrong")).
+		WithMeta(meta).
+		Respond()
 }

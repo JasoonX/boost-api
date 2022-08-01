@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Error** | Pointer to [**Error**](Error.md) |  | [optional] 
+**Error** | Pointer to [**Status**](Status.md) |  | [optional] 
 
 ## Methods
 
@@ -27,20 +27,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetError
 
-`func (o *NewsAddPost400Response) GetError() Error`
+`func (o *NewsAddPost400Response) GetError() Status`
 
 GetError returns the Error field if non-nil, zero value otherwise.
 
 ### GetErrorOk
 
-`func (o *NewsAddPost400Response) GetErrorOk() (*Error, bool)`
+`func (o *NewsAddPost400Response) GetErrorOk() (*Status, bool)`
 
 GetErrorOk returns a tuple with the Error field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetError
 
-`func (o *NewsAddPost400Response) SetError(v Error)`
+`func (o *NewsAddPost400Response) SetError(v Status)`
 
 SetError sets Error field to given value.
 

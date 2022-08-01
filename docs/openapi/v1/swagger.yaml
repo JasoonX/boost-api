@@ -24,7 +24,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: '#/components/schemas/Status'
   /news/add:
     post:
       summary: Add a new news
@@ -61,7 +61,7 @@ paths:
                 type: object
                 properties:
                   error:
-                    $ref: '#/components/schemas/Error'
+                    $ref: '#/components/schemas/Status'
         '500':
           description: Something is wrong on the server
           content:
@@ -70,7 +70,7 @@ paths:
                 type: object
                 properties:
                   error:
-                    $ref: '#/components/schemas/Error'
+                    $ref: '#/components/schemas/Status'
   /news:
     get:
       parameters:
@@ -118,6 +118,16 @@ paths:
                 properties:
                   status:
                     $ref: '#/components/schemas/Status'
+                  page:
+                    $ref: '#/components/schemas/Page'
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                  errors:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Error'
                   data:
                     type: object
                     properties:
@@ -133,9 +143,43 @@ paths:
                 type: object
                 properties:
                   error:
-                    $ref: '#/components/schemas/Error'
+                    $ref: '#/components/schemas/Status'
 components:
   schemas:
+    Page:
+      type: object
+      properties:
+        offset:
+          type: integer
+          example: 0
+        limit:
+          type: integer
+          example: 10
+        size:
+          type: integer
+          example: 10
+    Links:
+      type: object
+      required:
+        - self
+        - next
+        - prev
+      properties:
+        self:
+          type: string
+          example: 'https://api.boost.net.ua/v1/news?page[offset]=0&page[limit]=10'
+        next:
+          type: string
+          example: 'https://api.boost.net.ua/v1/news?page[offset]=10&page[limit]=10'
+        prev:
+          type: string
+          example: 'https://api.boost.net.ua/v1/news?page[offset]=0&page[limit]=10'
+        first:
+          type: string
+          example: 'https://api.boost.net.ua/v1/news?page[offset]=0&page[limit]=10'
+        last:
+          type: string
+          example: 'https://api.boost.net.ua/v1/news?page[offset]=0&page[limit]=10'
     Status:
       type: object
       required:

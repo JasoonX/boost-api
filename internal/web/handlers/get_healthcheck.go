@@ -8,10 +8,7 @@ import (
 )
 
 func GetHealthcheck(w http.ResponseWriter, r *http.Request) {
-	render.Respond(
-		w,
-		resources.NewStatus(http.StatusOK, "Server runs successfully"),
-		nil,
-		nil,
-	)
+	render.New(w).
+		WithStatus(resources.NewStatus(http.StatusOK, "Server runs successfully")).
+		Respond()
 }
