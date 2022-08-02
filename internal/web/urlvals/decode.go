@@ -4,13 +4,12 @@ import (
 	"fmt"
 	"net/url"
 	"reflect"
-	"strings"
 
 	"github.com/pkg/errors"
 	"github.com/spf13/cast"
 )
 
-// TODO: refactor this module and add sorting, includes to the params
+// TODO: add sorting, includes to the params
 
 var ErrSingleValueExpected = errors.New("expected single value, got slice")
 
@@ -25,9 +24,15 @@ func Decode(values url.Values, dest interface{}) error {
 		return errors.New(fmt.Sprintf("dest type must be pointer to a struct, got: %v", el.Kind()))
 	}
 
-	for _, tagName := range supportedTagsList {
-		for k, v := range values {
-			if err := parseTag(el, tagName, k, v); err != nil {
+	normalizedUrlQuery := normalizeUrlQuery(values)
+	normalizedTags := normalizeStructTags(t)
+
+	// merge order matters, since url data has higher priority
+	normalizedUrlQuery.Merge(normalizedTags)
+
+	for tagName, tagKeys := range normalizedUrlQuery {
+		for tagKey, tagParam := range tagKeys {
+			if err := processTag(el, tagName, tagKey, tagParam.Values); err != nil {
 				return errors.Wrapf(err, "failed to parse %s tag", tagName)
 			}
 		}
@@ -35,7 +40,7 @@ func Decode(values url.Values, dest interface{}) error {
 	return nil
 }
 
-func parseTag(dest reflect.Value, tagName, tagKey string, values []string) error {
+func processTag(dest reflect.Value, tagName, tagKey string, values []string) error {
 	if !dest.IsValid() {
 		return nil
 	}
@@ -50,61 +55,24 @@ func parseTag(dest reflect.Value, tagName, tagKey string, values []string) error
 			if !dest.Type().Field(i).IsExported() {
 				continue
 			}
-			if err := parseTag(dest.Field(i), tagName, tagKey, values); err != nil {
+			if err := processTag(dest.Field(i), tagName, tagKey, values); err != nil {
 				return errors.Wrap(err, "failed to parse tag")
 			}
-		}
 
-		// trying to find field in our dest type to set the value
-		fieldName, modifiers := findField(dest.Type(), tagName, getKey(tagName, tagKey))
-		if fieldName == "" {
-			return nil
-		}
+			// tag may also contain modifiers, like "default", thus we need to drop them
+			tag, _ := unwrapTag(getStructTag(dest.Type().Field(i), tagName))
 
-		f := dest.FieldByName(fieldName)
-		if err := setField(f, values, modifiers); err != nil {
-			return errors.Wrap(err, "failed to set field")
+			if tag != tagKey {
+				continue
+			}
+
+			if err := parseIntoValue(dest.Field(i), values...); err != nil {
+				return errors.Wrap(err, "failed to set field")
+			}
 		}
 	}
 
 	return nil
-}
-
-func findField(t reflect.Type, tagName, key string) (string, map[string]string) {
-	for i := 0; i < t.NumField(); i++ {
-		field := t.Field(i)
-
-		if !field.IsExported() {
-			continue
-		}
-
-		// Get the field tag value
-		tag := field.Tag.Get(tagName)
-
-		modifiers := parseModifiers(tag)
-
-		if tag == key {
-			return field.Name, modifiers
-		}
-	}
-	return "", nil
-}
-
-func parseModifiers(tag string) map[string]string {
-	modifiers := make(map[string]string)
-	for _, modifier := range modifiers {
-		if strings.Contains(tag, modifier) {
-			if strings.Contains(tag, "=") {
-				keyValue := strings.Split(tag, "=")
-				modifiers[keyValue[0]] = keyValue[1]
-			}
-		}
-	}
-	return modifiers
-}
-
-func setField(dest reflect.Value, values []string, modifiers map[string]string) error {
-	return parseIntoValue(dest, values...)
 }
 
 // parseSlice takes a slice of strings and converts it's items to the "destElemType".
@@ -135,7 +103,7 @@ func parseIntoValue(dest reflect.Value, input ...string) error {
 	t := dest.Type()
 	kind := t.Kind()
 
-	if kind == reflect.Ptr {
+	if kind == reflect.Pointer {
 		v := dest
 		if dest.IsNil() {
 			v = reflect.New(t.Elem())
@@ -202,19 +170,11 @@ func parseIntoValue(dest reflect.Value, input ...string) error {
 }
 
 func setValue(dest reflect.Value, v interface{}) {
-	// to assign type to their aliases:
+	// to assign type to their aliases
 	if reflect.TypeOf(v) != dest.Type() && reflect.TypeOf(v).Kind() == dest.Type().Kind() {
 		dest.Set(reflect.ValueOf(v).Convert(dest.Type()))
 		return
 	}
 
 	dest.Set(reflect.ValueOf(v))
-}
-
-func getKey(tagName, tagKey string) string {
-	return strings.TrimRight(
-		strings.TrimLeft(
-			strings.TrimPrefix(tagKey, tagName),
-			"["),
-		"]")
 }

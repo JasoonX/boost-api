@@ -1,4 +1,4 @@
-package urlvals
+package params
 
 type PageParams struct {
 	Limit  *int32 `page:"limit"`

@@ -1,5 +1,6 @@
 package urlvals
 
+// Tags
 const (
 	searchTag = "search"
 	filterTag = "filter"
@@ -8,6 +9,7 @@ const (
 
 var supportedTagsList = []string{searchTag, filterTag, pageTag}
 
+// Modifiers
 const (
 	defaultModifier = "default"
 )

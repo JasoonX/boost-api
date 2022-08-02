@@ -56,10 +56,6 @@ func populateValues(values url.Values, tagName string, v reflect.Value) {
 	}
 }
 
-func getStructTag(f reflect.StructField, tagName string) string {
-	return f.Tag.Get(tagName)
-}
-
 func setUrlValues(values url.Values, key string, value interface{}) {
 	if strVal := toString(value); strVal != "" {
 		values.Set(key, strVal)

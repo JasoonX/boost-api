@@ -6,10 +6,11 @@ import (
 	"github.com/pkg/errors"
 
 	"github.com/BOOST-2021/boost-app-back/internal/web/urlvals"
+	"github.com/BOOST-2021/boost-app-back/internal/web/urlvals/params"
 )
 
 type GetNewsRequest struct {
-	urlvals.PageParams
+	params.PageParams
 }
 
 func NewGetNewsRequest(r *http.Request) (*GetNewsRequest, error) {

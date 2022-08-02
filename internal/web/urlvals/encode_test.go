@@ -7,6 +7,7 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"github.com/BOOST-2021/boost-app-back/internal/common/convert"
+	"github.com/BOOST-2021/boost-app-back/internal/web/urlvals/params"
 )
 
 func TestEncode(t *testing.T) {
@@ -18,9 +19,9 @@ func TestEncode(t *testing.T) {
 		{
 			name: "ok page params embedded struct",
 			in: struct {
-				PageParams
+				params.PageParams
 			}{
-				PageParams: PageParams{
+				PageParams: params.PageParams{
 					Limit:  convert.Int32Ptr(12),
 					Offset: convert.Int32Ptr(12),
 				},

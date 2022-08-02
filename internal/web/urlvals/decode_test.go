@@ -7,10 +7,11 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"github.com/BOOST-2021/boost-app-back/internal/common/convert"
+	"github.com/BOOST-2021/boost-app-back/internal/web/urlvals/params"
 )
 
 type testEmbeded struct {
-	PageParams
+	params.PageParams
 }
 
 type testFields struct {
@@ -19,9 +20,21 @@ type testFields struct {
 }
 
 type testUnexported struct {
-	Limit    *int32 `page:"limit"`
-	Offset   *int32 `page:"offset"`
-	pageSize *int32 `page:"size"`
+	Limit  *int32 `page:"limit"`
+	Offset *int32 `page:"offset"`
+	size   *int32 `page:"size"`
+}
+
+type testDefaultValues struct {
+	Limit  *int32 `page:"limit,default=12"`
+	Offset *int32 `page:"offset,default=12"`
+	Size   *int32 `page:"size,default=12"`
+}
+
+type stringAlias string
+
+type testAlias struct {
+	Limit stringAlias `page:"limit"`
 }
 
 func TestDecode(t *testing.T) {
@@ -34,9 +47,10 @@ func TestDecode(t *testing.T) {
 			name: "ok page params embedded struct",
 			in:   "page[limit]=12&page[offset]=12",
 			out: testEmbeded{
-				PageParams: PageParams{
+				PageParams: params.PageParams{
 					Limit:  convert.Int32Ptr(12),
 					Offset: convert.Int32Ptr(12),
+					Size:   convert.Int32Ptr(10),
 				},
 			},
 		},
@@ -52,9 +66,25 @@ func TestDecode(t *testing.T) {
 			name: "ok private field not populated",
 			in:   "page[limit]=12&page[offset]=12&page[size]=12",
 			out: testUnexported{
-				Limit:    convert.Int32Ptr(12),
-				Offset:   convert.Int32Ptr(12),
-				pageSize: nil,
+				Limit:  convert.Int32Ptr(12),
+				Offset: convert.Int32Ptr(12),
+				size:   nil,
+			},
+		},
+		{
+			name: "ok default value",
+			in:   "",
+			out: testDefaultValues{
+				Limit:  convert.Int32Ptr(12),
+				Offset: convert.Int32Ptr(12),
+				Size:   convert.Int32Ptr(12),
+			},
+		},
+		{
+			name: "ok alias",
+			in:   "page[limit]=12",
+			out: testAlias{
+				Limit: "12",
 			},
 		},
 	}
@@ -77,6 +107,16 @@ func TestDecode(t *testing.T) {
 				require.Equal(t, tc.out, out)
 			case testUnexported:
 				out := testUnexported{}
+				err = Decode(values, &out)
+				require.NoError(t, err)
+				require.Equal(t, tc.out, out)
+			case testDefaultValues:
+				out := testDefaultValues{}
+				err = Decode(values, &out)
+				require.NoError(t, err)
+				require.Equal(t, tc.out, out)
+			case testAlias:
+				out := testAlias{}
 				err = Decode(values, &out)
 				require.NoError(t, err)
 				require.Equal(t, tc.out, out)
