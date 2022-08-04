@@ -1,4 +1,4 @@
-package urlvals
+package normalizer
 
 import (
 	"net/url"
@@ -10,7 +10,13 @@ import (
 	"github.com/BOOST-2021/boost-app-back/internal/web/urlvals/provider"
 )
 
-func TestNormalizeUrlQuery(t *testing.T) {
+const (
+	searchTag = "search"
+	filterTag = "filter"
+	pageTag   = "page"
+)
+
+func Test_NormalizeUrlQuery(t *testing.T) {
 	urlQuery := url.Values{}
 	urlQuery.Add("page[limit]", "10")
 	urlQuery.Add("page[offset]", "20")
@@ -19,7 +25,8 @@ func TestNormalizeUrlQuery(t *testing.T) {
 	urlQuery.Add("search[last_name]", "Doe")
 	urlQuery.Add("filter[age]", "30")
 
-	act := normalizeUrlQuery(urlQuery)
+	n := New([]string{}, NormalizationModeEncoding)
+	act := n.NormalizeUrlQuery(urlQuery)
 
 	exp := provider.TagProvider{
 		pageTag: provider.TagKeyProvider{
@@ -67,7 +74,7 @@ func TestNormalizeUrlQuery(t *testing.T) {
 	}
 }
 
-func TestNormalizeStructTags(t *testing.T) {
+func Test_NormalizeStructTags(t *testing.T) {
 	type Test struct {
 		Limit     int    `page:"limit,default=10"`
 		Offset    int    `page:"offset,default=20"`
@@ -75,9 +82,11 @@ func TestNormalizeStructTags(t *testing.T) {
 		FirstName string `search:"first_name,default=John"`
 		LastName  string `search:"last_name,default=Doe"`
 		Age       int    `filter:"age,default=30"`
+		City      string `filter:"city"`
 	}
 
-	act := normalizeStructTags(reflect.ValueOf(Test{}))
+	n := New([]string{}, NormalizationModeEncoding)
+	act := n.NormalizeStructTags(reflect.ValueOf(Test{}))
 
 	exp := provider.TagProvider{
 		pageTag: provider.TagKeyProvider{
@@ -114,6 +123,10 @@ func TestNormalizeStructTags(t *testing.T) {
 				TagName: filterTag,
 				TagKey:  "age",
 				Values:  []string{"30"},
+			},
+			"city": provider.NormalizedTagParam{
+				TagName: filterTag,
+				TagKey:  "city",
 			},
 		},
 	}

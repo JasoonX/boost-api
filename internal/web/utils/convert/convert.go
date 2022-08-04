@@ -3,6 +3,7 @@ package convert
 import (
 	"github.com/BOOST-2021/boost-app-back/internal/common"
 	"github.com/BOOST-2021/boost-app-back/internal/data/model"
+	"github.com/BOOST-2021/boost-app-back/internal/web/urlvals/params"
 	"github.com/BOOST-2021/boost-app-back/resources"
 )
 
@@ -50,5 +51,13 @@ func ToResponseNewsMediaResourceItem(r model.NewsMediaResource) resources.NewsMe
 		Type: r.Type,
 		Url:  r.URL,
 		Meta: metaMap,
+	}
+}
+
+func ToResponsePage(page params.PageParams) *resources.Page {
+	return &resources.Page{
+		Offset: page.Offset,
+		Limit:  page.Limit,
+		Total:  page.Total,
 	}
 }

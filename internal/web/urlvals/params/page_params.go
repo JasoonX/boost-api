@@ -1,7 +1,7 @@
 package params
 
 type PageParams struct {
-	Limit  *int32 `page:"limit"`
+	Limit  *int32 `page:"limit,default=10"`
 	Offset *int32 `page:"offset"`
-	Size   *int32 `page:"size,default=10"`
+	Total  *int32
 }

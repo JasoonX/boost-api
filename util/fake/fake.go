@@ -53,7 +53,7 @@ func (g *generator) Users(n int) ([]model.User, error) {
 	users := make([]model.User, n)
 	for i := 0; i < n; i++ {
 		users[i] = model.User{
-			Username: convert.StringPtr(g.faker.Username()),
+			Username: convert.ToPtr(g.faker.Username()),
 			Status:   userStatuses[rand.Int()%len(userStatuses)],
 			Role:     userRoles[rand.Int()%len(userRoles)],
 		}
@@ -81,8 +81,8 @@ func (g *generator) News(n int) ([]model.News, error) {
 			HideViewsCount:     rand.Int()%2 == 0,
 			HideReactionsCount: rand.Int()%2 == 0,
 			Media: &model.NewsMedia{
-				Title: convert.StringPtr(fmt.Sprintf("%s %s %s", g.faker.Noun(), g.faker.VerbAction(), g.faker.NounConcrete())),
-				Text:  convert.StringPtr(g.faker.Quote()),
+				Title: convert.ToPtr(fmt.Sprintf("%s %s %s", g.faker.Noun(), g.faker.VerbAction(), g.faker.NounConcrete())),
+				Text:  convert.ToPtr(g.faker.Quote()),
 			},
 			AuthorID: users[rand.Int()%len(users)].ID,
 		}
@@ -132,7 +132,7 @@ func (g *generator) Phones(n int) ([]model.Phone, error) {
 	for i := 0; i < n; i++ {
 		phones[i] = model.Phone{
 			SubscriberNumber: g.faker.Phone(),
-			CountryCode:      convert.StringPtr("380"),
+			CountryCode:      convert.ToPtr("380"),
 			IsVerified:       rand.Int()%2 == 0,
 			IsPrimary:        false,
 			UserID:           users[rand.Int()%len(users)].ID,
@@ -159,10 +159,10 @@ func (g *generator) Locations(n int) ([]model.Location, error) {
 	locations := make([]model.Location, n)
 	for i := 0; i < n; i++ {
 		locations[i] = model.Location{
-			CountryCode: convert.StringPtr(countries[rand.Int()%len(countries)].CountryCode),
-			Region:      convert.StringPtr(g.faker.State()),
-			City:        convert.StringPtr(g.faker.City()),
-			Street:      convert.StringPtr(g.faker.Street()),
+			CountryCode: convert.ToPtr(countries[rand.Int()%len(countries)].CountryCode),
+			Region:      convert.ToPtr(g.faker.State()),
+			City:        convert.ToPtr(g.faker.City()),
+			Street:      convert.ToPtr(g.faker.Street()),
 		}
 	}
 

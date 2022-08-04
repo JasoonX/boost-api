@@ -18,7 +18,7 @@ import (
 type Page struct {
 	Offset *int32 `json:"offset,omitempty"`
 	Limit  *int32 `json:"limit,omitempty"`
-	Size   *int32 `json:"size,omitempty"`
+	Total  *int32 `json:"total,omitempty"`
 }
 
 // NewPage instantiates a new Page object
@@ -102,36 +102,36 @@ func (o *Page) SetLimit(v int32) {
 	o.Limit = &v
 }
 
-// GetSize returns the Size field value if set, zero value otherwise.
-func (o *Page) GetSize() int32 {
-	if o == nil || o.Size == nil {
+// GetTotal returns the Total field value if set, zero value otherwise.
+func (o *Page) GetTotal() int32 {
+	if o == nil || o.Total == nil {
 		var ret int32
 		return ret
 	}
-	return *o.Size
+	return *o.Total
 }
 
-// GetSizeOk returns a tuple with the Size field value if set, nil otherwise
+// GetTotalOk returns a tuple with the Total field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Page) GetSizeOk() (*int32, bool) {
-	if o == nil || o.Size == nil {
+func (o *Page) GetTotalOk() (*int32, bool) {
+	if o == nil || o.Total == nil {
 		return nil, false
 	}
-	return o.Size, true
+	return o.Total, true
 }
 
-// HasSize returns a boolean if a field has been set.
-func (o *Page) HasSize() bool {
-	if o != nil && o.Size != nil {
+// HasTotal returns a boolean if a field has been set.
+func (o *Page) HasTotal() bool {
+	if o != nil && o.Total != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetSize gets a reference to the given int32 and assigns it to the Size field.
-func (o *Page) SetSize(v int32) {
-	o.Size = &v
+// SetTotal gets a reference to the given int32 and assigns it to the Total field.
+func (o *Page) SetTotal(v int32) {
+	o.Total = &v
 }
 
 func (o Page) MarshalJSON() ([]byte, error) {
@@ -142,8 +142,8 @@ func (o Page) MarshalJSON() ([]byte, error) {
 	if o.Limit != nil {
 		toSerialize["limit"] = o.Limit
 	}
-	if o.Size != nil {
-		toSerialize["size"] = o.Size
+	if o.Total != nil {
+		toSerialize["total"] = o.Total
 	}
 	return json.Marshal(toSerialize)
 }

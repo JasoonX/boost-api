@@ -1,11 +1,13 @@
 package provider
 
+import "strings"
+
 // TL;DR: this is a help package, to hide the implementation details
 // this package is intended to provide simple interface to the underlying
 // map of maps, and to set them without excessive checks.
 
 // NormalizedTagParam
-// TODO: consider removing that and replacing with flat []string
+// TODO: consider removing redundant fields (tagName, tagKey)
 // TODO: consider adding modifiers list, to reuse later on population
 type NormalizedTagParam struct {
 	TagName string
@@ -53,21 +55,22 @@ func (p TagProvider) Get(tagName, tagKey string) []string {
 	return p[tagName].Get(tagKey)
 }
 
-func (p TagProvider) GetKeys(tagName string) TagKeyProvider {
-	if _, ok := p[tagName]; !ok {
-		return nil
-	}
-	return p[tagName]
-}
-
+// Set TODO: make a note
+// that supported only either filter[ids]=1,2,3 or filter[ids]=1&filter[ids]=2&filter[ids]=3
+// filter[ids]=1&filter[ids]=2,3 NOT supported
 func (p TagProvider) Set(tagName, tagKey string, values []string) {
 	if _, ok := p[tagName]; !ok {
 		p[tagName] = NewTagKeyProvider()
 	}
+
+	tagValues := values
+	if len(values) == 1 {
+		tagValues = strings.Split(values[0], ",")
+	}
 	p[tagName].Set(NormalizedTagParam{
 		TagName: tagName,
 		TagKey:  tagKey,
-		Values:  values,
+		Values:  tagValues,
 	})
 }
 

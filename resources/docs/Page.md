@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Offset** | Pointer to **int32** |  | [optional] 
 **Limit** | Pointer to **int32** |  | [optional] 
-**Size** | Pointer to **int32** |  | [optional] 
+**Total** | Pointer to **int32** |  | [optional] 
 
 ## Methods
 
@@ -77,30 +77,30 @@ SetLimit sets Limit field to given value.
 
 HasLimit returns a boolean if a field has been set.
 
-### GetSize
+### GetTotal
 
-`func (o *Page) GetSize() int32`
+`func (o *Page) GetTotal() int32`
 
-GetSize returns the Size field if non-nil, zero value otherwise.
+GetTotal returns the Total field if non-nil, zero value otherwise.
 
-### GetSizeOk
+### GetTotalOk
 
-`func (o *Page) GetSizeOk() (*int32, bool)`
+`func (o *Page) GetTotalOk() (*int32, bool)`
 
-GetSizeOk returns a tuple with the Size field if it's non-nil, zero value otherwise
+GetTotalOk returns a tuple with the Total field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSize
+### SetTotal
 
-`func (o *Page) SetSize(v int32)`
+`func (o *Page) SetTotal(v int32)`
 
-SetSize sets Size field to given value.
+SetTotal sets Total field to given value.
 
-### HasSize
+### HasTotal
 
-`func (o *Page) HasSize() bool`
+`func (o *Page) HasTotal() bool`
 
-HasSize returns a boolean if a field has been set.
+HasTotal returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

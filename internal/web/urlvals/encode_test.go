@@ -10,7 +10,7 @@ import (
 	"github.com/BOOST-2021/boost-app-back/internal/web/urlvals/params"
 )
 
-func TestEncode(t *testing.T) {
+func Test_Encode(t *testing.T) {
 	testCases := []struct {
 		name string
 		in   interface{}
@@ -22,8 +22,8 @@ func TestEncode(t *testing.T) {
 				params.PageParams
 			}{
 				PageParams: params.PageParams{
-					Limit:  convert.Int32Ptr(12),
-					Offset: convert.Int32Ptr(12),
+					Limit:  convert.ToPtr[int32](12),
+					Offset: convert.ToPtr[int32](12),
 				},
 			},
 			out: "page[limit]=12&page[offset]=12",
@@ -34,8 +34,8 @@ func TestEncode(t *testing.T) {
 				Limit  *int32 `page:"limit"`
 				Offset *int32 `page:"offset"`
 			}{
-				Limit:  convert.Int32Ptr(12),
-				Offset: convert.Int32Ptr(12),
+				Limit:  convert.ToPtr[int32](12),
+				Offset: convert.ToPtr[int32](12),
 			},
 			out: "page[limit]=12&page[offset]=12",
 		},
@@ -46,11 +46,40 @@ func TestEncode(t *testing.T) {
 				Offset   *int32 `page:"offset"`
 				pageSize *int32 `page:"page_size"`
 			}{
-				Limit:    convert.Int32Ptr(12),
-				Offset:   convert.Int32Ptr(12),
-				pageSize: convert.Int32Ptr(12),
+				Limit:    convert.ToPtr[int32](12),
+				Offset:   convert.ToPtr[int32](12),
+				pageSize: convert.ToPtr[int32](12),
 			},
 			out: "page[limit]=12&page[offset]=12",
+		},
+		{
+			name: "ok not pointer",
+			in: struct {
+				Limit int32 `page:"limit"`
+			}{
+				Limit: 10,
+			},
+			out: "page[limit]=10",
+		},
+		{
+			name: "ok zero value",
+			in: struct {
+				Limit int32 `page:"limit"`
+			}{
+				Limit: 0,
+			},
+			out: "page[limit]=0",
+		},
+		{
+			name: "ok slices",
+			in: struct {
+				Cities []string `page:"cities"`
+				Ids    []int64  `page:"ids"`
+			}{
+				Cities: []string{"Moscow", "London"},
+				Ids:    []int64{1, 2, 3},
+			},
+			out: "page[cities]=Moscow,London&page[ids]=1,2,3",
 		},
 	}
 

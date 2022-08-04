@@ -17,9 +17,10 @@ func Success(w http.ResponseWriter, data json.Marshaler) {
 		Respond()
 }
 
-func SuccessPaged(w http.ResponseWriter, data json.Marshaler, page *resources.Page) {
+func SuccessPaged(w http.ResponseWriter, data json.Marshaler, page *resources.Page, links *resources.Links) {
 	New(w).
 		WithStatus(resources.NewStatus(http.StatusOK, "Request result ok")).
+		WithLinks(links).
 		WithPage(page).
 		WithData(data).
 		Respond()

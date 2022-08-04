@@ -54,6 +54,7 @@ func (r *responder) Respond() {
 		Data:   r.data,
 		Meta:   r.meta,
 		Page:   r.page,
+		Links:  r.links,
 		Errors: r.errors,
 	}
 

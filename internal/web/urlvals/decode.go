@@ -7,6 +7,9 @@ import (
 
 	"github.com/pkg/errors"
 	"github.com/spf13/cast"
+
+	"github.com/BOOST-2021/boost-app-back/internal/web/urlvals/normalizer"
+	"github.com/BOOST-2021/boost-app-back/internal/web/urlvals/utils"
 )
 
 // TODO: add sorting, includes to the params
@@ -24,8 +27,10 @@ func Decode(values url.Values, dest interface{}) error {
 		return errors.New(fmt.Sprintf("dest type must be pointer to a struct, got: %v", el.Kind()))
 	}
 
-	normalizedUrlQuery := normalizeUrlQuery(values)
-	normalizedTags := normalizeStructTags(t)
+	decodeNormalizer := normalizer.New(supportedTagsList, normalizer.NormalizationModeDecoding)
+
+	normalizedUrlQuery := decodeNormalizer.NormalizeUrlQuery(values)
+	normalizedTags := decodeNormalizer.NormalizeStructTags(dest)
 
 	// merge order matters, since url data has higher priority
 	normalizedUrlQuery.Merge(normalizedTags)
@@ -45,9 +50,7 @@ func processTag(dest reflect.Value, tagName, tagKey string, values []string) err
 		return nil
 	}
 
-	if dest.Kind() == reflect.Pointer {
-		dest = dest.Elem()
-	}
+	dest = reflect.Indirect(dest)
 
 	if dest.Kind() == reflect.Struct {
 		// recurring to struct fields for embedded structs
@@ -60,7 +63,7 @@ func processTag(dest reflect.Value, tagName, tagKey string, values []string) err
 			}
 
 			// tag may also contain modifiers, like "default", thus we need to drop them
-			tag, _ := unwrapTag(getStructTag(dest.Type().Field(i), tagName))
+			tag, _ := utils.UnwrapTag(utils.GetStructTag(dest.Type().Field(i), tagName))
 
 			if tag != tagKey {
 				continue

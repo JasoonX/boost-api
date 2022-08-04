@@ -8,10 +8,3 @@ const (
 )
 
 var supportedTagsList = []string{searchTag, filterTag, pageTag}
-
-// Modifiers
-const (
-	defaultModifier = "default"
-)
-
-var supportedModifiersList = []string{defaultModifier}

@@ -4,19 +4,55 @@ import (
 	"net/http"
 	"net/url"
 
+	"github.com/BOOST-2021/boost-app-back/internal/common"
+	"github.com/BOOST-2021/boost-app-back/internal/common/convert"
+	"github.com/BOOST-2021/boost-app-back/internal/web/urlvals"
+	"github.com/BOOST-2021/boost-app-back/internal/web/urlvals/params"
 	"github.com/BOOST-2021/boost-app-back/resources"
 )
 
-func BuildPageLinks(r http.Request, selfQuery string) *resources.Links {
-	urlBuilder := func(rawPath string) *url.URL {
+func BuildLinks(r *http.Request, page params.PageParams) *resources.Links {
+	urlBuilder := func(rawQuery string) *url.URL {
 		return &url.URL{
-			Scheme:   r.URL.Scheme,
-			Host:     r.URL.Host,
 			Path:     r.URL.Path,
-			RawQuery: rawPath,
+			RawQuery: rawQuery,
 		}
 	}
-	return &resources.Links{
-		Self: urlBuilder(selfQuery).String(),
+
+	selfQuery := urlvals.Encode(page)
+	nextQuery := urlvals.Encode(params.PageParams{
+		Limit:  page.Limit,
+		Offset: common.MaxOrCeil(common.SumPtr(page.Offset, page.Limit), page.Total),
+	})
+	prevQuery := urlvals.Encode(params.PageParams{
+		Limit:  page.Limit,
+		Offset: common.MinOrFloor(common.SubPtr(page.Offset, page.Limit), convert.ToPtr[int32](0)),
+	})
+
+	firstQuery := urlvals.Encode(params.PageParams{
+		Limit:  page.Limit,
+		Offset: convert.ToPtr[int32](0),
+	})
+
+	var lastQuery *string
+	if page.Total != nil && page.Limit != nil {
+		lastQuery = convert.ToPtr(
+			urlBuilder(urlvals.Encode(params.PageParams{
+				Limit:  page.Limit,
+				Offset: convert.ToPtr(lastPageOffset(*page.Total, *page.Limit)),
+			})).String(),
+		)
 	}
+
+	return &resources.Links{
+		Self:  urlBuilder(selfQuery).String(),
+		Next:  urlBuilder(nextQuery).String(),
+		Prev:  urlBuilder(prevQuery).String(),
+		First: convert.ToPtr(urlBuilder(firstQuery).String()),
+		Last:  lastQuery,
+	}
+}
+
+func lastPageOffset(total, limit int32) int32 {
+	return total - (total % limit)
 }

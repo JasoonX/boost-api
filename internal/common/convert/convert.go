@@ -1,13 +1,13 @@
 package convert
 
-func StringPtr(s string) *string {
-	return &s
+func FromPtr[T any](v *T) T {
+	if v == nil {
+		var res T
+		return res
+	}
+	return *v
 }
 
-func Int32Ptr(v int32) *int32 {
+func ToPtr[T any](v T) *T {
 	return &v
-}
-
-func BoolPtr(b bool) *bool {
-	return &b
 }

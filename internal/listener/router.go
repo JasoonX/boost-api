@@ -14,6 +14,7 @@ func (l *service) setupRouter() {
 	l.router = chi.NewRouter()
 
 	l.router.Use(
+		middleware.RequestID,
 		middleware.Logger,
 		middleware.Recoverer,
 		middlewares.Context(
