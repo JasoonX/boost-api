@@ -5,7 +5,7 @@ import (
 
 	"github.com/rubenv/sql-migrate"
 
-	"github.com/BOOST-2021/boost-app-back/util/source"
+	"github.com/BOOST-2021/boost-app-back/utils/source"
 )
 
 //go:embed migrations/postgres/*.sql

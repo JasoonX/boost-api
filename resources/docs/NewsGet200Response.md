@@ -9,13 +9,13 @@ Name | Type | Description | Notes
 **Links** | Pointer to [**Links**](Links.md) |  | [optional] 
 **Meta** | Pointer to **map[string]interface{}** |  | [optional] 
 **Errors** | Pointer to [**[]Error**](Error.md) |  | [optional] 
-**Data** | Pointer to [**NewsGet200ResponseData**](NewsGet200ResponseData.md) |  | [optional] 
+**Data** | [**NewsGet200ResponseData**](NewsGet200ResponseData.md) |  | 
 
 ## Methods
 
 ### NewNewsGet200Response
 
-`func NewNewsGet200Response() *NewsGet200Response`
+`func NewNewsGet200Response(data NewsGet200ResponseData, ) *NewsGet200Response`
 
 NewNewsGet200Response instantiates a new NewsGet200Response object
 This constructor will assign default values to properties that have it defined,
@@ -174,11 +174,6 @@ and a boolean to check if the value has been set.
 
 SetData sets Data field to given value.
 
-### HasData
-
-`func (o *NewsGet200Response) HasData() bool`
-
-HasData returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

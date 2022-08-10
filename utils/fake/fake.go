@@ -1,4 +1,4 @@
-//go:build fake
+////go:build fake
 
 package fake
 
@@ -11,6 +11,7 @@ import (
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 
+	"github.com/BOOST-2021/boost-app-back/internal/auth"
 	"github.com/BOOST-2021/boost-app-back/internal/common/convert"
 	"github.com/BOOST-2021/boost-app-back/internal/common/debug"
 	"github.com/BOOST-2021/boost-app-back/internal/config"
@@ -36,11 +37,6 @@ const (
 	seed = 123
 )
 
-var (
-	userStatuses = []model.UserStatus{model.Active, model.Inactive, model.Unverified}
-	userRoles    = []model.UserRole{model.Viewer, model.ReactViewer, model.Admin}
-)
-
 type generator struct {
 	data  store.DataProvider
 	cfg   *Config
@@ -52,10 +48,12 @@ func (g *generator) Users(n int) ([]model.User, error) {
 	ctx := context.TODO()
 	users := make([]model.User, n)
 	for i := 0; i < n; i++ {
+		passHash, _ := auth.HashPassword(g.faker.Password(true, true, true, true, true, 20))
 		users[i] = model.User{
-			Username: convert.ToPtr(g.faker.Username()),
-			Status:   userStatuses[rand.Int()%len(userStatuses)],
-			Role:     userRoles[rand.Int()%len(userRoles)],
+			Username:     convert.ToPtr(g.faker.Username()),
+			Status:       model.UserStatuses[rand.Int()%len(model.UserStatuses)],
+			Role:         model.UserRoles[rand.Int()%len(model.UserRoles)],
+			PasswordHash: passHash,
 		}
 	}
 
@@ -159,7 +157,7 @@ func (g *generator) Locations(n int) ([]model.Location, error) {
 	locations := make([]model.Location, n)
 	for i := 0; i < n; i++ {
 		locations[i] = model.Location{
-			CountryCode: convert.ToPtr(countries[rand.Int()%len(countries)].CountryCode),
+			CountryCode: convert.ToPtr(countries[rand.Int()%len(countries)].Code),
 			Region:      convert.ToPtr(g.faker.State()),
 			City:        convert.ToPtr(g.faker.City()),
 			Street:      convert.ToPtr(g.faker.Street()),

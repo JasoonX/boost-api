@@ -6,10 +6,12 @@ CREATE TABLE IF NOT EXISTS users
     updated_at   timestamp,
     first_name   text,
     last_name    text,
-    username     text NOT NULL,
+    username     text,
+    password_hash     text NOT NULL,
     status       text NOT NULL,
     role         text NOT NULL,
     is_anonymous boolean   DEFAULT false
+-- TODO: add isGoogle, isApple, etc.
 );
 
 CREATE TABLE IF NOT EXISTS news

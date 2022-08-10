@@ -4,9 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Offset** | Pointer to **int32** |  | [optional] 
-**Limit** | Pointer to **int32** |  | [optional] 
-**Total** | Pointer to **int32** |  | [optional] 
+**Offset** | Pointer to **int64** |  | [optional] 
+**Limit** | Pointer to **int64** |  | [optional] 
+**Total** | Pointer to **int64** |  | [optional] 
 
 ## Methods
 
@@ -29,20 +29,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetOffset
 
-`func (o *Page) GetOffset() int32`
+`func (o *Page) GetOffset() int64`
 
 GetOffset returns the Offset field if non-nil, zero value otherwise.
 
 ### GetOffsetOk
 
-`func (o *Page) GetOffsetOk() (*int32, bool)`
+`func (o *Page) GetOffsetOk() (*int64, bool)`
 
 GetOffsetOk returns a tuple with the Offset field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetOffset
 
-`func (o *Page) SetOffset(v int32)`
+`func (o *Page) SetOffset(v int64)`
 
 SetOffset sets Offset field to given value.
 
@@ -54,20 +54,20 @@ HasOffset returns a boolean if a field has been set.
 
 ### GetLimit
 
-`func (o *Page) GetLimit() int32`
+`func (o *Page) GetLimit() int64`
 
 GetLimit returns the Limit field if non-nil, zero value otherwise.
 
 ### GetLimitOk
 
-`func (o *Page) GetLimitOk() (*int32, bool)`
+`func (o *Page) GetLimitOk() (*int64, bool)`
 
 GetLimitOk returns a tuple with the Limit field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetLimit
 
-`func (o *Page) SetLimit(v int32)`
+`func (o *Page) SetLimit(v int64)`
 
 SetLimit sets Limit field to given value.
 
@@ -79,20 +79,20 @@ HasLimit returns a boolean if a field has been set.
 
 ### GetTotal
 
-`func (o *Page) GetTotal() int32`
+`func (o *Page) GetTotal() int64`
 
 GetTotal returns the Total field if non-nil, zero value otherwise.
 
 ### GetTotalOk
 
-`func (o *Page) GetTotalOk() (*int32, bool)`
+`func (o *Page) GetTotalOk() (*int64, bool)`
 
 GetTotalOk returns a tuple with the Total field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetTotal
 
-`func (o *Page) SetTotal(v int32)`
+`func (o *Page) SetTotal(v int64)`
 
 SetTotal sets Total field to given value.
 

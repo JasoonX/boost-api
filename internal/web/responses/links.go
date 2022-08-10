@@ -26,12 +26,12 @@ func BuildLinks(r *http.Request, page params.PageParams) *resources.Links {
 	})
 	prevQuery := urlvals.Encode(params.PageParams{
 		Limit:  page.Limit,
-		Offset: common.MinOrFloor(common.SubPtr(page.Offset, page.Limit), convert.ToPtr[int32](0)),
+		Offset: common.MinOrFloor(common.SubPtr(page.Offset, page.Limit), convert.ToPtr[int64](0)),
 	})
 
 	firstQuery := urlvals.Encode(params.PageParams{
 		Limit:  page.Limit,
-		Offset: convert.ToPtr[int32](0),
+		Offset: convert.ToPtr[int64](0),
 	})
 
 	var lastQuery *string
@@ -53,6 +53,6 @@ func BuildLinks(r *http.Request, page params.PageParams) *resources.Links {
 	}
 }
 
-func lastPageOffset(total, limit int32) int32 {
+func lastPageOffset(total, limit int64) int64 {
 	return total - (total % limit)
 }

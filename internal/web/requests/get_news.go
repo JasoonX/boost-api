@@ -10,7 +10,7 @@ import (
 )
 
 type GetNewsRequest struct {
-	params.PageParams
+	params.FilterNewsParams
 }
 
 func NewGetNewsRequest(r *http.Request) (*GetNewsRequest, error) {

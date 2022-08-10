@@ -11,22 +11,28 @@ type Config interface {
 	Logger
 	Listener
 	Databaser
+	JwtIssuer
+	SSOProvider
 }
 
 type config struct {
 	Logger
 	Listener
 	Databaser
+	JwtIssuer
+	SSOProvider
 }
 
-type envConfig struct {
-	LogLevel string            `yaml:"log_level"`
-	Address  string            `yaml:"address"`
-	Database envDatabaseConfig `yaml:"database"`
+type yamlConfig struct {
+	LogLevel     string                `yaml:"log_level"`
+	Address      string                `yaml:"address"`
+	Database     yamlDatabaseConfig    `yaml:"database"`
+	Jwt          yamlJwtConfig         `yaml:"jwt"`
+	SSOProviders yamlSSOProviderConfig `yaml:"sso_providers"`
 }
 
 func New(path string) Config {
-	cfg := envConfig{}
+	cfg := yamlConfig{}
 
 	yamlConfig, err := ioutil.ReadFile(path)
 	if err != nil {
@@ -39,8 +45,10 @@ func New(path string) Config {
 	}
 
 	return &config{
-		Logger:    NewLogger(cfg.LogLevel),
-		Listener:  NewListener(cfg.Address),
-		Databaser: NewDatabaser(cfg.Database.toPSQLPath(), cfg.Database.Driver),
+		Logger:      NewLogger(cfg.LogLevel),
+		Listener:    NewListener(cfg.Address),
+		Databaser:   NewDatabaser(cfg.Database.toPSQLPath(), cfg.Database.Driver),
+		JwtIssuer:   NewJwtIssuer(cfg.Jwt.Issuer, cfg.Jwt.SecretKey),
+		SSOProvider: NewSSOProvider(cfg.SSOProviders),
 	}
 }

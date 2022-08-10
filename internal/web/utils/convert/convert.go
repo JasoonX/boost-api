@@ -1,7 +1,9 @@
 package convert
 
 import (
+	"github.com/BOOST-2021/boost-app-back/internal/auth"
 	"github.com/BOOST-2021/boost-app-back/internal/common"
+	"github.com/BOOST-2021/boost-app-back/internal/common/convert"
 	"github.com/BOOST-2021/boost-app-back/internal/data/model"
 	"github.com/BOOST-2021/boost-app-back/internal/web/urlvals/params"
 	"github.com/BOOST-2021/boost-app-back/resources"
@@ -59,5 +61,32 @@ func ToResponsePage(page params.PageParams) *resources.Page {
 		Offset: page.Offset,
 		Limit:  page.Limit,
 		Total:  page.Total,
+	}
+}
+
+func ToResponseUser(user *model.User) *resources.User {
+	return &resources.User{
+		Id:        user.ID.String(),
+		CreatedAt: user.CreatedAt,
+		UpdatedAt: user.UpdatedAt,
+		Username:  user.Username,
+		FirstName: user.FirstName,
+		LastName:  user.LastName,
+		Status:    string(user.Status),
+		Role:      string(user.Role),
+	}
+}
+
+func ToResponseTokenPair(tokenPair *auth.TokenPair) resources.TokenPair {
+	return resources.TokenPair{
+		AccessToken:  tokenPair.AccessToken,
+		RefreshToken: tokenPair.RefreshToken,
+	}
+}
+
+func FromResponsePage(params params.PageParams) model.PageParams {
+	return model.PageParams{
+		Limit:  int(convert.FromPtr(params.Limit)),
+		Offset: int(convert.FromPtr(params.Offset)),
 	}
 }

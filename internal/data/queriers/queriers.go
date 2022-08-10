@@ -14,14 +14,21 @@ import (
 
 type UsersProvider interface {
 	GetUserByID(ctx context.Context, id uuid.UUID) (*model.User, error)
+	GetUserByEmail(ctx context.Context, email string) (*model.User, error)
 
 	ListUsers(ctx context.Context) ([]model.User, error)
+
+	AddUser(ctx context.Context, user model.User) (*model.User, error)
 
 	AddUsersBatch(ctx context.Context, users []model.User) error
 }
 
 type NewsProvider interface {
+	OfPage(ctx context.Context, pageParams model.PageParams) NewsProvider
+
 	ListNews(ctx context.Context) ([]model.News, error)
+
+	CountNews(ctx context.Context) (int64, error)
 
 	IndexNews(ctx context.Context, id uuid.UUID, title, text, meta string) error
 

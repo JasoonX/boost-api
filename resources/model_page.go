@@ -16,9 +16,9 @@ import (
 
 // Page struct for Page
 type Page struct {
-	Offset *int32 `json:"offset,omitempty"`
-	Limit  *int32 `json:"limit,omitempty"`
-	Total  *int32 `json:"total,omitempty"`
+	Offset *int64 `json:"offset,omitempty"`
+	Limit  *int64 `json:"limit,omitempty"`
+	Total  *int64 `json:"total,omitempty"`
 }
 
 // NewPage instantiates a new Page object
@@ -39,9 +39,9 @@ func NewPageWithDefaults() *Page {
 }
 
 // GetOffset returns the Offset field value if set, zero value otherwise.
-func (o *Page) GetOffset() int32 {
+func (o *Page) GetOffset() int64 {
 	if o == nil || o.Offset == nil {
-		var ret int32
+		var ret int64
 		return ret
 	}
 	return *o.Offset
@@ -49,7 +49,7 @@ func (o *Page) GetOffset() int32 {
 
 // GetOffsetOk returns a tuple with the Offset field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Page) GetOffsetOk() (*int32, bool) {
+func (o *Page) GetOffsetOk() (*int64, bool) {
 	if o == nil || o.Offset == nil {
 		return nil, false
 	}
@@ -65,15 +65,15 @@ func (o *Page) HasOffset() bool {
 	return false
 }
 
-// SetOffset gets a reference to the given int32 and assigns it to the Offset field.
-func (o *Page) SetOffset(v int32) {
+// SetOffset gets a reference to the given int64 and assigns it to the Offset field.
+func (o *Page) SetOffset(v int64) {
 	o.Offset = &v
 }
 
 // GetLimit returns the Limit field value if set, zero value otherwise.
-func (o *Page) GetLimit() int32 {
+func (o *Page) GetLimit() int64 {
 	if o == nil || o.Limit == nil {
-		var ret int32
+		var ret int64
 		return ret
 	}
 	return *o.Limit
@@ -81,7 +81,7 @@ func (o *Page) GetLimit() int32 {
 
 // GetLimitOk returns a tuple with the Limit field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Page) GetLimitOk() (*int32, bool) {
+func (o *Page) GetLimitOk() (*int64, bool) {
 	if o == nil || o.Limit == nil {
 		return nil, false
 	}
@@ -97,15 +97,15 @@ func (o *Page) HasLimit() bool {
 	return false
 }
 
-// SetLimit gets a reference to the given int32 and assigns it to the Limit field.
-func (o *Page) SetLimit(v int32) {
+// SetLimit gets a reference to the given int64 and assigns it to the Limit field.
+func (o *Page) SetLimit(v int64) {
 	o.Limit = &v
 }
 
 // GetTotal returns the Total field value if set, zero value otherwise.
-func (o *Page) GetTotal() int32 {
+func (o *Page) GetTotal() int64 {
 	if o == nil || o.Total == nil {
-		var ret int32
+		var ret int64
 		return ret
 	}
 	return *o.Total
@@ -113,7 +113,7 @@ func (o *Page) GetTotal() int32 {
 
 // GetTotalOk returns a tuple with the Total field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Page) GetTotalOk() (*int32, bool) {
+func (o *Page) GetTotalOk() (*int64, bool) {
 	if o == nil || o.Total == nil {
 		return nil, false
 	}
@@ -129,8 +129,8 @@ func (o *Page) HasTotal() bool {
 	return false
 }
 
-// SetTotal gets a reference to the given int32 and assigns it to the Total field.
-func (o *Page) SetTotal(v int32) {
+// SetTotal gets a reference to the given int64 and assigns it to the Total field.
+func (o *Page) SetTotal(v int64) {
 	o.Total = &v
 }
 

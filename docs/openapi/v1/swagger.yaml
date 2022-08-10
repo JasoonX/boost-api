@@ -20,14 +20,101 @@ paths:
               schema:
                 $ref: '#/components/schemas/Status'
         '500':
-          description: A JSON object with healthcheck result
+          $ref: '#/components/responses/InternalServerError'
+  /auth:
+    post:
+      summary: Authenticates user and returns access and refresh tokens.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - data
+              properties:
+                data:
+                  $ref: '#/components/schemas/Credentials'
+      responses:
+        '200':
+          description: A JSON object with access and refresh tokens
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Status'
+                type: object
+                required:
+                  - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/TokenPair'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /auth/{provider}:
+    get:
+      parameters:
+        - in: path
+          required: true
+          name: provider
+          schema:
+            type: string
+          description: The provider from the list of available providers.
+          example:
+            - google
+            - facebook
+            - apple
+      summary: Authenticates user and returns access and refresh tokens for specified provider.
+      responses:
+        '200':
+          description: A JSON object with access and refresh tokens
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/TokenPair'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /auth/{provider}/callback:
+    get:
+      parameters:
+        - in: path
+          required: true
+          name: provider
+          schema:
+            type: string
+          description: The provider from the list of available providers.
+          example:
+            - google
+            - facebook
+            - apple
+      summary: Callback for the provider to support OAuth2 specification.
+      responses:
+        '200':
+          description: A JSON object with access and refresh tokens
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/TokenPair'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
   /news/add:
     post:
-      summary: Add a new news
+      security:
+        - BearerAuth: []
+      summary: Add new news
       requestBody:
         required: true
         content:
@@ -54,25 +141,90 @@ paths:
                   data:
                     $ref: '#/components/schemas/News'
         '400':
-          description: Something is wrong with the data provided
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    $ref: '#/components/schemas/Status'
+          $ref: '#/components/responses/BadRequestError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
         '500':
-          description: Something is wrong on the server
+          $ref: '#/components/responses/InternalServerError'
+  /users/add:
+    post:
+      security:
+        - BearerAuth: [ ]
+      summary: Add a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - data
+              properties:
+                data:
+                  $ref: '#/components/schemas/AddUser'
+      responses:
+        '201':
+          description: Created successfully status
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  error:
+                  status:
                     $ref: '#/components/schemas/Status'
+                  meta:
+                    type: object
+                  errors:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Error'
+                  data:
+                    $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /users/{id}:
+    get:
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: path
+          required: true
+          name: id
+          schema:
+            type: string
+          description: The uuid of a user
+      responses:
+        '200':
+          description: Request status OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - data
+                properties:
+                  status:
+                    $ref: '#/components/schemas/Status'
+                  meta:
+                    type: object
+                  errors:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Error'
+                  data:
+                    $ref: '#/components/schemas/User'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
   /news:
     get:
+      security:
+        - BearerAuth: []
       parameters:
         - in: query
           name: page[offset]
@@ -115,6 +267,8 @@ paths:
             application/json:
               schema:
                 type: object
+                required:
+                  - data
                 properties:
                   status:
                     $ref: '#/components/schemas/Status'
@@ -135,28 +289,108 @@ paths:
                         type: array
                         items:
                           $ref: '#/components/schemas/News'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
         '500':
-          description: Something is wrong on the server
-          content:
-            application/json:
-              schema:
+          $ref: '#/components/responses/InternalServerError'
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    OpenID:
+      type: openIdConnect
+      openIdConnectUrl: https://example.com/.well-known/openid-configuration
+  responses:
+    UnauthorizedError:
+      description: 'Access token is missing or invalid'
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
                 type: object
                 properties:
-                  error:
-                    $ref: '#/components/schemas/Status'
-components:
+                  code:
+                    type: integer
+                    example: 401
+                  message:
+                    type: string
+                    example: 'User unauthorized'
+    InternalServerError:
+      description: 'Something is wrong on the server'
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 500
+                  message:
+                    type: string
+                    example: 'Something went wrong'
+    BadRequestError:
+      description: Something is wrong with the data provided
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    # TODO: revise this, might return json with errors
+                    example: 'Bad request'
   schemas:
+    Credentials:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          example: 'test@example.com'
+        password:
+          type: string
+          example: 'password'
+    TokenPair:
+      type: object
+      required:
+        - access_token
+        - refresh_token
+      properties:
+        access_token:
+          type: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+        refresh_token:
+          type: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
     Page:
       type: object
       properties:
         offset:
           type: integer
+          format: int64
           example: 0
         limit:
           type: integer
+          format: int64
           example: 10
         total:
           type: integer
+          format: int64
           example: 100
     Links:
       type: object
@@ -254,6 +488,35 @@ components:
         meta:
           description: Any meta information
           type: object
+    AddUser:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          example: 'example@gmail.com'
+        username:
+          type: string
+          example: 'admin'
+        password:
+          type: string
+          example: '123456'
+          description: Password must be at least 8 characters long, contain at least 2 numbers and 2 uppercase letters, and 1 special symbol.
+        first_name:
+          type: string
+          example: 'John'
+        last_name:
+          type: string
+          example: 'Doe'
+        role:
+          type: string
+          enum:
+            - viewer
+            - react_viewer
+            - admin
+          example: 'viewer'
     User:
       type: object
       required:
@@ -261,6 +524,7 @@ components:
         - created_at
         - status
         - role
+        - password
       properties:
         id:
           type: string
@@ -276,6 +540,12 @@ components:
         username:
           type: string
           example: 'admin'
+        first_name:
+          type: string
+          example: 'John'
+        last_name:
+          type: string
+          example: 'Doe'
         status:
           type: string
           enum:

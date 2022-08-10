@@ -23,7 +23,7 @@ type databaser struct {
 	driver string
 }
 
-type envDatabaseConfig struct {
+type yamlDatabaseConfig struct {
 	Host     string `yaml:"host"`
 	User     string `yaml:"user"`
 	Password string `yaml:"password"`
@@ -33,7 +33,7 @@ type envDatabaseConfig struct {
 	Driver   string `yaml:"driver"`
 }
 
-func (c envDatabaseConfig) toPSQLPath() string {
+func (c yamlDatabaseConfig) toPSQLPath() string {
 	return fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=%s",
 		c.Host, c.User, c.Password, c.Name, c.Port, c.SslMode)
 }

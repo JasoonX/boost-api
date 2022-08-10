@@ -21,6 +21,8 @@ type User struct {
 	CreatedAt time.Time  `json:"created_at"`
 	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 	Username  *string    `json:"username,omitempty"`
+	FirstName *string    `json:"first_name,omitempty"`
+	LastName  *string    `json:"last_name,omitempty"`
 	Status    string     `json:"status"`
 	Role      string     `json:"role"`
 }
@@ -158,6 +160,70 @@ func (o *User) SetUsername(v string) {
 	o.Username = &v
 }
 
+// GetFirstName returns the FirstName field value if set, zero value otherwise.
+func (o *User) GetFirstName() string {
+	if o == nil || o.FirstName == nil {
+		var ret string
+		return ret
+	}
+	return *o.FirstName
+}
+
+// GetFirstNameOk returns a tuple with the FirstName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *User) GetFirstNameOk() (*string, bool) {
+	if o == nil || o.FirstName == nil {
+		return nil, false
+	}
+	return o.FirstName, true
+}
+
+// HasFirstName returns a boolean if a field has been set.
+func (o *User) HasFirstName() bool {
+	if o != nil && o.FirstName != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetFirstName gets a reference to the given string and assigns it to the FirstName field.
+func (o *User) SetFirstName(v string) {
+	o.FirstName = &v
+}
+
+// GetLastName returns the LastName field value if set, zero value otherwise.
+func (o *User) GetLastName() string {
+	if o == nil || o.LastName == nil {
+		var ret string
+		return ret
+	}
+	return *o.LastName
+}
+
+// GetLastNameOk returns a tuple with the LastName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *User) GetLastNameOk() (*string, bool) {
+	if o == nil || o.LastName == nil {
+		return nil, false
+	}
+	return o.LastName, true
+}
+
+// HasLastName returns a boolean if a field has been set.
+func (o *User) HasLastName() bool {
+	if o != nil && o.LastName != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetLastName gets a reference to the given string and assigns it to the LastName field.
+func (o *User) SetLastName(v string) {
+	o.LastName = &v
+}
+
 // GetStatus returns the Status field value
 func (o *User) GetStatus() string {
 	if o == nil {
@@ -219,6 +285,12 @@ func (o User) MarshalJSON() ([]byte, error) {
 	}
 	if o.Username != nil {
 		toSerialize["username"] = o.Username
+	}
+	if o.FirstName != nil {
+		toSerialize["first_name"] = o.FirstName
+	}
+	if o.LastName != nil {
+		toSerialize["last_name"] = o.LastName
 	}
 	if true {
 		toSerialize["status"] = o.Status

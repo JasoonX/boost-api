@@ -16,20 +16,21 @@ import (
 
 // NewsGet200Response struct for NewsGet200Response
 type NewsGet200Response struct {
-	Status *Status                 `json:"status,omitempty"`
-	Page   *Page                   `json:"page,omitempty"`
-	Links  *Links                  `json:"links,omitempty"`
-	Meta   map[string]interface{}  `json:"meta,omitempty"`
-	Errors []Error                 `json:"errors,omitempty"`
-	Data   *NewsGet200ResponseData `json:"data,omitempty"`
+	Status *Status                `json:"status,omitempty"`
+	Page   *Page                  `json:"page,omitempty"`
+	Links  *Links                 `json:"links,omitempty"`
+	Meta   map[string]interface{} `json:"meta,omitempty"`
+	Errors []Error                `json:"errors,omitempty"`
+	Data   NewsGet200ResponseData `json:"data"`
 }
 
 // NewNewsGet200Response instantiates a new NewsGet200Response object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewNewsGet200Response() *NewsGet200Response {
+func NewNewsGet200Response(data NewsGet200ResponseData) *NewsGet200Response {
 	this := NewsGet200Response{}
+	this.Data = data
 	return &this
 }
 
@@ -201,36 +202,28 @@ func (o *NewsGet200Response) SetErrors(v []Error) {
 	o.Errors = v
 }
 
-// GetData returns the Data field value if set, zero value otherwise.
+// GetData returns the Data field value
 func (o *NewsGet200Response) GetData() NewsGet200ResponseData {
-	if o == nil || o.Data == nil {
+	if o == nil {
 		var ret NewsGet200ResponseData
 		return ret
 	}
-	return *o.Data
+
+	return o.Data
 }
 
-// GetDataOk returns a tuple with the Data field value if set, nil otherwise
+// GetDataOk returns a tuple with the Data field value
 // and a boolean to check if the value has been set.
 func (o *NewsGet200Response) GetDataOk() (*NewsGet200ResponseData, bool) {
-	if o == nil || o.Data == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.Data, true
+	return &o.Data, true
 }
 
-// HasData returns a boolean if a field has been set.
-func (o *NewsGet200Response) HasData() bool {
-	if o != nil && o.Data != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetData gets a reference to the given NewsGet200ResponseData and assigns it to the Data field.
+// SetData sets field value
 func (o *NewsGet200Response) SetData(v NewsGet200ResponseData) {
-	o.Data = &v
+	o.Data = v
 }
 
 func (o NewsGet200Response) MarshalJSON() ([]byte, error) {
@@ -250,7 +243,7 @@ func (o NewsGet200Response) MarshalJSON() ([]byte, error) {
 	if o.Errors != nil {
 		toSerialize["errors"] = o.Errors
 	}
-	if o.Data != nil {
+	if true {
 		toSerialize["data"] = o.Data
 	}
 	return json.Marshal(toSerialize)

@@ -1,4 +1,4 @@
-//go:build fake
+////go:build fake
 
 package fake
 

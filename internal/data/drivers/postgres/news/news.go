@@ -36,6 +36,19 @@ func New(cfg config.Config) queriers.NewsProvider {
 	}
 }
 
+func (p newsProvider) CountNews(_ context.Context) (int64, error) {
+	var count int64
+	if err := p.db.Model(newsModel).Count(&count).Error; err != nil {
+		return 0, errors.Wrap(err, "failed to count news")
+	}
+	return count, nil
+}
+
+func (p newsProvider) OfPage(_ context.Context, pageParams model.PageParams) queriers.NewsProvider {
+	p.db = p.db.Offset(pageParams.Offset).Limit(pageParams.Limit)
+	return p
+}
+
 func (p newsProvider) ListNews(_ context.Context) ([]model.News, error) {
 	var out []model.News
 	if err := p.db.Model(newsModel).Find(&out).Error; err != nil {

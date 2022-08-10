@@ -1,16 +1,28 @@
 package listener
 
 import (
+	"fmt"
+
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	"github.com/markbates/goth"
+	"github.com/markbates/goth/providers/google"
 
+	"github.com/BOOST-2021/boost-app-back/internal/auth"
+	"github.com/BOOST-2021/boost-app-back/internal/config"
 	"github.com/BOOST-2021/boost-app-back/internal/data/store"
 	"github.com/BOOST-2021/boost-app-back/internal/listener/middlewares"
+	"github.com/BOOST-2021/boost-app-back/internal/web"
 	"github.com/BOOST-2021/boost-app-back/internal/web/ctx"
 	"github.com/BOOST-2021/boost-app-back/internal/web/handlers"
 )
 
 func (l *service) setupRouter() {
+	googleCredentials := l.cfg.Credentials(config.Google)
+	goth.UseProviders(
+		google.New(googleCredentials.ClientID, googleCredentials.ClientSecret, googleCredentials.RedirectURI),
+	)
+
 	l.router = chi.NewRouter()
 
 	l.router.Use(
@@ -19,11 +31,19 @@ func (l *service) setupRouter() {
 		middleware.Recoverer,
 		middlewares.Context(
 			ctx.CtxLog(l.log),
-			ctx.CtxProvider(store.New(l.cfg)),
+			ctx.CtxDataProvider(store.New(l.cfg)),
+			ctx.CtxAuthProvider(auth.New(l.cfg)),
 		),
 	)
 
-	l.router.Get("/v1/healthcheck", handlers.GetHealthcheck)
+	l.router.Route("/v1", func(r chi.Router) {
+		r.Get("/healthcheck", handlers.GetHealthcheck)
 
-	l.router.Get("/v1/news", handlers.GetNews)
+		// Auth
+		r.Get("/auth", handlers.GetAuthToken)
+		r.With(web.SSOProviderContext).Get(fmt.Sprintf("/auth/{%s}", web.SSOProviderPathParam), handlers.GetAuthProvider)
+		r.With(web.SSOProviderContext).Get(fmt.Sprintf("/auth/{%s}/callback", web.SSOProviderPathParam), handlers.GetAuthProviderCallback)
+		r.With(web.Paginate).Get("/news", handlers.GetNews)
+	})
+
 }

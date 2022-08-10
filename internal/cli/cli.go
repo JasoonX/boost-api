@@ -8,8 +8,9 @@ import (
 
 	"github.com/BOOST-2021/boost-app-back/internal/config"
 	"github.com/BOOST-2021/boost-app-back/internal/listener"
-	"github.com/BOOST-2021/boost-app-back/util/migrate"
-	"github.com/BOOST-2021/boost-app-back/util/scripts"
+	"github.com/BOOST-2021/boost-app-back/utils/fake"
+	"github.com/BOOST-2021/boost-app-back/utils/migrate"
+	"github.com/BOOST-2021/boost-app-back/utils/scripts"
 )
 
 func Run(args []string) bool {
@@ -77,7 +78,7 @@ func Run(args []string) bool {
 				},
 				Action: func(c *cli.Context) error {
 					log.Debug("Running scripts...")
-					if fName := c.Args().First(); fName != "default" {
+					if fName := c.String("name"); fName != "default" {
 						if err := scripts.Run(cfg, strings.Split(fName, ",")...); err != nil {
 							return err
 						}
@@ -89,35 +90,35 @@ func Run(args []string) bool {
 					return nil
 				},
 			},
-			//{
-			//	// TODO: for dev purposes only, consider removing this in the future
-			//	Name:  "fake",
-			//	Usage: "fake data in the database",
-			//	Flags: []cli.Flag{
-			//		&cli.StringFlag{
-			//			Name:    "mode",
-			//			Aliases: []string{"m"},
-			//			Value:   "default",
-			//			Usage:   "mode of the fake to run",
-			//		},
-			//	},
-			//	Action: func(c *cli.Context) error {
-			//		log.Debug("generating fake data...")
-			//		fakeCfg, err := fake.NewConfig(os.Getenv("FAKE_CONFIG"))
-			//		if err != nil {
-			//			return err
-			//		}
-			//		fakeGenerator := fake.New(cfg, fakeCfg)
-			//		switch c.Args().First() {
-			//		// additional fake modes can be added here
-			//		default:
-			//			if err := fakeGenerator.Default(); err != nil {
-			//				return err
-			//			}
-			//		}
-			//		return nil
-			//	},
-			//},
+			{
+				// TODO: for dev purposes only, consider removing this in the future
+				Name:  "fake",
+				Usage: "fake data in the database",
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:    "mode",
+						Aliases: []string{"m"},
+						Value:   "default",
+						Usage:   "mode of the fake to run",
+					},
+				},
+				Action: func(c *cli.Context) error {
+					log.Debug("generating fake data...")
+					fakeCfg, err := fake.NewConfig(os.Getenv("FAKE_CONFIG"))
+					if err != nil {
+						return err
+					}
+					fakeGenerator := fake.New(cfg, fakeCfg)
+					switch c.Args().First() {
+					// additional fake modes can be added here
+					default:
+						if err := fakeGenerator.Default(); err != nil {
+							return err
+						}
+					}
+					return nil
+				},
+			},
 		},
 	}
 
