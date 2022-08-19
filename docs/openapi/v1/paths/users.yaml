@@ -1,0 +1,40 @@
+post:
+  tags: [ users ]
+  parameters:
+    - $ref: '../parameters/headerParams.yaml#/localizationHeader'
+    - $ref: '../parameters/headerParams.yaml#/deviceHeader'
+    - $ref: '../parameters/headerParams.yaml#/versionHeader'
+  summary: Add a new user
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - data
+          properties:
+            data:
+              $ref: '../schemas/AddUser.yaml'
+  responses:
+    '201':
+      description: Created successfully status
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                $ref: '../schemas/Status.yaml'
+              meta:
+                type: object
+              errors:
+                type: array
+                items:
+                  $ref: '../schemas/Error.yaml'
+              data:
+                $ref: '../schemas/User.yaml'
+    '400':
+      $ref: '../responses/BadRequestError.yaml'
+    '500':
+      $ref: '../responses/InternalServerError.yaml'

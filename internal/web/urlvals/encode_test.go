@@ -22,8 +22,8 @@ func Test_Encode(t *testing.T) {
 				params.PageParams
 			}{
 				PageParams: params.PageParams{
-					Limit:  convert.ToPtr[int32](12),
-					Offset: convert.ToPtr[int32](12),
+					Limit:  convert.ToPtr[int64](12),
+					Offset: convert.ToPtr[int64](12),
 				},
 			},
 			out: "page[limit]=12&page[offset]=12",

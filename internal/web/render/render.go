@@ -6,41 +6,42 @@ import (
 
 	"github.com/pkg/errors"
 
+	"github.com/BOOST-2021/boost-app-back/internal/web"
 	"github.com/BOOST-2021/boost-app-back/internal/web/responses"
 	"github.com/BOOST-2021/boost-app-back/resources"
 )
 
 func setDefaultHeaders(w http.ResponseWriter) {
-	w.Header().Set("Content-Type", "application/json; charset=utf-8")
+	w.Header().Set(web.HeaderContentType, "application/json; charset=utf-8")
 }
 
-type Responder interface {
+type Responder[T json.Marshaler] interface {
 	Respond()
 
-	WithStatus(status *resources.Status) Responder
-	WithData(data json.Marshaler) Responder
-	WithMeta(meta json.Marshaler) Responder
-	WithPage(page *resources.Page) Responder
-	WithLinks(links *resources.Links) Responder
-	WithErrors(errors responses.JSONServerErrors) Responder
+	WithStatus(status *resources.Status) Responder[T]
+	WithData(data T) Responder[T]
+	WithMeta(meta ...T) Responder[T]
+	WithPage(page *resources.Page) Responder[T]
+	WithLinks(links *resources.Links) Responder[T]
+	WithErrors(errors responses.JSONServerErrors) Responder[T]
 }
 
-type responder struct {
+type responder[T json.Marshaler] struct {
 	w http.ResponseWriter
 
 	status *resources.Status
-	data   json.Marshaler
-	meta   json.Marshaler
+	data   T
+	meta   []T
 	page   *resources.Page
 	links  *resources.Links
 	errors responses.JSONServerErrors
 }
 
-func New(w http.ResponseWriter) Responder {
-	return &responder{w: w}
+func New(w http.ResponseWriter) Responder[json.Marshaler] {
+	return &responder[json.Marshaler]{w: w}
 }
 
-func (r *responder) Respond() {
+func (r *responder[T]) Respond() {
 	setDefaultHeaders(r.w)
 
 	r.w.WriteHeader(int(r.status.Code))
@@ -49,7 +50,7 @@ func (r *responder) Respond() {
 		return
 	}
 
-	res := responses.Response{
+	res := responses.Response[T]{
 		Status: r.status,
 		Data:   r.data,
 		Meta:   r.meta,
@@ -64,32 +65,32 @@ func (r *responder) Respond() {
 	}
 }
 
-func (r *responder) WithStatus(status *resources.Status) Responder {
+func (r *responder[T]) WithStatus(status *resources.Status) Responder[T] {
 	r.status = status
 	return r
 }
 
-func (r *responder) WithData(data json.Marshaler) Responder {
+func (r *responder[T]) WithData(data T) Responder[T] {
 	r.data = data
 	return r
 }
 
-func (r *responder) WithMeta(meta json.Marshaler) Responder {
+func (r *responder[T]) WithMeta(meta ...T) Responder[T] {
 	r.meta = meta
 	return r
 }
 
-func (r *responder) WithPage(page *resources.Page) Responder {
+func (r *responder[T]) WithPage(page *resources.Page) Responder[T] {
 	r.page = page
 	return r
 }
 
-func (r *responder) WithLinks(links *resources.Links) Responder {
+func (r *responder[T]) WithLinks(links *resources.Links) Responder[T] {
 	r.links = links
 	return r
 }
 
-func (r *responder) WithErrors(errors responses.JSONServerErrors) Responder {
+func (r *responder[T]) WithErrors(errors responses.JSONServerErrors) Responder[T] {
 	r.errors = errors
 	return r
 }

@@ -19,7 +19,7 @@ func GetNews(w http.ResponseWriter, r *http.Request) {
 	_, err := requests.NewGetNewsRequest(r)
 	if err != nil {
 		log.WithError(err).Error("failed to get search ownerships request")
-		render.InternalServerError(w, nil)
+		render.InternalServerError(w)
 		return
 	}
 
@@ -28,7 +28,7 @@ func GetNews(w http.ResponseWriter, r *http.Request) {
 	count, err := provider.NewsProvider().CountNews(reqCtx)
 	if err != nil {
 		log.WithError(err).Error("failed to count news")
-		render.InternalServerError(w, nil)
+		render.InternalServerError(w)
 		return
 	}
 
@@ -38,7 +38,7 @@ func GetNews(w http.ResponseWriter, r *http.Request) {
 	news, err := provider.NewsProvider().OfPage(reqCtx, webconvert.FromResponsePage(pageParams)).ListNews(reqCtx)
 	if err != nil {
 		log.WithError(err).Error("failed to get news from provider")
-		render.InternalServerError(w, nil)
+		render.InternalServerError(w)
 		return
 	}
 

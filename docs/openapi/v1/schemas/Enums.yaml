@@ -1,0 +1,45 @@
+Locale:
+  title: Locale
+  enum:
+    - en
+    - ru
+    - ua
+    - pl
+Device:
+  title: Device
+  enum:
+    - IOS
+    - Android
+    - Web
+SortOrder:
+  title: SortOrder
+  enum:
+    - asc
+    - desc
+  description: >
+    Sort order:
+     * `asc` - Ascending, from A to Z
+     * `desc` - Descending, from Z to A
+UserRole:
+  title: UserRole
+  enum:
+    - VIEWER
+    - REACT_VIEWER
+    - ADMIN
+UserStatus:
+  title: UserStatus
+  enum:
+    - ACTIVE
+    - INACTIVE
+    - UNVERIFIED
+EntityType:
+  title: EntityType
+  enum:
+    - USERS
+    - EMAILS
+    - PHONES
+    - NEWS
+    - NEWS_MEDIA
+    - NEWS_MEDIA_RESOURCES
+    - CREDENTIALS
+    - TOKEN_PAIR

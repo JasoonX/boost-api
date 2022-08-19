@@ -4,6 +4,7 @@ import (
 	"github.com/BOOST-2021/boost-app-back/internal/auth"
 	"github.com/BOOST-2021/boost-app-back/internal/common"
 	"github.com/BOOST-2021/boost-app-back/internal/common/convert"
+	"github.com/BOOST-2021/boost-app-back/internal/data"
 	"github.com/BOOST-2021/boost-app-back/internal/data/model"
 	"github.com/BOOST-2021/boost-app-back/internal/web/urlvals/params"
 	"github.com/BOOST-2021/boost-app-back/resources"
@@ -19,11 +20,41 @@ func ToResponseNews(news []model.News) []resources.News {
 
 func ToResponseNewsItem(news model.News) resources.News {
 	return resources.News{
-		Id:        news.ID.String(),
-		AuthorId:  news.AuthorID.String(),
-		CreatedAt: news.CreatedAt,
-		UpdatedAt: news.UpdatedAt,
-		Media:     ToResponseNewsMedia(news.Media),
+		Id:   news.ID.String(),
+		Type: resources.NEWS,
+		Attributes: resources.NewsAttributes{
+			CreatedAt: news.CreatedAt,
+			UpdatedAt: news.UpdatedAt,
+			Media:     ToResponseNewsMedia(news.Media),
+		},
+		Relationships: resources.NewsRelationships{
+			Author: resources.NewsRelationshipsAuthor{
+				Links: ToResponseRelationLinks(resources.NEWS, resources.USERS, news.ID.String(), news.AuthorID.String()),
+				Data:  ToResponseRelationItem(resources.USERS, news.AuthorID.String()),
+			},
+		},
+	}
+}
+
+func ToResponseRelations[T data.IDer](relationType resources.EntityType, relations []T) []resources.RelatedEntity {
+	relationsResponse := make([]resources.RelatedEntity, len(relations))
+	for i, r := range relations {
+		relationsResponse[i] = *ToResponseRelationItem(relationType, r.GetID())
+	}
+	return relationsResponse
+}
+
+func ToResponseRelationItem(relationType resources.EntityType, relationID string) *resources.RelatedEntity {
+	return &resources.RelatedEntity{
+		Type: &relationType,
+		Id:   &relationID,
+	}
+}
+
+func ToResponseRelationLinks(selfType, relationType resources.EntityType, selfID, relationID string) *resources.RelatedLinks {
+	return &resources.RelatedLinks{
+		Self:    EntityTypeToPath(selfType, selfID),
+		Related: EntityTypeToPath(relationType, relationID),
 	}
 }
 
@@ -66,21 +97,60 @@ func ToResponsePage(page params.PageParams) *resources.Page {
 
 func ToResponseUser(user *model.User) *resources.User {
 	return &resources.User{
-		Id:        user.ID.String(),
-		CreatedAt: user.CreatedAt,
-		UpdatedAt: user.UpdatedAt,
-		Username:  user.Username,
-		FirstName: user.FirstName,
-		LastName:  user.LastName,
-		Status:    string(user.Status),
-		Role:      string(user.Role),
+		Id:   user.ID.String(),
+		Type: resources.USERS,
+		Attributes: resources.UserAttributes{
+			CreatedAt: user.CreatedAt,
+			UpdatedAt: user.UpdatedAt,
+			Username:  user.Username,
+			FirstName: user.FirstName,
+			LastName:  user.LastName,
+			Status:    ToResponseUserStatus(user.Status),
+			Role:      ToResponseUserRoles(user.Roles()),
+		},
+		Relationships: resources.UserRelationships{
+			Emails: resources.UserRelationshipsEmails{
+				Data: ToResponseRelations(resources.EMAILS, user.Emails),
+			},
+			Phones: &resources.UserRelationshipsPhones{
+				Data: ToResponseRelations(resources.PHONES, user.Phones),
+			},
+		},
+	}
+}
+
+func ToResponseUserEmails(emails []model.Email) []resources.Email {
+	emailsResponse := make([]resources.Email, len(emails))
+	for i, e := range emails {
+		emailsResponse[i] = ToResponseEmailItem(e)
+	}
+	return emailsResponse
+}
+
+func ToResponseEmailItem(email model.Email) resources.Email {
+	return resources.Email{
+		Id:   email.ID.String(),
+		Type: resources.EMAILS,
+		Attributes: resources.EmailAttributes{
+			Email:      email.Email,
+			IsVerified: &email.IsVerified,
+			IsPrimary:  &email.IsPrimary,
+		},
+		Relationships: resources.EmailRelationships{
+			User: resources.EmailRelationshipsUser{
+				Data: ToResponseRelationItem(resources.USERS, email.UserID.String()),
+			},
+		},
 	}
 }
 
 func ToResponseTokenPair(tokenPair *auth.TokenPair) resources.TokenPair {
 	return resources.TokenPair{
-		AccessToken:  tokenPair.AccessToken,
-		RefreshToken: tokenPair.RefreshToken,
+		Type: resources.TOKEN_PAIR,
+		Attributes: resources.TokenPairAttributes{
+			AccessToken:  tokenPair.AccessToken,
+			RefreshToken: tokenPair.RefreshToken,
+		},
 	}
 }
 

@@ -3,7 +3,7 @@ package auth
 import "golang.org/x/crypto/bcrypt"
 
 const (
-	cost = 14
+	cost = 10
 )
 
 func HashPassword(password string) (string, error) {

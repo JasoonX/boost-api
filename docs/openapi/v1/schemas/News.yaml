@@ -1,0 +1,38 @@
+type: object
+required:
+  - id
+  - type
+  - attributes
+  - relationships
+properties:
+  id:
+    $ref: './EntityUUID.yaml'
+  type:
+    $ref: './Enums.yaml#/EntityType'
+  attributes:
+    type: object
+    required:
+      - created_at
+    properties:
+      created_at:
+        type: string
+        format: date-time
+        example: '2020-01-01T00:00:00Z'
+      updated_at:
+        type: string
+        format: date-time
+        example: '2020-01-01T00:00:00Z'
+      media:
+        $ref: './NewsMedia.yaml'
+  relationships:
+    type: object
+    required:
+      - author
+    properties:
+      author:
+        type: object
+        properties:
+          links:
+            $ref: './RelatedLinks.yaml'
+          data:
+            $ref: './RelatedEntity.yaml'

@@ -16,24 +16,22 @@ import (
 
 // Phone struct for Phone
 type Phone struct {
-	Id               string  `json:"id"`
-	SubscriberNumber string  `json:"subscriber_number"`
-	CountryCode      *string `json:"country_code,omitempty"`
-	Extension        *string `json:"extension,omitempty"`
-	Verified         *bool   `json:"verified,omitempty"`
-	PrimaryFlag      *bool   `json:"primary_flag,omitempty"`
-	UserId           string  `json:"user_id"`
+	Id            string             `json:"id"`
+	Type          EntityType         `json:"type"`
+	Attributes    PhoneAttributes    `json:"attributes"`
+	Relationships PhoneRelationships `json:"relationships"`
 }
 
 // NewPhone instantiates a new Phone object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewPhone(id string, subscriberNumber string, userId string) *Phone {
+func NewPhone(id string, type_ EntityType, attributes PhoneAttributes, relationships PhoneRelationships) *Phone {
 	this := Phone{}
 	this.Id = id
-	this.SubscriberNumber = subscriberNumber
-	this.UserId = userId
+	this.Type = type_
+	this.Attributes = attributes
+	this.Relationships = relationships
 	return &this
 }
 
@@ -69,180 +67,76 @@ func (o *Phone) SetId(v string) {
 	o.Id = v
 }
 
-// GetSubscriberNumber returns the SubscriberNumber field value
-func (o *Phone) GetSubscriberNumber() string {
+// GetType returns the Type field value
+func (o *Phone) GetType() EntityType {
 	if o == nil {
-		var ret string
+		var ret EntityType
 		return ret
 	}
 
-	return o.SubscriberNumber
+	return o.Type
 }
 
-// GetSubscriberNumberOk returns a tuple with the SubscriberNumber field value
+// GetTypeOk returns a tuple with the Type field value
 // and a boolean to check if the value has been set.
-func (o *Phone) GetSubscriberNumberOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.SubscriberNumber, true
-}
-
-// SetSubscriberNumber sets field value
-func (o *Phone) SetSubscriberNumber(v string) {
-	o.SubscriberNumber = v
-}
-
-// GetCountryCode returns the CountryCode field value if set, zero value otherwise.
-func (o *Phone) GetCountryCode() string {
-	if o == nil || o.CountryCode == nil {
-		var ret string
-		return ret
-	}
-	return *o.CountryCode
-}
-
-// GetCountryCodeOk returns a tuple with the CountryCode field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *Phone) GetCountryCodeOk() (*string, bool) {
-	if o == nil || o.CountryCode == nil {
-		return nil, false
-	}
-	return o.CountryCode, true
-}
-
-// HasCountryCode returns a boolean if a field has been set.
-func (o *Phone) HasCountryCode() bool {
-	if o != nil && o.CountryCode != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetCountryCode gets a reference to the given string and assigns it to the CountryCode field.
-func (o *Phone) SetCountryCode(v string) {
-	o.CountryCode = &v
-}
-
-// GetExtension returns the Extension field value if set, zero value otherwise.
-func (o *Phone) GetExtension() string {
-	if o == nil || o.Extension == nil {
-		var ret string
-		return ret
-	}
-	return *o.Extension
-}
-
-// GetExtensionOk returns a tuple with the Extension field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *Phone) GetExtensionOk() (*string, bool) {
-	if o == nil || o.Extension == nil {
-		return nil, false
-	}
-	return o.Extension, true
-}
-
-// HasExtension returns a boolean if a field has been set.
-func (o *Phone) HasExtension() bool {
-	if o != nil && o.Extension != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetExtension gets a reference to the given string and assigns it to the Extension field.
-func (o *Phone) SetExtension(v string) {
-	o.Extension = &v
-}
-
-// GetVerified returns the Verified field value if set, zero value otherwise.
-func (o *Phone) GetVerified() bool {
-	if o == nil || o.Verified == nil {
-		var ret bool
-		return ret
-	}
-	return *o.Verified
-}
-
-// GetVerifiedOk returns a tuple with the Verified field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *Phone) GetVerifiedOk() (*bool, bool) {
-	if o == nil || o.Verified == nil {
-		return nil, false
-	}
-	return o.Verified, true
-}
-
-// HasVerified returns a boolean if a field has been set.
-func (o *Phone) HasVerified() bool {
-	if o != nil && o.Verified != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetVerified gets a reference to the given bool and assigns it to the Verified field.
-func (o *Phone) SetVerified(v bool) {
-	o.Verified = &v
-}
-
-// GetPrimaryFlag returns the PrimaryFlag field value if set, zero value otherwise.
-func (o *Phone) GetPrimaryFlag() bool {
-	if o == nil || o.PrimaryFlag == nil {
-		var ret bool
-		return ret
-	}
-	return *o.PrimaryFlag
-}
-
-// GetPrimaryFlagOk returns a tuple with the PrimaryFlag field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *Phone) GetPrimaryFlagOk() (*bool, bool) {
-	if o == nil || o.PrimaryFlag == nil {
-		return nil, false
-	}
-	return o.PrimaryFlag, true
-}
-
-// HasPrimaryFlag returns a boolean if a field has been set.
-func (o *Phone) HasPrimaryFlag() bool {
-	if o != nil && o.PrimaryFlag != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetPrimaryFlag gets a reference to the given bool and assigns it to the PrimaryFlag field.
-func (o *Phone) SetPrimaryFlag(v bool) {
-	o.PrimaryFlag = &v
-}
-
-// GetUserId returns the UserId field value
-func (o *Phone) GetUserId() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.UserId
-}
-
-// GetUserIdOk returns a tuple with the UserId field value
-// and a boolean to check if the value has been set.
-func (o *Phone) GetUserIdOk() (*string, bool) {
+func (o *Phone) GetTypeOk() (*EntityType, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.UserId, true
+	return &o.Type, true
 }
 
-// SetUserId sets field value
-func (o *Phone) SetUserId(v string) {
-	o.UserId = v
+// SetType sets field value
+func (o *Phone) SetType(v EntityType) {
+	o.Type = v
+}
+
+// GetAttributes returns the Attributes field value
+func (o *Phone) GetAttributes() PhoneAttributes {
+	if o == nil {
+		var ret PhoneAttributes
+		return ret
+	}
+
+	return o.Attributes
+}
+
+// GetAttributesOk returns a tuple with the Attributes field value
+// and a boolean to check if the value has been set.
+func (o *Phone) GetAttributesOk() (*PhoneAttributes, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Attributes, true
+}
+
+// SetAttributes sets field value
+func (o *Phone) SetAttributes(v PhoneAttributes) {
+	o.Attributes = v
+}
+
+// GetRelationships returns the Relationships field value
+func (o *Phone) GetRelationships() PhoneRelationships {
+	if o == nil {
+		var ret PhoneRelationships
+		return ret
+	}
+
+	return o.Relationships
+}
+
+// GetRelationshipsOk returns a tuple with the Relationships field value
+// and a boolean to check if the value has been set.
+func (o *Phone) GetRelationshipsOk() (*PhoneRelationships, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Relationships, true
+}
+
+// SetRelationships sets field value
+func (o *Phone) SetRelationships(v PhoneRelationships) {
+	o.Relationships = v
 }
 
 func (o Phone) MarshalJSON() ([]byte, error) {
@@ -251,22 +145,13 @@ func (o Phone) MarshalJSON() ([]byte, error) {
 		toSerialize["id"] = o.Id
 	}
 	if true {
-		toSerialize["subscriber_number"] = o.SubscriberNumber
-	}
-	if o.CountryCode != nil {
-		toSerialize["country_code"] = o.CountryCode
-	}
-	if o.Extension != nil {
-		toSerialize["extension"] = o.Extension
-	}
-	if o.Verified != nil {
-		toSerialize["verified"] = o.Verified
-	}
-	if o.PrimaryFlag != nil {
-		toSerialize["primary_flag"] = o.PrimaryFlag
+		toSerialize["type"] = o.Type
 	}
 	if true {
-		toSerialize["user_id"] = o.UserId
+		toSerialize["attributes"] = o.Attributes
+	}
+	if true {
+		toSerialize["relationships"] = o.Relationships
 	}
 	return json.Marshal(toSerialize)
 }

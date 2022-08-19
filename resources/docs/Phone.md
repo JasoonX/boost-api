@@ -5,18 +5,15 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Id** | **string** |  | 
-**SubscriberNumber** | **string** |  | 
-**CountryCode** | Pointer to **string** |  | [optional] 
-**Extension** | Pointer to **string** |  | [optional] 
-**Verified** | Pointer to **bool** |  | [optional] 
-**PrimaryFlag** | Pointer to **bool** |  | [optional] 
-**UserId** | **string** |  | 
+**Type** | [**EntityType**](EntityType.md) |  | 
+**Attributes** | [**PhoneAttributes**](PhoneAttributes.md) |  | 
+**Relationships** | [**PhoneRelationships**](PhoneRelationships.md) |  | 
 
 ## Methods
 
 ### NewPhone
 
-`func NewPhone(id string, subscriberNumber string, userId string, ) *Phone`
+`func NewPhone(id string, type_ EntityType, attributes PhoneAttributes, relationships PhoneRelationships, ) *Phone`
 
 NewPhone instantiates a new Phone object
 This constructor will assign default values to properties that have it defined,
@@ -51,144 +48,64 @@ and a boolean to check if the value has been set.
 SetId sets Id field to given value.
 
 
-### GetSubscriberNumber
+### GetType
 
-`func (o *Phone) GetSubscriberNumber() string`
+`func (o *Phone) GetType() EntityType`
 
-GetSubscriberNumber returns the SubscriberNumber field if non-nil, zero value otherwise.
+GetType returns the Type field if non-nil, zero value otherwise.
 
-### GetSubscriberNumberOk
+### GetTypeOk
 
-`func (o *Phone) GetSubscriberNumberOk() (*string, bool)`
+`func (o *Phone) GetTypeOk() (*EntityType, bool)`
 
-GetSubscriberNumberOk returns a tuple with the SubscriberNumber field if it's non-nil, zero value otherwise
+GetTypeOk returns a tuple with the Type field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSubscriberNumber
+### SetType
 
-`func (o *Phone) SetSubscriberNumber(v string)`
+`func (o *Phone) SetType(v EntityType)`
 
-SetSubscriberNumber sets SubscriberNumber field to given value.
+SetType sets Type field to given value.
 
 
-### GetCountryCode
+### GetAttributes
 
-`func (o *Phone) GetCountryCode() string`
+`func (o *Phone) GetAttributes() PhoneAttributes`
 
-GetCountryCode returns the CountryCode field if non-nil, zero value otherwise.
+GetAttributes returns the Attributes field if non-nil, zero value otherwise.
 
-### GetCountryCodeOk
+### GetAttributesOk
 
-`func (o *Phone) GetCountryCodeOk() (*string, bool)`
+`func (o *Phone) GetAttributesOk() (*PhoneAttributes, bool)`
 
-GetCountryCodeOk returns a tuple with the CountryCode field if it's non-nil, zero value otherwise
+GetAttributesOk returns a tuple with the Attributes field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetCountryCode
+### SetAttributes
 
-`func (o *Phone) SetCountryCode(v string)`
+`func (o *Phone) SetAttributes(v PhoneAttributes)`
 
-SetCountryCode sets CountryCode field to given value.
+SetAttributes sets Attributes field to given value.
 
-### HasCountryCode
 
-`func (o *Phone) HasCountryCode() bool`
+### GetRelationships
 
-HasCountryCode returns a boolean if a field has been set.
+`func (o *Phone) GetRelationships() PhoneRelationships`
 
-### GetExtension
+GetRelationships returns the Relationships field if non-nil, zero value otherwise.
 
-`func (o *Phone) GetExtension() string`
+### GetRelationshipsOk
 
-GetExtension returns the Extension field if non-nil, zero value otherwise.
+`func (o *Phone) GetRelationshipsOk() (*PhoneRelationships, bool)`
 
-### GetExtensionOk
-
-`func (o *Phone) GetExtensionOk() (*string, bool)`
-
-GetExtensionOk returns a tuple with the Extension field if it's non-nil, zero value otherwise
+GetRelationshipsOk returns a tuple with the Relationships field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetExtension
+### SetRelationships
 
-`func (o *Phone) SetExtension(v string)`
+`func (o *Phone) SetRelationships(v PhoneRelationships)`
 
-SetExtension sets Extension field to given value.
-
-### HasExtension
-
-`func (o *Phone) HasExtension() bool`
-
-HasExtension returns a boolean if a field has been set.
-
-### GetVerified
-
-`func (o *Phone) GetVerified() bool`
-
-GetVerified returns the Verified field if non-nil, zero value otherwise.
-
-### GetVerifiedOk
-
-`func (o *Phone) GetVerifiedOk() (*bool, bool)`
-
-GetVerifiedOk returns a tuple with the Verified field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetVerified
-
-`func (o *Phone) SetVerified(v bool)`
-
-SetVerified sets Verified field to given value.
-
-### HasVerified
-
-`func (o *Phone) HasVerified() bool`
-
-HasVerified returns a boolean if a field has been set.
-
-### GetPrimaryFlag
-
-`func (o *Phone) GetPrimaryFlag() bool`
-
-GetPrimaryFlag returns the PrimaryFlag field if non-nil, zero value otherwise.
-
-### GetPrimaryFlagOk
-
-`func (o *Phone) GetPrimaryFlagOk() (*bool, bool)`
-
-GetPrimaryFlagOk returns a tuple with the PrimaryFlag field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetPrimaryFlag
-
-`func (o *Phone) SetPrimaryFlag(v bool)`
-
-SetPrimaryFlag sets PrimaryFlag field to given value.
-
-### HasPrimaryFlag
-
-`func (o *Phone) HasPrimaryFlag() bool`
-
-HasPrimaryFlag returns a boolean if a field has been set.
-
-### GetUserId
-
-`func (o *Phone) GetUserId() string`
-
-GetUserId returns the UserId field if non-nil, zero value otherwise.
-
-### GetUserIdOk
-
-`func (o *Phone) GetUserIdOk() (*string, bool)`
-
-GetUserIdOk returns a tuple with the UserId field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetUserId
-
-`func (o *Phone) SetUserId(v string)`
-
-SetUserId sets UserId field to given value.
+SetRelationships sets Relationships field to given value.
 
 
 

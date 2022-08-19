@@ -1,0 +1,49 @@
+get:
+  tags: [ users ]
+  parameters:
+    - $ref: '../parameters/headerParams.yaml#/authorizationHeader'
+    - $ref: '../parameters/headerParams.yaml#/localizationHeader'
+    - $ref: '../parameters/headerParams.yaml#/deviceHeader'
+    - $ref: '../parameters/headerParams.yaml#/versionHeader'
+    - $ref: '../parameters/pathParams.yaml#/id'
+  security:
+    - BearerAuth: [ ]
+  responses:
+    '200':
+      description: Request status OK
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              status:
+                $ref: '../schemas/Status.yaml'
+              meta:
+                type: object
+              errors:
+                type: array
+                items:
+                  $ref: '../schemas/Error.yaml'
+              data:
+                $ref: '../schemas/User.yaml'
+              included:
+                type: object
+                properties:
+                  emails:
+                    description: Emails that belong to this user.
+                    type: array
+                    items:
+                      $ref: '../schemas/Email.yaml'
+                  phones:
+                    description: Phones that belong to this user.
+                    type: array
+                    items:
+                      $ref: '../schemas/Phone.yaml'
+    '401':
+      $ref: '../responses/UnauthorizedError.yaml'
+    '403':
+      $ref: '../responses/ForbiddenError.yaml'
+    '500':
+      $ref: '../responses/InternalServerError.yaml'

@@ -14,5 +14,5 @@ type UserLocation struct {
 }
 
 func (UserLocation) TableName() string {
-	return "user_location"
+	return "user_locations"
 }

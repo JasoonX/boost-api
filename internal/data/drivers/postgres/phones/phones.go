@@ -13,7 +13,7 @@ import (
 	"github.com/BOOST-2021/boost-app-back/internal/data/queriers"
 )
 
-const Phone = "phone"
+const Phones = "phones"
 
 type phonesProvider struct {
 	log *logrus.Entry
@@ -23,7 +23,7 @@ type phonesProvider struct {
 func New(cfg config.Config) queriers.PhonesProvider {
 	return &phonesProvider{
 		db:  cfg.DB(),
-		log: cfg.Logging().WithField(postgres.Querier, Phone),
+		log: cfg.Logging().WithField(postgres.Querier, Phones),
 	}
 }
 

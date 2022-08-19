@@ -16,9 +16,11 @@ import (
 
 // Page struct for Page
 type Page struct {
-	Offset *int64 `json:"offset,omitempty"`
-	Limit  *int64 `json:"limit,omitempty"`
-	Total  *int64 `json:"total,omitempty"`
+	Offset  *int64  `json:"offset,omitempty"`
+	Limit   *int64  `json:"limit,omitempty"`
+	Orderby *string `json:"orderby,omitempty"`
+	Order   *string `json:"order,omitempty"`
+	Total   *int64  `json:"total,omitempty"`
 }
 
 // NewPage instantiates a new Page object
@@ -102,6 +104,70 @@ func (o *Page) SetLimit(v int64) {
 	o.Limit = &v
 }
 
+// GetOrderby returns the Orderby field value if set, zero value otherwise.
+func (o *Page) GetOrderby() string {
+	if o == nil || o.Orderby == nil {
+		var ret string
+		return ret
+	}
+	return *o.Orderby
+}
+
+// GetOrderbyOk returns a tuple with the Orderby field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Page) GetOrderbyOk() (*string, bool) {
+	if o == nil || o.Orderby == nil {
+		return nil, false
+	}
+	return o.Orderby, true
+}
+
+// HasOrderby returns a boolean if a field has been set.
+func (o *Page) HasOrderby() bool {
+	if o != nil && o.Orderby != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetOrderby gets a reference to the given string and assigns it to the Orderby field.
+func (o *Page) SetOrderby(v string) {
+	o.Orderby = &v
+}
+
+// GetOrder returns the Order field value if set, zero value otherwise.
+func (o *Page) GetOrder() string {
+	if o == nil || o.Order == nil {
+		var ret string
+		return ret
+	}
+	return *o.Order
+}
+
+// GetOrderOk returns a tuple with the Order field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Page) GetOrderOk() (*string, bool) {
+	if o == nil || o.Order == nil {
+		return nil, false
+	}
+	return o.Order, true
+}
+
+// HasOrder returns a boolean if a field has been set.
+func (o *Page) HasOrder() bool {
+	if o != nil && o.Order != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetOrder gets a reference to the given string and assigns it to the Order field.
+func (o *Page) SetOrder(v string) {
+	o.Order = &v
+}
+
 // GetTotal returns the Total field value if set, zero value otherwise.
 func (o *Page) GetTotal() int64 {
 	if o == nil || o.Total == nil {
@@ -141,6 +207,12 @@ func (o Page) MarshalJSON() ([]byte, error) {
 	}
 	if o.Limit != nil {
 		toSerialize["limit"] = o.Limit
+	}
+	if o.Orderby != nil {
+		toSerialize["orderby"] = o.Orderby
+	}
+	if o.Order != nil {
+		toSerialize["order"] = o.Order
 	}
 	if o.Total != nil {
 		toSerialize["total"] = o.Total

@@ -5,19 +5,15 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Id** | **string** |  | 
-**CreatedAt** | **time.Time** |  | 
-**UpdatedAt** | Pointer to **time.Time** |  | [optional] 
-**Username** | Pointer to **string** |  | [optional] 
-**FirstName** | Pointer to **string** |  | [optional] 
-**LastName** | Pointer to **string** |  | [optional] 
-**Status** | **string** |  | 
-**Role** | **string** |  | 
+**Type** | [**EntityType**](EntityType.md) |  | 
+**Attributes** | [**UserAttributes**](UserAttributes.md) |  | 
+**Relationships** | [**UserRelationships**](UserRelationships.md) |  | 
 
 ## Methods
 
 ### NewUser
 
-`func NewUser(id string, createdAt time.Time, status string, role string, ) *User`
+`func NewUser(id string, type_ EntityType, attributes UserAttributes, relationships UserRelationships, ) *User`
 
 NewUser instantiates a new User object
 This constructor will assign default values to properties that have it defined,
@@ -52,164 +48,64 @@ and a boolean to check if the value has been set.
 SetId sets Id field to given value.
 
 
-### GetCreatedAt
+### GetType
 
-`func (o *User) GetCreatedAt() time.Time`
+`func (o *User) GetType() EntityType`
 
-GetCreatedAt returns the CreatedAt field if non-nil, zero value otherwise.
+GetType returns the Type field if non-nil, zero value otherwise.
 
-### GetCreatedAtOk
+### GetTypeOk
 
-`func (o *User) GetCreatedAtOk() (*time.Time, bool)`
+`func (o *User) GetTypeOk() (*EntityType, bool)`
 
-GetCreatedAtOk returns a tuple with the CreatedAt field if it's non-nil, zero value otherwise
+GetTypeOk returns a tuple with the Type field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetCreatedAt
+### SetType
 
-`func (o *User) SetCreatedAt(v time.Time)`
+`func (o *User) SetType(v EntityType)`
 
-SetCreatedAt sets CreatedAt field to given value.
+SetType sets Type field to given value.
 
 
-### GetUpdatedAt
+### GetAttributes
 
-`func (o *User) GetUpdatedAt() time.Time`
+`func (o *User) GetAttributes() UserAttributes`
 
-GetUpdatedAt returns the UpdatedAt field if non-nil, zero value otherwise.
+GetAttributes returns the Attributes field if non-nil, zero value otherwise.
 
-### GetUpdatedAtOk
+### GetAttributesOk
 
-`func (o *User) GetUpdatedAtOk() (*time.Time, bool)`
+`func (o *User) GetAttributesOk() (*UserAttributes, bool)`
 
-GetUpdatedAtOk returns a tuple with the UpdatedAt field if it's non-nil, zero value otherwise
+GetAttributesOk returns a tuple with the Attributes field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetUpdatedAt
+### SetAttributes
 
-`func (o *User) SetUpdatedAt(v time.Time)`
+`func (o *User) SetAttributes(v UserAttributes)`
 
-SetUpdatedAt sets UpdatedAt field to given value.
+SetAttributes sets Attributes field to given value.
 
-### HasUpdatedAt
 
-`func (o *User) HasUpdatedAt() bool`
+### GetRelationships
 
-HasUpdatedAt returns a boolean if a field has been set.
+`func (o *User) GetRelationships() UserRelationships`
 
-### GetUsername
+GetRelationships returns the Relationships field if non-nil, zero value otherwise.
 
-`func (o *User) GetUsername() string`
+### GetRelationshipsOk
 
-GetUsername returns the Username field if non-nil, zero value otherwise.
+`func (o *User) GetRelationshipsOk() (*UserRelationships, bool)`
 
-### GetUsernameOk
-
-`func (o *User) GetUsernameOk() (*string, bool)`
-
-GetUsernameOk returns a tuple with the Username field if it's non-nil, zero value otherwise
+GetRelationshipsOk returns a tuple with the Relationships field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetUsername
+### SetRelationships
 
-`func (o *User) SetUsername(v string)`
+`func (o *User) SetRelationships(v UserRelationships)`
 
-SetUsername sets Username field to given value.
-
-### HasUsername
-
-`func (o *User) HasUsername() bool`
-
-HasUsername returns a boolean if a field has been set.
-
-### GetFirstName
-
-`func (o *User) GetFirstName() string`
-
-GetFirstName returns the FirstName field if non-nil, zero value otherwise.
-
-### GetFirstNameOk
-
-`func (o *User) GetFirstNameOk() (*string, bool)`
-
-GetFirstNameOk returns a tuple with the FirstName field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetFirstName
-
-`func (o *User) SetFirstName(v string)`
-
-SetFirstName sets FirstName field to given value.
-
-### HasFirstName
-
-`func (o *User) HasFirstName() bool`
-
-HasFirstName returns a boolean if a field has been set.
-
-### GetLastName
-
-`func (o *User) GetLastName() string`
-
-GetLastName returns the LastName field if non-nil, zero value otherwise.
-
-### GetLastNameOk
-
-`func (o *User) GetLastNameOk() (*string, bool)`
-
-GetLastNameOk returns a tuple with the LastName field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetLastName
-
-`func (o *User) SetLastName(v string)`
-
-SetLastName sets LastName field to given value.
-
-### HasLastName
-
-`func (o *User) HasLastName() bool`
-
-HasLastName returns a boolean if a field has been set.
-
-### GetStatus
-
-`func (o *User) GetStatus() string`
-
-GetStatus returns the Status field if non-nil, zero value otherwise.
-
-### GetStatusOk
-
-`func (o *User) GetStatusOk() (*string, bool)`
-
-GetStatusOk returns a tuple with the Status field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetStatus
-
-`func (o *User) SetStatus(v string)`
-
-SetStatus sets Status field to given value.
-
-
-### GetRole
-
-`func (o *User) GetRole() string`
-
-GetRole returns the Role field if non-nil, zero value otherwise.
-
-### GetRoleOk
-
-`func (o *User) GetRoleOk() (*string, bool)`
-
-GetRoleOk returns a tuple with the Role field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetRole
-
-`func (o *User) SetRole(v string)`
-
-SetRole sets Role field to given value.
+SetRelationships sets Relationships field to given value.
 
 
 

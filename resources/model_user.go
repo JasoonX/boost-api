@@ -12,31 +12,26 @@ package resources
 
 import (
 	"encoding/json"
-	"time"
 )
 
 // User struct for User
 type User struct {
-	Id        string     `json:"id"`
-	CreatedAt time.Time  `json:"created_at"`
-	UpdatedAt *time.Time `json:"updated_at,omitempty"`
-	Username  *string    `json:"username,omitempty"`
-	FirstName *string    `json:"first_name,omitempty"`
-	LastName  *string    `json:"last_name,omitempty"`
-	Status    string     `json:"status"`
-	Role      string     `json:"role"`
+	Id            string            `json:"id"`
+	Type          EntityType        `json:"type"`
+	Attributes    UserAttributes    `json:"attributes"`
+	Relationships UserRelationships `json:"relationships"`
 }
 
 // NewUser instantiates a new User object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewUser(id string, createdAt time.Time, status string, role string) *User {
+func NewUser(id string, type_ EntityType, attributes UserAttributes, relationships UserRelationships) *User {
 	this := User{}
 	this.Id = id
-	this.CreatedAt = createdAt
-	this.Status = status
-	this.Role = role
+	this.Type = type_
+	this.Attributes = attributes
+	this.Relationships = relationships
 	return &this
 }
 
@@ -72,204 +67,76 @@ func (o *User) SetId(v string) {
 	o.Id = v
 }
 
-// GetCreatedAt returns the CreatedAt field value
-func (o *User) GetCreatedAt() time.Time {
+// GetType returns the Type field value
+func (o *User) GetType() EntityType {
 	if o == nil {
-		var ret time.Time
+		var ret EntityType
 		return ret
 	}
 
-	return o.CreatedAt
+	return o.Type
 }
 
-// GetCreatedAtOk returns a tuple with the CreatedAt field value
+// GetTypeOk returns a tuple with the Type field value
 // and a boolean to check if the value has been set.
-func (o *User) GetCreatedAtOk() (*time.Time, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.CreatedAt, true
-}
-
-// SetCreatedAt sets field value
-func (o *User) SetCreatedAt(v time.Time) {
-	o.CreatedAt = v
-}
-
-// GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise.
-func (o *User) GetUpdatedAt() time.Time {
-	if o == nil || o.UpdatedAt == nil {
-		var ret time.Time
-		return ret
-	}
-	return *o.UpdatedAt
-}
-
-// GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *User) GetUpdatedAtOk() (*time.Time, bool) {
-	if o == nil || o.UpdatedAt == nil {
-		return nil, false
-	}
-	return o.UpdatedAt, true
-}
-
-// HasUpdatedAt returns a boolean if a field has been set.
-func (o *User) HasUpdatedAt() bool {
-	if o != nil && o.UpdatedAt != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetUpdatedAt gets a reference to the given time.Time and assigns it to the UpdatedAt field.
-func (o *User) SetUpdatedAt(v time.Time) {
-	o.UpdatedAt = &v
-}
-
-// GetUsername returns the Username field value if set, zero value otherwise.
-func (o *User) GetUsername() string {
-	if o == nil || o.Username == nil {
-		var ret string
-		return ret
-	}
-	return *o.Username
-}
-
-// GetUsernameOk returns a tuple with the Username field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *User) GetUsernameOk() (*string, bool) {
-	if o == nil || o.Username == nil {
-		return nil, false
-	}
-	return o.Username, true
-}
-
-// HasUsername returns a boolean if a field has been set.
-func (o *User) HasUsername() bool {
-	if o != nil && o.Username != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetUsername gets a reference to the given string and assigns it to the Username field.
-func (o *User) SetUsername(v string) {
-	o.Username = &v
-}
-
-// GetFirstName returns the FirstName field value if set, zero value otherwise.
-func (o *User) GetFirstName() string {
-	if o == nil || o.FirstName == nil {
-		var ret string
-		return ret
-	}
-	return *o.FirstName
-}
-
-// GetFirstNameOk returns a tuple with the FirstName field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *User) GetFirstNameOk() (*string, bool) {
-	if o == nil || o.FirstName == nil {
-		return nil, false
-	}
-	return o.FirstName, true
-}
-
-// HasFirstName returns a boolean if a field has been set.
-func (o *User) HasFirstName() bool {
-	if o != nil && o.FirstName != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetFirstName gets a reference to the given string and assigns it to the FirstName field.
-func (o *User) SetFirstName(v string) {
-	o.FirstName = &v
-}
-
-// GetLastName returns the LastName field value if set, zero value otherwise.
-func (o *User) GetLastName() string {
-	if o == nil || o.LastName == nil {
-		var ret string
-		return ret
-	}
-	return *o.LastName
-}
-
-// GetLastNameOk returns a tuple with the LastName field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *User) GetLastNameOk() (*string, bool) {
-	if o == nil || o.LastName == nil {
-		return nil, false
-	}
-	return o.LastName, true
-}
-
-// HasLastName returns a boolean if a field has been set.
-func (o *User) HasLastName() bool {
-	if o != nil && o.LastName != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetLastName gets a reference to the given string and assigns it to the LastName field.
-func (o *User) SetLastName(v string) {
-	o.LastName = &v
-}
-
-// GetStatus returns the Status field value
-func (o *User) GetStatus() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.Status
-}
-
-// GetStatusOk returns a tuple with the Status field value
-// and a boolean to check if the value has been set.
-func (o *User) GetStatusOk() (*string, bool) {
+func (o *User) GetTypeOk() (*EntityType, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.Status, true
+	return &o.Type, true
 }
 
-// SetStatus sets field value
-func (o *User) SetStatus(v string) {
-	o.Status = v
+// SetType sets field value
+func (o *User) SetType(v EntityType) {
+	o.Type = v
 }
 
-// GetRole returns the Role field value
-func (o *User) GetRole() string {
+// GetAttributes returns the Attributes field value
+func (o *User) GetAttributes() UserAttributes {
 	if o == nil {
-		var ret string
+		var ret UserAttributes
 		return ret
 	}
 
-	return o.Role
+	return o.Attributes
 }
 
-// GetRoleOk returns a tuple with the Role field value
+// GetAttributesOk returns a tuple with the Attributes field value
 // and a boolean to check if the value has been set.
-func (o *User) GetRoleOk() (*string, bool) {
+func (o *User) GetAttributesOk() (*UserAttributes, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.Role, true
+	return &o.Attributes, true
 }
 
-// SetRole sets field value
-func (o *User) SetRole(v string) {
-	o.Role = v
+// SetAttributes sets field value
+func (o *User) SetAttributes(v UserAttributes) {
+	o.Attributes = v
+}
+
+// GetRelationships returns the Relationships field value
+func (o *User) GetRelationships() UserRelationships {
+	if o == nil {
+		var ret UserRelationships
+		return ret
+	}
+
+	return o.Relationships
+}
+
+// GetRelationshipsOk returns a tuple with the Relationships field value
+// and a boolean to check if the value has been set.
+func (o *User) GetRelationshipsOk() (*UserRelationships, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Relationships, true
+}
+
+// SetRelationships sets field value
+func (o *User) SetRelationships(v UserRelationships) {
+	o.Relationships = v
 }
 
 func (o User) MarshalJSON() ([]byte, error) {
@@ -278,25 +145,13 @@ func (o User) MarshalJSON() ([]byte, error) {
 		toSerialize["id"] = o.Id
 	}
 	if true {
-		toSerialize["created_at"] = o.CreatedAt
-	}
-	if o.UpdatedAt != nil {
-		toSerialize["updated_at"] = o.UpdatedAt
-	}
-	if o.Username != nil {
-		toSerialize["username"] = o.Username
-	}
-	if o.FirstName != nil {
-		toSerialize["first_name"] = o.FirstName
-	}
-	if o.LastName != nil {
-		toSerialize["last_name"] = o.LastName
+		toSerialize["type"] = o.Type
 	}
 	if true {
-		toSerialize["status"] = o.Status
+		toSerialize["attributes"] = o.Attributes
 	}
 	if true {
-		toSerialize["role"] = o.Role
+		toSerialize["relationships"] = o.Relationships
 	}
 	return json.Marshal(toSerialize)
 }

@@ -1,0 +1,6 @@
+type: object
+properties:
+  id:
+    $ref: './EntityUUID.yaml'
+  type:
+    $ref: './Enums.yaml#/EntityType'

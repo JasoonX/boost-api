@@ -20,7 +20,7 @@ func AddUser(w http.ResponseWriter, r *http.Request) {
 
 	req, err := requests.NewAddUserRequest(r)
 	if err != nil {
-		log.WithError(err).Error("failed to get search ownerships request")
+		log.WithError(err).Error("failed to get add user request")
 		render.BadRequest(w, responses.JSONServerErrors{
 			&resources.Error{
 				Code:  111,
@@ -32,24 +32,18 @@ func AddUser(w http.ResponseWriter, r *http.Request) {
 
 	provider := ctx.DataProvider(r)
 
-	pass, err := auth.HashPassword(req.Body.Data.Password)
+	pass, err := auth.HashPassword(req.Body.Data.Attributes.Password)
 
-	newRole := model.Viewer
-	if req.Body.Data.Role != nil {
-		newRole = webconvert.FromRequestRole(*req.Body.Data.Role)
-	}
 	newUser, err := provider.UsersProvider().AddUser(reqCtx, model.User{
-		Username:     req.Body.Data.Username,
-		FirstName:    req.Body.Data.FirstName,
-		LastName:     req.Body.Data.LastName,
-		IsAnonymous:  false,
+		Username:     req.Body.Data.Attributes.Username,
+		FirstName:    req.Body.Data.Attributes.FirstName,
+		LastName:     req.Body.Data.Attributes.LastName,
 		PasswordHash: pass,
-		Status:       model.Unverified,
-		Role:         newRole,
+		Status:       model.UserStatusUnverified,
 	})
 	if err != nil {
 		log.WithError(err).Error("failed to add new user")
-		render.InternalServerError(w, nil)
+		render.InternalServerError(w)
 		return
 	}
 

@@ -1,0 +1,35 @@
+type: object
+required:
+  - type
+  - attributes
+  - relationships
+properties:
+  type:
+    $ref: './Enums.yaml#/EntityType'
+  attributes:
+    type: object
+    required:
+      - phone
+    properties:
+      subscriber_number:
+        type: string
+        description: Phone number of the subscriber.
+        example: 935123456
+      country_code:
+        type: string
+        description: Country code of the subscriber.
+        example: +38
+      extension:
+        type: string
+        description: Extension of the subscriber.
+        example: 4025
+  relationships:
+    type: object
+    required:
+      - user
+    properties:
+      user:
+        type: object
+        properties:
+          data:
+            $ref: './RelatedEntity.yaml'

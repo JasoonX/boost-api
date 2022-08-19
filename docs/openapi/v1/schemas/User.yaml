@@ -1,0 +1,63 @@
+type: object
+required:
+  - id
+  - type
+  - attributes
+  - relationships
+properties:
+  id:
+    $ref: './EntityUUID.yaml'
+  type:
+    $ref: './Enums.yaml#/EntityType'
+  attributes:
+    type: object
+    required:
+      - created_at
+      - status
+      - role
+      - password
+    properties:
+      created_at:
+        type: string
+        format: date-time
+        example: '2020-01-01T00:00:00Z'
+      updated_at:
+        type: string
+        format: date-time
+        example: '2020-01-01T00:00:00Z'
+      username:
+        type: string
+        example: 'admin'
+      first_name:
+        type: string
+        example: 'John'
+      last_name:
+        type: string
+        example: 'Doe'
+      status:
+        $ref: './Enums.yaml#/UserStatus'
+      role:
+        type: array
+        items:
+          $ref: './Enums.yaml#/UserRole'
+  relationships:
+    type: object
+    required:
+      - emails
+    properties:
+      emails:
+        description: Emails that belong to this user.
+        type: object
+        properties:
+          data:
+            type: array
+            items:
+              $ref: './RelatedEntity.yaml'
+      phones:
+        description: Phones that belong to this user.
+        type: object
+        properties:
+          data:
+            type: array
+            items:
+              $ref: './RelatedEntity.yaml'

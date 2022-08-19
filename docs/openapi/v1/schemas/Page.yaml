@@ -1,0 +1,23 @@
+type: object
+properties:
+  offset:
+    type: integer
+    format: int64
+    example: 0
+  limit:
+    type: integer
+    format: int64
+    example: 10
+  orderby:
+    type: string
+    example: 'id'
+  order:
+    type: string
+    enum:
+      - asc
+      - desc
+    example: 'asc'
+  total:
+    type: integer
+    format: int64
+    example: 100

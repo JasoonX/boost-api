@@ -13,6 +13,7 @@ type Config interface {
 	Databaser
 	JwtIssuer
 	SSOProvider
+	Runtime
 }
 
 type config struct {
@@ -21,6 +22,7 @@ type config struct {
 	Databaser
 	JwtIssuer
 	SSOProvider
+	Runtime
 }
 
 type yamlConfig struct {
@@ -29,6 +31,7 @@ type yamlConfig struct {
 	Database     yamlDatabaseConfig    `yaml:"database"`
 	Jwt          yamlJwtConfig         `yaml:"jwt"`
 	SSOProviders yamlSSOProviderConfig `yaml:"sso_providers"`
+	Runtime      yamlRuntimeConfig     `yaml:"runtime"`
 }
 
 func New(path string) Config {
@@ -50,5 +53,6 @@ func New(path string) Config {
 		Databaser:   NewDatabaser(cfg.Database.toPSQLPath(), cfg.Database.Driver),
 		JwtIssuer:   NewJwtIssuer(cfg.Jwt.Issuer, cfg.Jwt.SecretKey),
 		SSOProvider: NewSSOProvider(cfg.SSOProviders),
+		Runtime:     NewRuntime(cfg.Runtime.Auth, cfg.Runtime.Environment, cfg.Runtime.Version),
 	}
 }

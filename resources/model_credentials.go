@@ -16,18 +16,20 @@ import (
 
 // Credentials struct for Credentials
 type Credentials struct {
-	Email    string `json:"email"`
-	Password string `json:"password"`
+	Id         string                `json:"id"`
+	Type       EntityType            `json:"type"`
+	Attributes CredentialsAttributes `json:"attributes"`
 }
 
 // NewCredentials instantiates a new Credentials object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCredentials(email string, password string) *Credentials {
+func NewCredentials(id string, type_ EntityType, attributes CredentialsAttributes) *Credentials {
 	this := Credentials{}
-	this.Email = email
-	this.Password = password
+	this.Id = id
+	this.Type = type_
+	this.Attributes = attributes
 	return &this
 }
 
@@ -39,61 +41,88 @@ func NewCredentialsWithDefaults() *Credentials {
 	return &this
 }
 
-// GetEmail returns the Email field value
-func (o *Credentials) GetEmail() string {
+// GetId returns the Id field value
+func (o *Credentials) GetId() string {
 	if o == nil {
 		var ret string
 		return ret
 	}
 
-	return o.Email
+	return o.Id
 }
 
-// GetEmailOk returns a tuple with the Email field value
+// GetIdOk returns a tuple with the Id field value
 // and a boolean to check if the value has been set.
-func (o *Credentials) GetEmailOk() (*string, bool) {
+func (o *Credentials) GetIdOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.Email, true
+	return &o.Id, true
 }
 
-// SetEmail sets field value
-func (o *Credentials) SetEmail(v string) {
-	o.Email = v
+// SetId sets field value
+func (o *Credentials) SetId(v string) {
+	o.Id = v
 }
 
-// GetPassword returns the Password field value
-func (o *Credentials) GetPassword() string {
+// GetType returns the Type field value
+func (o *Credentials) GetType() EntityType {
 	if o == nil {
-		var ret string
+		var ret EntityType
 		return ret
 	}
 
-	return o.Password
+	return o.Type
 }
 
-// GetPasswordOk returns a tuple with the Password field value
+// GetTypeOk returns a tuple with the Type field value
 // and a boolean to check if the value has been set.
-func (o *Credentials) GetPasswordOk() (*string, bool) {
+func (o *Credentials) GetTypeOk() (*EntityType, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.Password, true
+	return &o.Type, true
 }
 
-// SetPassword sets field value
-func (o *Credentials) SetPassword(v string) {
-	o.Password = v
+// SetType sets field value
+func (o *Credentials) SetType(v EntityType) {
+	o.Type = v
+}
+
+// GetAttributes returns the Attributes field value
+func (o *Credentials) GetAttributes() CredentialsAttributes {
+	if o == nil {
+		var ret CredentialsAttributes
+		return ret
+	}
+
+	return o.Attributes
+}
+
+// GetAttributesOk returns a tuple with the Attributes field value
+// and a boolean to check if the value has been set.
+func (o *Credentials) GetAttributesOk() (*CredentialsAttributes, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Attributes, true
+}
+
+// SetAttributes sets field value
+func (o *Credentials) SetAttributes(v CredentialsAttributes) {
+	o.Attributes = v
 }
 
 func (o Credentials) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if true {
-		toSerialize["email"] = o.Email
+		toSerialize["id"] = o.Id
 	}
 	if true {
-		toSerialize["password"] = o.Password
+		toSerialize["type"] = o.Type
+	}
+	if true {
+		toSerialize["attributes"] = o.Attributes
 	}
 	return json.Marshal(toSerialize)
 }

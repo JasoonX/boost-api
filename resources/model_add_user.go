@@ -16,23 +16,18 @@ import (
 
 // AddUser struct for AddUser
 type AddUser struct {
-	Email    string  `json:"email"`
-	Username *string `json:"username,omitempty"`
-	// Password must be at least 8 characters long, contain at least 2 numbers and 2 uppercase letters, and 1 special symbol.
-	Password  string  `json:"password"`
-	FirstName *string `json:"first_name,omitempty"`
-	LastName  *string `json:"last_name,omitempty"`
-	Role      *string `json:"role,omitempty"`
+	Type       EntityType        `json:"type"`
+	Attributes AddUserAttributes `json:"attributes"`
 }
 
 // NewAddUser instantiates a new AddUser object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAddUser(email string, password string) *AddUser {
+func NewAddUser(type_ EntityType, attributes AddUserAttributes) *AddUser {
 	this := AddUser{}
-	this.Email = email
-	this.Password = password
+	this.Type = type_
+	this.Attributes = attributes
 	return &this
 }
 
@@ -44,201 +39,61 @@ func NewAddUserWithDefaults() *AddUser {
 	return &this
 }
 
-// GetEmail returns the Email field value
-func (o *AddUser) GetEmail() string {
+// GetType returns the Type field value
+func (o *AddUser) GetType() EntityType {
 	if o == nil {
-		var ret string
+		var ret EntityType
 		return ret
 	}
 
-	return o.Email
+	return o.Type
 }
 
-// GetEmailOk returns a tuple with the Email field value
+// GetTypeOk returns a tuple with the Type field value
 // and a boolean to check if the value has been set.
-func (o *AddUser) GetEmailOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.Email, true
-}
-
-// SetEmail sets field value
-func (o *AddUser) SetEmail(v string) {
-	o.Email = v
-}
-
-// GetUsername returns the Username field value if set, zero value otherwise.
-func (o *AddUser) GetUsername() string {
-	if o == nil || o.Username == nil {
-		var ret string
-		return ret
-	}
-	return *o.Username
-}
-
-// GetUsernameOk returns a tuple with the Username field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *AddUser) GetUsernameOk() (*string, bool) {
-	if o == nil || o.Username == nil {
-		return nil, false
-	}
-	return o.Username, true
-}
-
-// HasUsername returns a boolean if a field has been set.
-func (o *AddUser) HasUsername() bool {
-	if o != nil && o.Username != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetUsername gets a reference to the given string and assigns it to the Username field.
-func (o *AddUser) SetUsername(v string) {
-	o.Username = &v
-}
-
-// GetPassword returns the Password field value
-func (o *AddUser) GetPassword() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.Password
-}
-
-// GetPasswordOk returns a tuple with the Password field value
-// and a boolean to check if the value has been set.
-func (o *AddUser) GetPasswordOk() (*string, bool) {
+func (o *AddUser) GetTypeOk() (*EntityType, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.Password, true
+	return &o.Type, true
 }
 
-// SetPassword sets field value
-func (o *AddUser) SetPassword(v string) {
-	o.Password = v
+// SetType sets field value
+func (o *AddUser) SetType(v EntityType) {
+	o.Type = v
 }
 
-// GetFirstName returns the FirstName field value if set, zero value otherwise.
-func (o *AddUser) GetFirstName() string {
-	if o == nil || o.FirstName == nil {
-		var ret string
+// GetAttributes returns the Attributes field value
+func (o *AddUser) GetAttributes() AddUserAttributes {
+	if o == nil {
+		var ret AddUserAttributes
 		return ret
 	}
-	return *o.FirstName
+
+	return o.Attributes
 }
 
-// GetFirstNameOk returns a tuple with the FirstName field value if set, nil otherwise
+// GetAttributesOk returns a tuple with the Attributes field value
 // and a boolean to check if the value has been set.
-func (o *AddUser) GetFirstNameOk() (*string, bool) {
-	if o == nil || o.FirstName == nil {
+func (o *AddUser) GetAttributesOk() (*AddUserAttributes, bool) {
+	if o == nil {
 		return nil, false
 	}
-	return o.FirstName, true
+	return &o.Attributes, true
 }
 
-// HasFirstName returns a boolean if a field has been set.
-func (o *AddUser) HasFirstName() bool {
-	if o != nil && o.FirstName != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetFirstName gets a reference to the given string and assigns it to the FirstName field.
-func (o *AddUser) SetFirstName(v string) {
-	o.FirstName = &v
-}
-
-// GetLastName returns the LastName field value if set, zero value otherwise.
-func (o *AddUser) GetLastName() string {
-	if o == nil || o.LastName == nil {
-		var ret string
-		return ret
-	}
-	return *o.LastName
-}
-
-// GetLastNameOk returns a tuple with the LastName field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *AddUser) GetLastNameOk() (*string, bool) {
-	if o == nil || o.LastName == nil {
-		return nil, false
-	}
-	return o.LastName, true
-}
-
-// HasLastName returns a boolean if a field has been set.
-func (o *AddUser) HasLastName() bool {
-	if o != nil && o.LastName != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetLastName gets a reference to the given string and assigns it to the LastName field.
-func (o *AddUser) SetLastName(v string) {
-	o.LastName = &v
-}
-
-// GetRole returns the Role field value if set, zero value otherwise.
-func (o *AddUser) GetRole() string {
-	if o == nil || o.Role == nil {
-		var ret string
-		return ret
-	}
-	return *o.Role
-}
-
-// GetRoleOk returns a tuple with the Role field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *AddUser) GetRoleOk() (*string, bool) {
-	if o == nil || o.Role == nil {
-		return nil, false
-	}
-	return o.Role, true
-}
-
-// HasRole returns a boolean if a field has been set.
-func (o *AddUser) HasRole() bool {
-	if o != nil && o.Role != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetRole gets a reference to the given string and assigns it to the Role field.
-func (o *AddUser) SetRole(v string) {
-	o.Role = &v
+// SetAttributes sets field value
+func (o *AddUser) SetAttributes(v AddUserAttributes) {
+	o.Attributes = v
 }
 
 func (o AddUser) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if true {
-		toSerialize["email"] = o.Email
-	}
-	if o.Username != nil {
-		toSerialize["username"] = o.Username
+		toSerialize["type"] = o.Type
 	}
 	if true {
-		toSerialize["password"] = o.Password
-	}
-	if o.FirstName != nil {
-		toSerialize["first_name"] = o.FirstName
-	}
-	if o.LastName != nil {
-		toSerialize["last_name"] = o.LastName
-	}
-	if o.Role != nil {
-		toSerialize["role"] = o.Role
+		toSerialize["attributes"] = o.Attributes
 	}
 	return json.Marshal(toSerialize)
 }

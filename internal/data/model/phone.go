@@ -15,5 +15,9 @@ type Phone struct {
 }
 
 func (Phone) TableName() string {
-	return "phone"
+	return "phones"
+}
+
+func (p Phone) GetID() string {
+	return p.ID.String()
 }

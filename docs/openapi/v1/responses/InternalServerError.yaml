@@ -1,0 +1,15 @@
+description: 'Something is wrong on the server'
+content:
+  application/json:
+    schema:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              example: 500
+            message:
+              type: string
+              example: 'Something went wrong'

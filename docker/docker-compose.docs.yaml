@@ -6,9 +6,11 @@ services:
     ports:
       - "9001:8080"
     volumes:
-      - ../docs/openapi/v1:/docs
+      - type: bind
+        source: ../docs/openapi/v1/_build
+        target: /docs
     environment:
-      SWAGGER_JSON: /docs/swagger.yaml
+      SWAGGER_JSON: /docs/openapi.yaml
   swagger-editor:
     image: swaggerapi/swagger-editor
     container_name: swagger_editor_container
@@ -16,7 +18,7 @@ services:
       - "9002:8080"
     volumes:
       - type: bind
-        source: ../docs/openapi/v1
+        source: ../docs/openapi/v1/_build
         target: /docs
     environment:
-      SWAGGER_FILE: /docs/swagger.yaml
+      SWAGGER_FILE: /docs/openapi.yaml

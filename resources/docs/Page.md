@@ -6,6 +6,8 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Offset** | Pointer to **int64** |  | [optional] 
 **Limit** | Pointer to **int64** |  | [optional] 
+**Orderby** | Pointer to **string** |  | [optional] 
+**Order** | Pointer to **string** |  | [optional] 
 **Total** | Pointer to **int64** |  | [optional] 
 
 ## Methods
@@ -76,6 +78,56 @@ SetLimit sets Limit field to given value.
 `func (o *Page) HasLimit() bool`
 
 HasLimit returns a boolean if a field has been set.
+
+### GetOrderby
+
+`func (o *Page) GetOrderby() string`
+
+GetOrderby returns the Orderby field if non-nil, zero value otherwise.
+
+### GetOrderbyOk
+
+`func (o *Page) GetOrderbyOk() (*string, bool)`
+
+GetOrderbyOk returns a tuple with the Orderby field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOrderby
+
+`func (o *Page) SetOrderby(v string)`
+
+SetOrderby sets Orderby field to given value.
+
+### HasOrderby
+
+`func (o *Page) HasOrderby() bool`
+
+HasOrderby returns a boolean if a field has been set.
+
+### GetOrder
+
+`func (o *Page) GetOrder() string`
+
+GetOrder returns the Order field if non-nil, zero value otherwise.
+
+### GetOrderOk
+
+`func (o *Page) GetOrderOk() (*string, bool)`
+
+GetOrderOk returns a tuple with the Order field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOrder
+
+`func (o *Page) SetOrder(v string)`
+
+SetOrder sets Order field to given value.
+
+### HasOrder
+
+`func (o *Page) HasOrder() bool`
+
+HasOrder returns a boolean if a field has been set.
 
 ### GetTotal
 

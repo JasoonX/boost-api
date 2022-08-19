@@ -1,0 +1,45 @@
+pageOffset:
+  in: query
+  name: page[offset]
+  schema:
+    type: integer
+  description: The number of items to skip before starting to collect the result set
+pageLimit:
+  in: query
+  name: page[limit]
+  schema:
+    type: integer
+  description: The numbers of items to return
+pageOrder:
+  in: query
+  name: page[order]
+  schema:
+    $ref: '../schemas/Enums.yaml#/SortOrder'
+  description: The order of the result set
+pageOrderBy:
+  in: query
+  name: page[order_by]
+  schema:
+    type: string
+  description: The field to order the result set by
+searchFirstName:
+  in: query
+  name: search[first_name]
+  schema:
+    type: string
+    example: 'Jon'
+  description: First name of an author to return news for
+searchLastName:
+  in: query
+  name: search[last_name]
+  schema:
+    type: string
+    example: 'Doe'
+  description: Last name of an author to return news for
+filterCity:
+  in: query
+  name: filter[city]
+  schema:
+    type: string
+    example: 'Kiev'
+  description: City to filter news by

@@ -1,16 +1,20 @@
 package common
 
-import "github.com/BOOST-2021/boost-app-back/internal/common/convert"
+import (
+	"golang.org/x/exp/constraints"
 
-func SumPtr[T Integer](a, b *T) *T {
+	"github.com/BOOST-2021/boost-app-back/internal/common/convert"
+)
+
+func SumPtr[T constraints.Integer](a, b *T) *T {
 	return convert.ToPtr(convert.FromPtr(a) + convert.FromPtr(b))
 }
 
-func SubPtr[T Integer](a, b *T) *T {
+func SubPtr[T constraints.Integer](a, b *T) *T {
 	return convert.ToPtr(convert.FromPtr(a) - convert.FromPtr(b))
 }
 
-func MinOrFloor[T Integer](a *T, floor *T) *T {
+func MinOrFloor[T constraints.Integer](a *T, floor *T) *T {
 	if a == nil {
 		return floor
 	}
@@ -20,7 +24,7 @@ func MinOrFloor[T Integer](a *T, floor *T) *T {
 	return a
 }
 
-func MaxOrCeil[T Integer](a *T, ceil *T) *T {
+func MaxOrCeil[T constraints.Integer](a *T, ceil *T) *T {
 	if a == nil {
 		return ceil
 	}

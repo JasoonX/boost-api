@@ -1,0 +1,45 @@
+type: object
+required:
+  - id
+  - type
+  - attributes
+  - relationships
+properties:
+  id:
+    $ref: './EntityUUID.yaml'
+  type:
+    $ref: './Enums.yaml#/EntityType'
+  attributes:
+    type: object
+    required:
+      - subscriber_number
+      - user_id
+    properties:
+      subscriber_number:
+        type: string
+        example: '0664023252'
+      country_code:
+        type: string
+        example: '+38'
+      extension:
+        type: string
+        example: '4025'
+      verified:
+        type: boolean
+        example: true
+      primary_flag:
+        type: boolean
+        example: true
+  relationships:
+    type: object
+    required:
+      - user
+    properties:
+      user:
+        description: User that owns this phone.
+        type: object
+        properties:
+          links:
+            $ref: './RelatedLinks.yaml'
+          data:
+            $ref: './RelatedEntity.yaml'

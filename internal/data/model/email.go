@@ -13,5 +13,9 @@ type Email struct {
 }
 
 func (Email) TableName() string {
-	return "email"
+	return "emails"
+}
+
+func (e Email) GetID() string {
+	return e.ID.String()
 }

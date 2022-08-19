@@ -1,0 +1,21 @@
+get:
+  tags: [ auth ]
+  parameters:
+    - $ref: '../parameters/pathParams.yaml#/provider'
+  summary: Callback for the provider to support OAuth2 specification.
+  responses:
+    '200':
+      description: A JSON object with access and refresh tokens
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                $ref: '../schemas/TokenPair.yaml'
+    '400':
+      $ref: '../responses/BadRequestError.yaml'
+    '500':
+      $ref: '../responses/InternalServerError.yaml'

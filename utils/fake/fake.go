@@ -8,6 +8,7 @@ import (
 	"math/rand"
 
 	"github.com/brianvoe/gofakeit/v6"
+	"github.com/lib/pq"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 
@@ -52,7 +53,7 @@ func (g *generator) Users(n int) ([]model.User, error) {
 		users[i] = model.User{
 			Username:     convert.ToPtr(g.faker.Username()),
 			Status:       model.UserStatuses[rand.Int()%len(model.UserStatuses)],
-			Role:         model.UserRoles[rand.Int()%len(model.UserRoles)],
+			Role:         pq.StringArray{string(model.UserRoles[rand.Int()%len(model.UserRoles)])},
 			PasswordHash: passHash,
 		}
 	}

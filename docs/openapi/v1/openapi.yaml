@@ -1,0 +1,38 @@
+openapi: 3.0.0
+info:
+  title: Boost API
+  description: This is a REST API of the Boost App.
+  version: 0.0.1-beta1
+servers:
+  - url: http://api.boost.net.ua/v1
+    description: Main (production) listener
+  - url: http://dev.api.boost.net.ua/v1
+    description: Test (development) listener
+paths:
+  /healthcheck:
+    $ref: './paths/healthcheck.yaml'
+  /auth:
+    $ref: './paths/auth.yaml'
+  /auth/{provider}:
+    $ref: './paths/auth_{provider}_.yaml'
+  /auth/{provider}/callback:
+    $ref: './paths/auth_{provider}_callback.yaml'
+  /news:
+    $ref: './paths/news.yaml'
+  /users:
+    $ref: './paths/users.yaml'
+  /users/{id}:
+    $ref: './paths/users_{id}_.yaml'
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  parameters:
+    $ref: './parameters/_index.yaml'
+  schemas:
+    $ref: './schemas/_index.yaml'
+  responses:
+    $ref: './responses/_index.yaml'

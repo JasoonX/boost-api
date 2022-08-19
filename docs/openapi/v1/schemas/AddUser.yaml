@@ -1,0 +1,32 @@
+type: object
+required:
+  - type
+  - attributes
+properties:
+  type:
+    $ref: './Enums.yaml#/EntityType'
+  attributes:
+    type: object
+    required:
+      - email
+      - password
+    properties:
+      email:
+        type: string
+        example: 'example@gmail.com'
+      phone:
+        type: string
+        example: '+380935123456'
+      username:
+        type: string
+        example: 'admin'
+      password:
+        type: string
+        example: '123456'
+        description: 'Password must be at least 8 characters long, contain at least 2 numbers and 2 uppercase letters, and 1 special symbol.'
+      first_name:
+        type: string
+        example: 'John'
+      last_name:
+        type: string
+        example: 'Doe'

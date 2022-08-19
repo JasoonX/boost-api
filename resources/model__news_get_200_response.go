@@ -16,12 +16,13 @@ import (
 
 // NewsGet200Response struct for NewsGet200Response
 type NewsGet200Response struct {
-	Status *Status                `json:"status,omitempty"`
-	Page   *Page                  `json:"page,omitempty"`
-	Links  *Links                 `json:"links,omitempty"`
-	Meta   map[string]interface{} `json:"meta,omitempty"`
-	Errors []Error                `json:"errors,omitempty"`
-	Data   NewsGet200ResponseData `json:"data"`
+	Status   *Status                     `json:"status,omitempty"`
+	Page     *Page                       `json:"page,omitempty"`
+	Links    *Links                      `json:"links,omitempty"`
+	Meta     map[string]interface{}      `json:"meta,omitempty"`
+	Errors   []Error                     `json:"errors,omitempty"`
+	Data     NewsGet200ResponseData      `json:"data"`
+	Included *NewsGet200ResponseIncluded `json:"included,omitempty"`
 }
 
 // NewNewsGet200Response instantiates a new NewsGet200Response object
@@ -226,6 +227,38 @@ func (o *NewsGet200Response) SetData(v NewsGet200ResponseData) {
 	o.Data = v
 }
 
+// GetIncluded returns the Included field value if set, zero value otherwise.
+func (o *NewsGet200Response) GetIncluded() NewsGet200ResponseIncluded {
+	if o == nil || o.Included == nil {
+		var ret NewsGet200ResponseIncluded
+		return ret
+	}
+	return *o.Included
+}
+
+// GetIncludedOk returns a tuple with the Included field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *NewsGet200Response) GetIncludedOk() (*NewsGet200ResponseIncluded, bool) {
+	if o == nil || o.Included == nil {
+		return nil, false
+	}
+	return o.Included, true
+}
+
+// HasIncluded returns a boolean if a field has been set.
+func (o *NewsGet200Response) HasIncluded() bool {
+	if o != nil && o.Included != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetIncluded gets a reference to the given NewsGet200ResponseIncluded and assigns it to the Included field.
+func (o *NewsGet200Response) SetIncluded(v NewsGet200ResponseIncluded) {
+	o.Included = &v
+}
+
 func (o NewsGet200Response) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Status != nil {
@@ -245,6 +278,9 @@ func (o NewsGet200Response) MarshalJSON() ([]byte, error) {
 	}
 	if true {
 		toSerialize["data"] = o.Data
+	}
+	if o.Included != nil {
+		toSerialize["included"] = o.Included
 	}
 	return json.Marshal(toSerialize)
 }

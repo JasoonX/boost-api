@@ -1,0 +1,21 @@
+type: object
+required:
+  - self
+  - next
+  - prev
+properties:
+  self:
+    type: string
+    example: 'v1/news?page[offset]=0&page[limit]=10'
+  next:
+    type: string
+    example: 'v1/news?page[offset]=10&page[limit]=10'
+  prev:
+    type: string
+    example: 'v1/news?page[offset]=0&page[limit]=10'
+  first:
+    type: string
+    example: 'v1/news?page[offset]=0&page[limit]=10'
+  last:
+    type: string
+    example: 'v1/news?page[offset]=0&page[limit]=10'

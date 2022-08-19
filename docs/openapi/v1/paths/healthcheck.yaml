@@ -1,0 +1,11 @@
+get:
+  summary: Returns success if listener runs successfully.
+  responses:
+    '200': # status code
+      description: A JSON object with healthcheck result
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/Status.yaml'
+    '500':
+      $ref: '../responses/InternalServerError.yaml'

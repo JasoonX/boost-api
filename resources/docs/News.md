@@ -5,16 +5,15 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Id** | **string** |  | 
-**AuthorId** | **string** |  | 
-**CreatedAt** | **time.Time** |  | 
-**UpdatedAt** | Pointer to **time.Time** |  | [optional] 
-**Media** | Pointer to [**NewsMedia**](NewsMedia.md) |  | [optional] 
+**Type** | [**EntityType**](EntityType.md) |  | 
+**Attributes** | [**NewsAttributes**](NewsAttributes.md) |  | 
+**Relationships** | [**NewsRelationships**](NewsRelationships.md) |  | 
 
 ## Methods
 
 ### NewNews
 
-`func NewNews(id string, authorId string, createdAt time.Time, ) *News`
+`func NewNews(id string, type_ EntityType, attributes NewsAttributes, relationships NewsRelationships, ) *News`
 
 NewNews instantiates a new News object
 This constructor will assign default values to properties that have it defined,
@@ -49,95 +48,65 @@ and a boolean to check if the value has been set.
 SetId sets Id field to given value.
 
 
-### GetAuthorId
+### GetType
 
-`func (o *News) GetAuthorId() string`
+`func (o *News) GetType() EntityType`
 
-GetAuthorId returns the AuthorId field if non-nil, zero value otherwise.
+GetType returns the Type field if non-nil, zero value otherwise.
 
-### GetAuthorIdOk
+### GetTypeOk
 
-`func (o *News) GetAuthorIdOk() (*string, bool)`
+`func (o *News) GetTypeOk() (*EntityType, bool)`
 
-GetAuthorIdOk returns a tuple with the AuthorId field if it's non-nil, zero value otherwise
+GetTypeOk returns a tuple with the Type field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetAuthorId
+### SetType
 
-`func (o *News) SetAuthorId(v string)`
+`func (o *News) SetType(v EntityType)`
 
-SetAuthorId sets AuthorId field to given value.
+SetType sets Type field to given value.
 
 
-### GetCreatedAt
+### GetAttributes
 
-`func (o *News) GetCreatedAt() time.Time`
+`func (o *News) GetAttributes() NewsAttributes`
 
-GetCreatedAt returns the CreatedAt field if non-nil, zero value otherwise.
+GetAttributes returns the Attributes field if non-nil, zero value otherwise.
 
-### GetCreatedAtOk
+### GetAttributesOk
 
-`func (o *News) GetCreatedAtOk() (*time.Time, bool)`
+`func (o *News) GetAttributesOk() (*NewsAttributes, bool)`
 
-GetCreatedAtOk returns a tuple with the CreatedAt field if it's non-nil, zero value otherwise
+GetAttributesOk returns a tuple with the Attributes field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetCreatedAt
+### SetAttributes
 
-`func (o *News) SetCreatedAt(v time.Time)`
+`func (o *News) SetAttributes(v NewsAttributes)`
 
-SetCreatedAt sets CreatedAt field to given value.
+SetAttributes sets Attributes field to given value.
 
 
-### GetUpdatedAt
+### GetRelationships
 
-`func (o *News) GetUpdatedAt() time.Time`
+`func (o *News) GetRelationships() NewsRelationships`
 
-GetUpdatedAt returns the UpdatedAt field if non-nil, zero value otherwise.
+GetRelationships returns the Relationships field if non-nil, zero value otherwise.
 
-### GetUpdatedAtOk
+### GetRelationshipsOk
 
-`func (o *News) GetUpdatedAtOk() (*time.Time, bool)`
+`func (o *News) GetRelationshipsOk() (*NewsRelationships, bool)`
 
-GetUpdatedAtOk returns a tuple with the UpdatedAt field if it's non-nil, zero value otherwise
+GetRelationshipsOk returns a tuple with the Relationships field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetUpdatedAt
+### SetRelationships
 
-`func (o *News) SetUpdatedAt(v time.Time)`
+`func (o *News) SetRelationships(v NewsRelationships)`
 
-SetUpdatedAt sets UpdatedAt field to given value.
+SetRelationships sets Relationships field to given value.
 
-### HasUpdatedAt
-
-`func (o *News) HasUpdatedAt() bool`
-
-HasUpdatedAt returns a boolean if a field has been set.
-
-### GetMedia
-
-`func (o *News) GetMedia() NewsMedia`
-
-GetMedia returns the Media field if non-nil, zero value otherwise.
-
-### GetMediaOk
-
-`func (o *News) GetMediaOk() (*NewsMedia, bool)`
-
-GetMediaOk returns a tuple with the Media field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetMedia
-
-`func (o *News) SetMedia(v NewsMedia)`
-
-SetMedia sets Media field to given value.
-
-### HasMedia
-
-`func (o *News) HasMedia() bool`
-
-HasMedia returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

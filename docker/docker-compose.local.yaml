@@ -1,0 +1,38 @@
+version: "3.9"
+services:
+  boost-api:
+    image: stepancons/boost-api:latest
+    container_name: boost-api
+    ports:
+      - "8080:8080"
+    networks:
+      - default
+    volumes:
+      - type: bind
+        source: ../config.local.yaml
+        target: /config.yaml
+      - type: bind
+        source: ../config.fake.yaml
+        target: /fake-config.yaml
+    environment:
+      CONFIG: /config.yaml
+      FAKE_CONFIG: /fake-config.yaml
+    depends_on:
+      - postgres_db
+    entrypoint: /bin/sh
+    command: -c "boost-api migrate up && boost-api scripts -n default && boost-api fake && boost-api run"
+  postgres_db:
+    image: postgres:14.5-alpine
+    hostname: postgres_db
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    ports:
+      - '6060:5432'
+    volumes:
+      - db:/var/lib/postgresql/data
+volumes:
+  db:
+    driver: local

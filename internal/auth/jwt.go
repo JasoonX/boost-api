@@ -1,6 +1,7 @@
 package auth
 
 import (
+	"strings"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
@@ -22,8 +23,8 @@ type Credentials struct {
 }
 
 type UserInfo struct {
-	Email string `json:"email"`
-	Role  string `json:"role"`
+	Email string   `json:"email"`
+	Roles []string `json:"role"`
 }
 
 type Claims struct {
@@ -39,6 +40,7 @@ type TokenPair struct {
 
 type Provider interface {
 	GenerateTokenPair(info UserInfo) (*TokenPair, error)
+	Verify(token string) (*Claims, error)
 }
 
 type provider struct {
@@ -53,10 +55,11 @@ func New(cfg config.Config) Provider {
 	}
 }
 
+// TODO: test me
 func (p *provider) GenerateTokenPair(info UserInfo) (*TokenPair, error) {
 	accessToken := jwt.NewWithClaims(jwt.SigningMethodHS256, Claims{
 		Email: info.Email,
-		Role:  info.Role,
+		Role:  strings.Join(info.Roles, ","),
 		StandardClaims: jwt.StandardClaims{
 			Subject:   subjectAccessToken,
 			ExpiresAt: time.Now().Add(defaultAccessExpiration).Unix(),
@@ -71,7 +74,7 @@ func (p *provider) GenerateTokenPair(info UserInfo) (*TokenPair, error) {
 
 	refreshToken := jwt.NewWithClaims(jwt.SigningMethodHS256, Claims{
 		Email: info.Email,
-		Role:  info.Role,
+		Role:  strings.Join(info.Roles, ","),
 		StandardClaims: jwt.StandardClaims{
 			Subject:   subjectRefreshToken,
 			ExpiresAt: time.Now().Add(defaultRefreshExpiration).Unix(),
@@ -88,4 +91,31 @@ func (p *provider) GenerateTokenPair(info UserInfo) (*TokenPair, error) {
 		AccessToken:  accessTokenSigned,
 		RefreshToken: refreshTokenSigned,
 	}, nil
+}
+
+// TODO: test me
+func (p *provider) Verify(rawToken string) (*Claims, error) {
+	keyFunc := func(token *jwt.Token) (interface{}, error) {
+		_, ok := token.Method.(*jwt.SigningMethodHMAC)
+		if !ok {
+			return nil, ErrInvalidToken
+		}
+		return p.JwtSecretKey, nil
+	}
+
+	token, err := jwt.ParseWithClaims(rawToken, &Claims{}, keyFunc)
+	if err != nil {
+		verr, ok := err.(*jwt.ValidationError)
+		if ok && errors.Is(verr.Inner, ErrExpiredToken) {
+			return nil, ErrExpiredToken
+		}
+		return nil, ErrInvalidToken
+	}
+
+	payload, ok := token.Claims.(*Claims)
+	if !ok {
+		return nil, ErrInvalidToken
+	}
+
+	return payload, nil
 }

@@ -1,0 +1,26 @@
+authorizationHeader:
+  in: header
+  name: Authorization
+  schema:
+    type: string
+    format: bearer
+  description: Bearer token
+  required: true
+localizationHeader:
+  in: header
+  name: Accept-Language
+  schema:
+    $ref: '../schemas/Enums.yaml#/Locale'
+  required: true
+deviceHeader:
+  in: header
+  name: User-Agent
+  schema:
+    $ref: '../schemas/Enums.yaml#/Device'
+  required: true
+versionHeader:
+  in: header
+  name: Accept-Version
+  schema:
+    type: string
+  required: true

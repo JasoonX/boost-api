@@ -10,6 +10,7 @@ import (
 
 	"github.com/BOOST-2021/boost-app-back/internal/auth"
 	"github.com/BOOST-2021/boost-app-back/internal/config"
+	"github.com/BOOST-2021/boost-app-back/internal/data/model"
 	"github.com/BOOST-2021/boost-app-back/internal/data/store"
 	"github.com/BOOST-2021/boost-app-back/internal/listener/middlewares"
 	"github.com/BOOST-2021/boost-app-back/internal/web"
@@ -36,14 +37,20 @@ func (l *service) setupRouter() {
 		),
 	)
 
-	l.router.Route("/v1", func(r chi.Router) {
-		r.Get("/healthcheck", handlers.GetHealthcheck)
+	l.router.Get("/healthcheck", handlers.GetHealthcheck)
+
+	l.router.With(middlewares.ValidateHeaders(l.cfg)).Route("/v1", func(r chi.Router) {
 
 		// Auth
-		r.Get("/auth", handlers.GetAuthToken)
+		r.Post("/auth", handlers.GetAuthToken)
 		r.With(web.SSOProviderContext).Get(fmt.Sprintf("/auth/{%s}", web.SSOProviderPathParam), handlers.GetAuthProvider)
 		r.With(web.SSOProviderContext).Get(fmt.Sprintf("/auth/{%s}/callback", web.SSOProviderPathParam), handlers.GetAuthProviderCallback)
-		r.With(web.Paginate).Get("/news", handlers.GetNews)
+
+		// Users
+		r.Post("/users/add", handlers.AddUser)
+
+		// News
+		r.With(web.Paginate, middlewares.Doorman(l.cfg, model.UserRoleViewer, model.UserRoleReactViewer)).Get("/news", handlers.GetNews)
 	})
 
 }

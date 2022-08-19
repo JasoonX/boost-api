@@ -1,0 +1,33 @@
+post:
+  tags: [ auth ]
+  parameters:
+    - $ref: '../parameters/headerParams.yaml#/localizationHeader'
+    - $ref: '../parameters/headerParams.yaml#/deviceHeader'
+    - $ref: '../parameters/headerParams.yaml#/versionHeader'
+  summary: Authenticates user and returns access and refresh tokens.
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - data
+          properties:
+            data:
+              $ref: '../schemas/Credentials.yaml'
+  responses:
+    '200':
+      description: A JSON object with access and refresh tokens
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                $ref: '../schemas/TokenPair.yaml'
+    '400':
+      $ref: '../responses/BadRequestError.yaml'
+    '500':
+      $ref: '../responses/InternalServerError.yaml'

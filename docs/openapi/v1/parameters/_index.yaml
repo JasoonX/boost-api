@@ -1,0 +1,26 @@
+localizationHeader:
+  $ref: './headerParams.yaml#/localizationHeader'
+deviceHeader:
+  $ref: './headerParams.yaml#/deviceHeader'
+versionHeader:
+  $ref: './headerParams.yaml#/versionHeader'
+authorizationHeader:
+  $ref: './headerParams.yaml#/authorizationHeader'
+provider:
+  $ref: './pathParams.yaml#/provider'
+id:
+  $ref: './pathParams.yaml#/id'
+pageOffset:
+  $ref: './queryParams.yaml#/pageOffset'
+pageLimit:
+  $ref: './queryParams.yaml#/pageLimit'
+pageOrder:
+  $ref: './queryParams.yaml#/pageOrder'
+pageOrderBy:
+  $ref: './queryParams.yaml#/pageOrderBy'
+searchFirstName:
+  $ref: './queryParams.yaml#/searchFirstName'
+searchLastName:
+  $ref: './queryParams.yaml#/searchLastName'
+filterCity:
+  $ref: './queryParams.yaml#/filterCity'

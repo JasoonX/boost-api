@@ -8,24 +8,31 @@ import (
 	"github.com/BOOST-2021/boost-app-back/resources"
 )
 
-func InternalServerError(w http.ResponseWriter, meta json.Marshaler) {
+func InternalServerError(w http.ResponseWriter, meta ...json.Marshaler) {
 	New(w).
 		WithStatus(resources.NewStatus(http.StatusInternalServerError, "Something went wrong")).
-		WithMeta(meta).
+		WithMeta(meta...).
 		Respond()
 }
 
-func BadRequest(w http.ResponseWriter, errors responses.JSONServerErrors, meta json.Marshaler) {
+func BadRequest(w http.ResponseWriter, errors responses.JSONServerErrors, meta ...json.Marshaler) {
 	New(w).
 		WithStatus(resources.NewStatus(http.StatusBadRequest, "Wrong payload provided")).
-		WithMeta(meta).
+		WithMeta(meta...).
 		WithErrors(errors).
 		Respond()
 }
 
-func Unauthorized(w http.ResponseWriter, meta json.Marshaler) {
+func Unauthorized(w http.ResponseWriter, meta ...json.Marshaler) {
 	New(w).
 		WithStatus(resources.NewStatus(http.StatusUnauthorized, "Unauthorized")).
-		WithMeta(meta).
+		WithMeta(meta...).
+		Respond()
+}
+
+func Forbidden(w http.ResponseWriter, meta ...json.Marshaler) {
+	New(w).
+		WithStatus(resources.NewStatus(http.StatusForbidden, "Forbidden")).
+		WithMeta(meta...).
 		Respond()
 }

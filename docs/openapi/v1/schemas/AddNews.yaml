@@ -1,0 +1,27 @@
+type: object
+required:
+  - type
+  - attributes
+  - relationships
+properties:
+  type:
+    $ref: './Enums.yaml#/EntityType'
+  attributes:
+    type: object
+    required:
+      - media
+    properties:
+      media:
+        $ref: './NewsMedia.yaml'
+  relationships:
+    description: Relationships of the news to add.
+    type: object
+    required:
+      - author
+    properties:
+      author:
+        description: Author of the news.
+        type: object
+        properties:
+          data:
+            $ref: './RelatedEntity.yaml'

@@ -1,0 +1,92 @@
+get:
+  tags: [ news ]
+  security:
+    - BearerAuth: [ ]
+  parameters:
+    - $ref: '../parameters/headerParams.yaml#/authorizationHeader'
+    - $ref: '../parameters/headerParams.yaml#/localizationHeader'
+    - $ref: '../parameters/headerParams.yaml#/deviceHeader'
+    - $ref: '../parameters/headerParams.yaml#/versionHeader'
+    - $ref: '../parameters/queryParams.yaml#/pageOffset'
+    - $ref: '../parameters/queryParams.yaml#/pageLimit'
+    - $ref: '../parameters/queryParams.yaml#/pageOrder'
+    - $ref: '../parameters/queryParams.yaml#/pageOrderBy'
+    - $ref: '../parameters/queryParams.yaml#/searchFirstName'
+    - $ref: '../parameters/queryParams.yaml#/searchLastName'
+    - $ref: '../parameters/queryParams.yaml#/filterCity'
+  responses:
+    '200':
+      description: Search for news
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              status:
+                $ref: '../schemas/Status.yaml'
+              page:
+                $ref: '../schemas/Page.yaml'
+              links:
+                $ref: '../schemas/Links.yaml'
+              meta:
+                type: object
+              errors:
+                type: array
+                items:
+                  $ref: '../schemas/Error.yaml'
+              data:
+                type: object
+                properties:
+                  news:
+                    type: array
+                    items:
+                      $ref: '../schemas/News.yaml'
+              included:
+                type: object
+                properties:
+                  author:
+                    $ref: '../schemas/User.yaml'
+    '401':
+      $ref: '../responses/UnauthorizedError.yaml'
+    '403':
+      $ref: '../responses/ForbiddenError.yaml'
+    '500':
+      $ref: '../responses/InternalServerError.yaml'
+post:
+  tags: [ news ]
+  security:
+    - BearerAuth: [ ]
+  summary: Add new news
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - data
+          properties:
+            data:
+              $ref: '../schemas/AddNews.yaml'
+  responses:
+    '201':
+      description: Created successfully status
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                $ref: '../schemas/Status.yaml'
+              data:
+                $ref: '../schemas/News.yaml'
+    '400':
+      $ref: '../responses/BadRequestError.yaml'
+    '401':
+      $ref: '../responses/UnauthorizedError.yaml'
+    '403':
+      $ref: '../responses/ForbiddenError.yaml'
+    '500':
+      $ref: '../responses/InternalServerError.yaml'

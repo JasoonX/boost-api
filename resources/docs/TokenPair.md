@@ -4,14 +4,14 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**AccessToken** | **string** |  | 
-**RefreshToken** | **string** |  | 
+**Type** | [**EntityType**](EntityType.md) |  | 
+**Attributes** | [**TokenPairAttributes**](TokenPairAttributes.md) |  | 
 
 ## Methods
 
 ### NewTokenPair
 
-`func NewTokenPair(accessToken string, refreshToken string, ) *TokenPair`
+`func NewTokenPair(type_ EntityType, attributes TokenPairAttributes, ) *TokenPair`
 
 NewTokenPair instantiates a new TokenPair object
 This constructor will assign default values to properties that have it defined,
@@ -26,44 +26,44 @@ NewTokenPairWithDefaults instantiates a new TokenPair object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetAccessToken
+### GetType
 
-`func (o *TokenPair) GetAccessToken() string`
+`func (o *TokenPair) GetType() EntityType`
 
-GetAccessToken returns the AccessToken field if non-nil, zero value otherwise.
+GetType returns the Type field if non-nil, zero value otherwise.
 
-### GetAccessTokenOk
+### GetTypeOk
 
-`func (o *TokenPair) GetAccessTokenOk() (*string, bool)`
+`func (o *TokenPair) GetTypeOk() (*EntityType, bool)`
 
-GetAccessTokenOk returns a tuple with the AccessToken field if it's non-nil, zero value otherwise
+GetTypeOk returns a tuple with the Type field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetAccessToken
+### SetType
 
-`func (o *TokenPair) SetAccessToken(v string)`
+`func (o *TokenPair) SetType(v EntityType)`
 
-SetAccessToken sets AccessToken field to given value.
+SetType sets Type field to given value.
 
 
-### GetRefreshToken
+### GetAttributes
 
-`func (o *TokenPair) GetRefreshToken() string`
+`func (o *TokenPair) GetAttributes() TokenPairAttributes`
 
-GetRefreshToken returns the RefreshToken field if non-nil, zero value otherwise.
+GetAttributes returns the Attributes field if non-nil, zero value otherwise.
 
-### GetRefreshTokenOk
+### GetAttributesOk
 
-`func (o *TokenPair) GetRefreshTokenOk() (*string, bool)`
+`func (o *TokenPair) GetAttributesOk() (*TokenPairAttributes, bool)`
 
-GetRefreshTokenOk returns a tuple with the RefreshToken field if it's non-nil, zero value otherwise
+GetAttributesOk returns a tuple with the Attributes field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetRefreshToken
+### SetAttributes
 
-`func (o *TokenPair) SetRefreshToken(v string)`
+`func (o *TokenPair) SetAttributes(v TokenPairAttributes)`
 
-SetRefreshToken sets RefreshToken field to given value.
+SetAttributes sets Attributes field to given value.
 
 
 

@@ -1,0 +1,13 @@
+type: object
+required:
+  - self
+  - related
+properties:
+  self:
+    type: string
+    example: 'v1/users/123e4567-e89b-12d3-a456-426614174000'
+    description: The self link of the resource
+  related:
+    type: string
+    example: 'v1/news/d3d767e1-8795-43d1-a9c6-34296abd78a0'
+    description: The related link of the resource (might think of it as of parent link)

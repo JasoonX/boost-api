@@ -1,0 +1,8 @@
+UnauthorizedError:
+  $ref: './UnauthorizedError.yaml'
+InternalServerError:
+  $ref: './InternalServerError.yaml'
+BadRequestError:
+  $ref: './BadRequestError.yaml'
+ForbiddenError:
+  $ref: './ForbiddenError.yaml'

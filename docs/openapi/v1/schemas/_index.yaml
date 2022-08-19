@@ -1,0 +1,53 @@
+# Enums:
+SortOrder:
+  $ref: './Enums.yaml#/SortOrder'
+UserRole:
+  $ref: './Enums.yaml#/UserRole'
+UserStatus:
+  $ref: './Enums.yaml#/UserStatus'
+EntityType:
+  $ref: './Enums.yaml#/EntityType'
+
+# Model:
+# Relationships
+EntityUUID:
+  $ref: './EntityUUID.yaml'
+RelatedEntity:
+  $ref: './RelatedEntity.yaml'
+RelatedLinks:
+  $ref: './RelatedLinks.yaml'
+# Auth
+Credentials:
+  $ref: './Credentials.yaml'
+TokenPair:
+  $ref: './TokenPair.yaml'
+# Pagination
+Page:
+  $ref: './Page.yaml'
+Links:
+  $ref: './Links.yaml'
+# Return data
+Status:
+  $ref: './Status.yaml'
+Error:
+  $ref: './Error.yaml'
+AddNews:
+  $ref: './AddNews.yaml'
+News:
+  $ref: './News.yaml'
+NewsMedia:
+  $ref: './NewsMedia.yaml'
+NewsMediaResource:
+  $ref: './NewsMediaResource.yaml'
+AddUser:
+  $ref: './AddUser.yaml'
+User:
+  $ref: './User.yaml'
+AddEmail:
+  $ref: './AddEmail.yaml'
+Email:
+  $ref: './Email.yaml'
+AddPhone:
+  $ref: './AddPhone.yaml'
+Phone:
+  $ref: './Phone.yaml'

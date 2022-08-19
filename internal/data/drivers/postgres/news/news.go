@@ -10,7 +10,7 @@ import (
 	"gorm.io/gorm"
 
 	"github.com/BOOST-2021/boost-app-back/internal/common"
-	"github.com/BOOST-2021/boost-app-back/internal/common/enum"
+	"github.com/BOOST-2021/boost-app-back/internal/common/enums"
 	"github.com/BOOST-2021/boost-app-back/internal/config"
 	"github.com/BOOST-2021/boost-app-back/internal/data/drivers/postgres"
 	"github.com/BOOST-2021/boost-app-back/internal/data/model"
@@ -58,7 +58,7 @@ func (p newsProvider) ListNews(_ context.Context) ([]model.News, error) {
 }
 
 func (p newsProvider) IndexNews(ctx context.Context, id uuid.UUID, title, text, meta string) error {
-	locale := enum.LocaleFromISO2(common.GetLocaleFromContext(ctx))
+	locale := enums.LocaleFromISO2(common.GetLocaleFromContext(ctx))
 	err := p.db.Model(model.News{
 		ID: id,
 	}).UpdateColumn(

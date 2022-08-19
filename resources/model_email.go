@@ -16,22 +16,22 @@ import (
 
 // Email struct for Email
 type Email struct {
-	Id          string `json:"id"`
-	Email       string `json:"email"`
-	Verified    *bool  `json:"verified,omitempty"`
-	PrimaryFlag *bool  `json:"primary_flag,omitempty"`
-	UserId      string `json:"user_id"`
+	Id            string             `json:"id"`
+	Type          EntityType         `json:"type"`
+	Attributes    EmailAttributes    `json:"attributes"`
+	Relationships EmailRelationships `json:"relationships"`
 }
 
 // NewEmail instantiates a new Email object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewEmail(id string, email string, userId string) *Email {
+func NewEmail(id string, type_ EntityType, attributes EmailAttributes, relationships EmailRelationships) *Email {
 	this := Email{}
 	this.Id = id
-	this.Email = email
-	this.UserId = userId
+	this.Type = type_
+	this.Attributes = attributes
+	this.Relationships = relationships
 	return &this
 }
 
@@ -67,116 +67,76 @@ func (o *Email) SetId(v string) {
 	o.Id = v
 }
 
-// GetEmail returns the Email field value
-func (o *Email) GetEmail() string {
+// GetType returns the Type field value
+func (o *Email) GetType() EntityType {
 	if o == nil {
-		var ret string
+		var ret EntityType
 		return ret
 	}
 
-	return o.Email
+	return o.Type
 }
 
-// GetEmailOk returns a tuple with the Email field value
+// GetTypeOk returns a tuple with the Type field value
 // and a boolean to check if the value has been set.
-func (o *Email) GetEmailOk() (*string, bool) {
+func (o *Email) GetTypeOk() (*EntityType, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.Email, true
+	return &o.Type, true
 }
 
-// SetEmail sets field value
-func (o *Email) SetEmail(v string) {
-	o.Email = v
+// SetType sets field value
+func (o *Email) SetType(v EntityType) {
+	o.Type = v
 }
 
-// GetVerified returns the Verified field value if set, zero value otherwise.
-func (o *Email) GetVerified() bool {
-	if o == nil || o.Verified == nil {
-		var ret bool
-		return ret
-	}
-	return *o.Verified
-}
-
-// GetVerifiedOk returns a tuple with the Verified field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *Email) GetVerifiedOk() (*bool, bool) {
-	if o == nil || o.Verified == nil {
-		return nil, false
-	}
-	return o.Verified, true
-}
-
-// HasVerified returns a boolean if a field has been set.
-func (o *Email) HasVerified() bool {
-	if o != nil && o.Verified != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetVerified gets a reference to the given bool and assigns it to the Verified field.
-func (o *Email) SetVerified(v bool) {
-	o.Verified = &v
-}
-
-// GetPrimaryFlag returns the PrimaryFlag field value if set, zero value otherwise.
-func (o *Email) GetPrimaryFlag() bool {
-	if o == nil || o.PrimaryFlag == nil {
-		var ret bool
-		return ret
-	}
-	return *o.PrimaryFlag
-}
-
-// GetPrimaryFlagOk returns a tuple with the PrimaryFlag field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *Email) GetPrimaryFlagOk() (*bool, bool) {
-	if o == nil || o.PrimaryFlag == nil {
-		return nil, false
-	}
-	return o.PrimaryFlag, true
-}
-
-// HasPrimaryFlag returns a boolean if a field has been set.
-func (o *Email) HasPrimaryFlag() bool {
-	if o != nil && o.PrimaryFlag != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetPrimaryFlag gets a reference to the given bool and assigns it to the PrimaryFlag field.
-func (o *Email) SetPrimaryFlag(v bool) {
-	o.PrimaryFlag = &v
-}
-
-// GetUserId returns the UserId field value
-func (o *Email) GetUserId() string {
+// GetAttributes returns the Attributes field value
+func (o *Email) GetAttributes() EmailAttributes {
 	if o == nil {
-		var ret string
+		var ret EmailAttributes
 		return ret
 	}
 
-	return o.UserId
+	return o.Attributes
 }
 
-// GetUserIdOk returns a tuple with the UserId field value
+// GetAttributesOk returns a tuple with the Attributes field value
 // and a boolean to check if the value has been set.
-func (o *Email) GetUserIdOk() (*string, bool) {
+func (o *Email) GetAttributesOk() (*EmailAttributes, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.UserId, true
+	return &o.Attributes, true
 }
 
-// SetUserId sets field value
-func (o *Email) SetUserId(v string) {
-	o.UserId = v
+// SetAttributes sets field value
+func (o *Email) SetAttributes(v EmailAttributes) {
+	o.Attributes = v
+}
+
+// GetRelationships returns the Relationships field value
+func (o *Email) GetRelationships() EmailRelationships {
+	if o == nil {
+		var ret EmailRelationships
+		return ret
+	}
+
+	return o.Relationships
+}
+
+// GetRelationshipsOk returns a tuple with the Relationships field value
+// and a boolean to check if the value has been set.
+func (o *Email) GetRelationshipsOk() (*EmailRelationships, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Relationships, true
+}
+
+// SetRelationships sets field value
+func (o *Email) SetRelationships(v EmailRelationships) {
+	o.Relationships = v
 }
 
 func (o Email) MarshalJSON() ([]byte, error) {
@@ -185,16 +145,13 @@ func (o Email) MarshalJSON() ([]byte, error) {
 		toSerialize["id"] = o.Id
 	}
 	if true {
-		toSerialize["email"] = o.Email
-	}
-	if o.Verified != nil {
-		toSerialize["verified"] = o.Verified
-	}
-	if o.PrimaryFlag != nil {
-		toSerialize["primary_flag"] = o.PrimaryFlag
+		toSerialize["type"] = o.Type
 	}
 	if true {
-		toSerialize["user_id"] = o.UserId
+		toSerialize["attributes"] = o.Attributes
+	}
+	if true {
+		toSerialize["relationships"] = o.Relationships
 	}
 	return json.Marshal(toSerialize)
 }

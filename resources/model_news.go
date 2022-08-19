@@ -12,27 +12,26 @@ package resources
 
 import (
 	"encoding/json"
-	"time"
 )
 
 // News struct for News
 type News struct {
-	Id        string     `json:"id"`
-	AuthorId  string     `json:"author_id"`
-	CreatedAt time.Time  `json:"created_at"`
-	UpdatedAt *time.Time `json:"updated_at,omitempty"`
-	Media     *NewsMedia `json:"media,omitempty"`
+	Id            string            `json:"id"`
+	Type          EntityType        `json:"type"`
+	Attributes    NewsAttributes    `json:"attributes"`
+	Relationships NewsRelationships `json:"relationships"`
 }
 
 // NewNews instantiates a new News object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewNews(id string, authorId string, createdAt time.Time) *News {
+func NewNews(id string, type_ EntityType, attributes NewsAttributes, relationships NewsRelationships) *News {
 	this := News{}
 	this.Id = id
-	this.AuthorId = authorId
-	this.CreatedAt = createdAt
+	this.Type = type_
+	this.Attributes = attributes
+	this.Relationships = relationships
 	return &this
 }
 
@@ -68,116 +67,76 @@ func (o *News) SetId(v string) {
 	o.Id = v
 }
 
-// GetAuthorId returns the AuthorId field value
-func (o *News) GetAuthorId() string {
+// GetType returns the Type field value
+func (o *News) GetType() EntityType {
 	if o == nil {
-		var ret string
+		var ret EntityType
 		return ret
 	}
 
-	return o.AuthorId
+	return o.Type
 }
 
-// GetAuthorIdOk returns a tuple with the AuthorId field value
+// GetTypeOk returns a tuple with the Type field value
 // and a boolean to check if the value has been set.
-func (o *News) GetAuthorIdOk() (*string, bool) {
+func (o *News) GetTypeOk() (*EntityType, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.AuthorId, true
+	return &o.Type, true
 }
 
-// SetAuthorId sets field value
-func (o *News) SetAuthorId(v string) {
-	o.AuthorId = v
+// SetType sets field value
+func (o *News) SetType(v EntityType) {
+	o.Type = v
 }
 
-// GetCreatedAt returns the CreatedAt field value
-func (o *News) GetCreatedAt() time.Time {
+// GetAttributes returns the Attributes field value
+func (o *News) GetAttributes() NewsAttributes {
 	if o == nil {
-		var ret time.Time
+		var ret NewsAttributes
 		return ret
 	}
 
-	return o.CreatedAt
+	return o.Attributes
 }
 
-// GetCreatedAtOk returns a tuple with the CreatedAt field value
+// GetAttributesOk returns a tuple with the Attributes field value
 // and a boolean to check if the value has been set.
-func (o *News) GetCreatedAtOk() (*time.Time, bool) {
+func (o *News) GetAttributesOk() (*NewsAttributes, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.CreatedAt, true
+	return &o.Attributes, true
 }
 
-// SetCreatedAt sets field value
-func (o *News) SetCreatedAt(v time.Time) {
-	o.CreatedAt = v
+// SetAttributes sets field value
+func (o *News) SetAttributes(v NewsAttributes) {
+	o.Attributes = v
 }
 
-// GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise.
-func (o *News) GetUpdatedAt() time.Time {
-	if o == nil || o.UpdatedAt == nil {
-		var ret time.Time
+// GetRelationships returns the Relationships field value
+func (o *News) GetRelationships() NewsRelationships {
+	if o == nil {
+		var ret NewsRelationships
 		return ret
 	}
-	return *o.UpdatedAt
+
+	return o.Relationships
 }
 
-// GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
+// GetRelationshipsOk returns a tuple with the Relationships field value
 // and a boolean to check if the value has been set.
-func (o *News) GetUpdatedAtOk() (*time.Time, bool) {
-	if o == nil || o.UpdatedAt == nil {
+func (o *News) GetRelationshipsOk() (*NewsRelationships, bool) {
+	if o == nil {
 		return nil, false
 	}
-	return o.UpdatedAt, true
+	return &o.Relationships, true
 }
 
-// HasUpdatedAt returns a boolean if a field has been set.
-func (o *News) HasUpdatedAt() bool {
-	if o != nil && o.UpdatedAt != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetUpdatedAt gets a reference to the given time.Time and assigns it to the UpdatedAt field.
-func (o *News) SetUpdatedAt(v time.Time) {
-	o.UpdatedAt = &v
-}
-
-// GetMedia returns the Media field value if set, zero value otherwise.
-func (o *News) GetMedia() NewsMedia {
-	if o == nil || o.Media == nil {
-		var ret NewsMedia
-		return ret
-	}
-	return *o.Media
-}
-
-// GetMediaOk returns a tuple with the Media field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *News) GetMediaOk() (*NewsMedia, bool) {
-	if o == nil || o.Media == nil {
-		return nil, false
-	}
-	return o.Media, true
-}
-
-// HasMedia returns a boolean if a field has been set.
-func (o *News) HasMedia() bool {
-	if o != nil && o.Media != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetMedia gets a reference to the given NewsMedia and assigns it to the Media field.
-func (o *News) SetMedia(v NewsMedia) {
-	o.Media = &v
+// SetRelationships sets field value
+func (o *News) SetRelationships(v NewsRelationships) {
+	o.Relationships = v
 }
 
 func (o News) MarshalJSON() ([]byte, error) {
@@ -186,16 +145,13 @@ func (o News) MarshalJSON() ([]byte, error) {
 		toSerialize["id"] = o.Id
 	}
 	if true {
-		toSerialize["author_id"] = o.AuthorId
+		toSerialize["type"] = o.Type
 	}
 	if true {
-		toSerialize["created_at"] = o.CreatedAt
+		toSerialize["attributes"] = o.Attributes
 	}
-	if o.UpdatedAt != nil {
-		toSerialize["updated_at"] = o.UpdatedAt
-	}
-	if o.Media != nil {
-		toSerialize["media"] = o.Media
+	if true {
+		toSerialize["relationships"] = o.Relationships
 	}
 	return json.Marshal(toSerialize)
 }

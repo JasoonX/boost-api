@@ -9,8 +9,7 @@ CREATE TABLE IF NOT EXISTS users
     username     text,
     password_hash     text NOT NULL,
     status       text NOT NULL,
-    role         text NOT NULL,
-    is_anonymous boolean   DEFAULT false
+    role         text[] NOT NULL
 -- TODO: add isGoogle, isApple, etc.
 );
 
@@ -33,7 +32,7 @@ CREATE TABLE IF NOT EXISTS news
     tsv_text_ru          tsvector
 );
 
-CREATE TABLE IF NOT EXISTS email
+CREATE TABLE IF NOT EXISTS emails
 (
     id          uuid    DEFAULT gen_random_uuid() PRIMARY KEY,
     is_verified boolean DEFAULT false,
@@ -42,7 +41,7 @@ CREATE TABLE IF NOT EXISTS email
     user_id     uuid REFERENCES users (id)
 );
 
-CREATE TABLE IF NOT EXISTS phone
+CREATE TABLE IF NOT EXISTS phones
 (
     id                uuid    DEFAULT gen_random_uuid() PRIMARY KEY,
     subscriber_number text NOT NULL,
@@ -59,7 +58,7 @@ CREATE TABLE IF NOT EXISTS country
     name text NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS location
+CREATE TABLE IF NOT EXISTS locations
 (
     id           uuid DEFAULT gen_random_uuid() PRIMARY KEY,
     country_code text REFERENCES country (code),
@@ -68,11 +67,11 @@ CREATE TABLE IF NOT EXISTS location
     street       text
 );
 
-CREATE TABLE IF NOT EXISTS user_location
+CREATE TABLE IF NOT EXISTS user_locations
 (
     id          uuid      DEFAULT gen_random_uuid() PRIMARY KEY,
     user_id     uuid REFERENCES users (id),
-    location_id uuid REFERENCES location (id),
+    location_id uuid REFERENCES locations (id),
     created_at  timestamp DEFAULT now()
 );
 
@@ -84,8 +83,8 @@ CREATE INDEX news_text_search_ru_idx ON news USING GIN (tsv_text_ru);
 -- +migrate Down
 DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS news CASCADE;
-DROP TABLE IF EXISTS email CASCADE;
-DROP TABLE IF EXISTS phone CASCADE;
-DROP TABLE IF EXISTS user_location CASCADE;
-DROP TABLE IF EXISTS location CASCADE;
+DROP TABLE IF EXISTS emails CASCADE;
+DROP TABLE IF EXISTS phones CASCADE;
+DROP TABLE IF EXISTS user_locations CASCADE;
+DROP TABLE IF EXISTS locations CASCADE;
 DROP TABLE IF EXISTS country CASCADE;

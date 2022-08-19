@@ -5,16 +5,15 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Id** | **string** |  | 
-**Email** | **string** |  | 
-**Verified** | Pointer to **bool** |  | [optional] 
-**PrimaryFlag** | Pointer to **bool** |  | [optional] 
-**UserId** | **string** |  | 
+**Type** | [**EntityType**](EntityType.md) |  | 
+**Attributes** | [**EmailAttributes**](EmailAttributes.md) |  | 
+**Relationships** | [**EmailRelationships**](EmailRelationships.md) |  | 
 
 ## Methods
 
 ### NewEmail
 
-`func NewEmail(id string, email string, userId string, ) *Email`
+`func NewEmail(id string, type_ EntityType, attributes EmailAttributes, relationships EmailRelationships, ) *Email`
 
 NewEmail instantiates a new Email object
 This constructor will assign default values to properties that have it defined,
@@ -49,94 +48,64 @@ and a boolean to check if the value has been set.
 SetId sets Id field to given value.
 
 
-### GetEmail
+### GetType
 
-`func (o *Email) GetEmail() string`
+`func (o *Email) GetType() EntityType`
 
-GetEmail returns the Email field if non-nil, zero value otherwise.
+GetType returns the Type field if non-nil, zero value otherwise.
 
-### GetEmailOk
+### GetTypeOk
 
-`func (o *Email) GetEmailOk() (*string, bool)`
+`func (o *Email) GetTypeOk() (*EntityType, bool)`
 
-GetEmailOk returns a tuple with the Email field if it's non-nil, zero value otherwise
+GetTypeOk returns a tuple with the Type field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetEmail
+### SetType
 
-`func (o *Email) SetEmail(v string)`
+`func (o *Email) SetType(v EntityType)`
 
-SetEmail sets Email field to given value.
+SetType sets Type field to given value.
 
 
-### GetVerified
+### GetAttributes
 
-`func (o *Email) GetVerified() bool`
+`func (o *Email) GetAttributes() EmailAttributes`
 
-GetVerified returns the Verified field if non-nil, zero value otherwise.
+GetAttributes returns the Attributes field if non-nil, zero value otherwise.
 
-### GetVerifiedOk
+### GetAttributesOk
 
-`func (o *Email) GetVerifiedOk() (*bool, bool)`
+`func (o *Email) GetAttributesOk() (*EmailAttributes, bool)`
 
-GetVerifiedOk returns a tuple with the Verified field if it's non-nil, zero value otherwise
+GetAttributesOk returns a tuple with the Attributes field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetVerified
+### SetAttributes
 
-`func (o *Email) SetVerified(v bool)`
+`func (o *Email) SetAttributes(v EmailAttributes)`
 
-SetVerified sets Verified field to given value.
+SetAttributes sets Attributes field to given value.
 
-### HasVerified
 
-`func (o *Email) HasVerified() bool`
+### GetRelationships
 
-HasVerified returns a boolean if a field has been set.
+`func (o *Email) GetRelationships() EmailRelationships`
 
-### GetPrimaryFlag
+GetRelationships returns the Relationships field if non-nil, zero value otherwise.
 
-`func (o *Email) GetPrimaryFlag() bool`
+### GetRelationshipsOk
 
-GetPrimaryFlag returns the PrimaryFlag field if non-nil, zero value otherwise.
+`func (o *Email) GetRelationshipsOk() (*EmailRelationships, bool)`
 
-### GetPrimaryFlagOk
-
-`func (o *Email) GetPrimaryFlagOk() (*bool, bool)`
-
-GetPrimaryFlagOk returns a tuple with the PrimaryFlag field if it's non-nil, zero value otherwise
+GetRelationshipsOk returns a tuple with the Relationships field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetPrimaryFlag
+### SetRelationships
 
-`func (o *Email) SetPrimaryFlag(v bool)`
+`func (o *Email) SetRelationships(v EmailRelationships)`
 
-SetPrimaryFlag sets PrimaryFlag field to given value.
-
-### HasPrimaryFlag
-
-`func (o *Email) HasPrimaryFlag() bool`
-
-HasPrimaryFlag returns a boolean if a field has been set.
-
-### GetUserId
-
-`func (o *Email) GetUserId() string`
-
-GetUserId returns the UserId field if non-nil, zero value otherwise.
-
-### GetUserIdOk
-
-`func (o *Email) GetUserIdOk() (*string, bool)`
-
-GetUserIdOk returns a tuple with the UserId field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetUserId
-
-`func (o *Email) SetUserId(v string)`
-
-SetUserId sets UserId field to given value.
+SetRelationships sets Relationships field to given value.
 
 
 

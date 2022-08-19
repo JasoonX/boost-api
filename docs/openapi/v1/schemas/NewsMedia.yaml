@@ -1,0 +1,12 @@
+type: object
+properties:
+  title:
+    type: string
+    example: 'IPhone'
+  text:
+    type: string
+    example: 'IPhone is a new phone'
+  resources:
+    type: array
+    items:
+      $ref: './NewsMediaResource.yaml'

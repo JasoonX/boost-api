@@ -16,18 +16,18 @@ import (
 
 // TokenPair struct for TokenPair
 type TokenPair struct {
-	AccessToken  string `json:"access_token"`
-	RefreshToken string `json:"refresh_token"`
+	Type       EntityType          `json:"type"`
+	Attributes TokenPairAttributes `json:"attributes"`
 }
 
 // NewTokenPair instantiates a new TokenPair object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewTokenPair(accessToken string, refreshToken string) *TokenPair {
+func NewTokenPair(type_ EntityType, attributes TokenPairAttributes) *TokenPair {
 	this := TokenPair{}
-	this.AccessToken = accessToken
-	this.RefreshToken = refreshToken
+	this.Type = type_
+	this.Attributes = attributes
 	return &this
 }
 
@@ -39,61 +39,61 @@ func NewTokenPairWithDefaults() *TokenPair {
 	return &this
 }
 
-// GetAccessToken returns the AccessToken field value
-func (o *TokenPair) GetAccessToken() string {
+// GetType returns the Type field value
+func (o *TokenPair) GetType() EntityType {
 	if o == nil {
-		var ret string
+		var ret EntityType
 		return ret
 	}
 
-	return o.AccessToken
+	return o.Type
 }
 
-// GetAccessTokenOk returns a tuple with the AccessToken field value
+// GetTypeOk returns a tuple with the Type field value
 // and a boolean to check if the value has been set.
-func (o *TokenPair) GetAccessTokenOk() (*string, bool) {
+func (o *TokenPair) GetTypeOk() (*EntityType, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.AccessToken, true
+	return &o.Type, true
 }
 
-// SetAccessToken sets field value
-func (o *TokenPair) SetAccessToken(v string) {
-	o.AccessToken = v
+// SetType sets field value
+func (o *TokenPair) SetType(v EntityType) {
+	o.Type = v
 }
 
-// GetRefreshToken returns the RefreshToken field value
-func (o *TokenPair) GetRefreshToken() string {
+// GetAttributes returns the Attributes field value
+func (o *TokenPair) GetAttributes() TokenPairAttributes {
 	if o == nil {
-		var ret string
+		var ret TokenPairAttributes
 		return ret
 	}
 
-	return o.RefreshToken
+	return o.Attributes
 }
 
-// GetRefreshTokenOk returns a tuple with the RefreshToken field value
+// GetAttributesOk returns a tuple with the Attributes field value
 // and a boolean to check if the value has been set.
-func (o *TokenPair) GetRefreshTokenOk() (*string, bool) {
+func (o *TokenPair) GetAttributesOk() (*TokenPairAttributes, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.RefreshToken, true
+	return &o.Attributes, true
 }
 
-// SetRefreshToken sets field value
-func (o *TokenPair) SetRefreshToken(v string) {
-	o.RefreshToken = v
+// SetAttributes sets field value
+func (o *TokenPair) SetAttributes(v TokenPairAttributes) {
+	o.Attributes = v
 }
 
 func (o TokenPair) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if true {
-		toSerialize["access_token"] = o.AccessToken
+		toSerialize["type"] = o.Type
 	}
 	if true {
-		toSerialize["refresh_token"] = o.RefreshToken
+		toSerialize["attributes"] = o.Attributes
 	}
 	return json.Marshal(toSerialize)
 }

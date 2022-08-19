@@ -1,0 +1,12 @@
+type: object
+required:
+  - code
+  - error
+properties:
+  code:
+    type: integer
+    format: int32
+    example: 123
+  error:
+    type: string
+    example: 'Invalid data provided'

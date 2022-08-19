@@ -1,0 +1,16 @@
+provider:
+  in: path
+  required: true
+  name: provider
+  schema:
+    type: string
+  description: The provider from the list of available providers.
+  example: google
+id:
+  in: path
+  required: true
+  name: id
+  schema:
+    type: string
+  description: The of an entity
+  example: '123e4567-e89b-12d3-a456-426614174000'

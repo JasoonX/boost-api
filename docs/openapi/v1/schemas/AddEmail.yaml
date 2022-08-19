@@ -1,0 +1,26 @@
+type: object
+required:
+  - type
+  - attributes
+  - relationships
+properties:
+  type:
+    $ref: './Enums.yaml#/EntityType'
+  attributes:
+    type: object
+    required:
+      - email
+    properties:
+      email:
+        type: string
+        example: 'test@example.com'
+  relationships:
+    type: object
+    required:
+      - user
+    properties:
+      user:
+        type: object
+        properties:
+          data:
+            $ref: './RelatedEntity.yaml'

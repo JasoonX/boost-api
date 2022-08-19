@@ -55,3 +55,7 @@ func (a *NewsMedia) Scan(value interface{}) error {
 func (News) TableName() string {
 	return "news"
 }
+
+func (n News) GetID() string {
+	return n.ID.String()
+}

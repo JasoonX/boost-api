@@ -1,0 +1,949 @@
+openapi: 3.0.0
+info:
+  title: Boost API
+  description: This is a REST API of the Boost App.
+  version: 0.0.1-beta1
+servers:
+  - url: 'http://api.boost.net.ua/v1'
+    description: Main (production) listener
+  - url: 'http://dev.api.boost.net.ua/v1'
+    description: Test (development) listener
+paths:
+  /healthcheck:
+    get:
+      summary: Returns success if listener runs successfully.
+      responses:
+        '200':
+          description: A JSON object with healthcheck result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /auth:
+    post:
+      tags:
+        - auth
+      parameters:
+        - $ref: '#/components/parameters/localizationHeader'
+        - $ref: '#/components/parameters/deviceHeader'
+        - $ref: '#/components/parameters/versionHeader'
+      summary: Authenticates user and returns access and refresh tokens.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - data
+              properties:
+                data:
+                  $ref: '#/components/schemas/Credentials'
+      responses:
+        '200':
+          description: A JSON object with access and refresh tokens
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/TokenPair'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/auth/{provider}':
+    get:
+      tags:
+        - auth
+      parameters:
+        - $ref: '#/components/parameters/provider'
+      summary: Authenticates user and returns access and refresh tokens for specified provider.
+      responses:
+        '200':
+          description: A JSON object with access and refresh tokens
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/TokenPair'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/auth/{provider}/callback':
+    get:
+      tags:
+        - auth
+      parameters:
+        - $ref: '#/components/parameters/provider'
+      summary: Callback for the provider to support OAuth2 specification.
+      responses:
+        '200':
+          description: A JSON object with access and refresh tokens
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/TokenPair'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /news:
+    get:
+      tags:
+        - news
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/authorizationHeader'
+        - $ref: '#/components/parameters/localizationHeader'
+        - $ref: '#/components/parameters/deviceHeader'
+        - $ref: '#/components/parameters/versionHeader'
+        - $ref: '#/components/parameters/pageOffset'
+        - $ref: '#/components/parameters/pageLimit'
+        - $ref: '#/components/parameters/pageOrder'
+        - $ref: '#/components/parameters/pageOrderBy'
+        - $ref: '#/components/parameters/searchFirstName'
+        - $ref: '#/components/parameters/searchLastName'
+        - $ref: '#/components/parameters/filterCity'
+      responses:
+        '200':
+          description: Search for news
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - data
+                properties:
+                  status:
+                    $ref: '#/components/schemas/Status'
+                  page:
+                    $ref: '#/components/schemas/Page'
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                  errors:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Error'
+                  data:
+                    type: object
+                    properties:
+                      news:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/News'
+                  included:
+                    type: object
+                    properties:
+                      author:
+                        $ref: '#/components/schemas/User'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      tags:
+        - news
+      security:
+        - BearerAuth: []
+      summary: Add new news
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - data
+              properties:
+                data:
+                  $ref: '#/components/schemas/AddNews'
+      responses:
+        '201':
+          description: Created successfully status
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/Status'
+                  data:
+                    $ref: '#/components/schemas/News'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /users:
+    post:
+      tags:
+        - users
+      parameters:
+        - $ref: '#/components/parameters/localizationHeader'
+        - $ref: '#/components/parameters/deviceHeader'
+        - $ref: '#/components/parameters/versionHeader'
+      summary: Add a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - data
+              properties:
+                data:
+                  $ref: '#/components/schemas/AddUser'
+      responses:
+        '201':
+          description: Created successfully status
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/Status'
+                  meta:
+                    type: object
+                  errors:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Error'
+                  data:
+                    $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/users/{id}':
+    get:
+      tags:
+        - users
+      parameters:
+        - $ref: '#/components/parameters/authorizationHeader'
+        - $ref: '#/components/parameters/localizationHeader'
+        - $ref: '#/components/parameters/deviceHeader'
+        - $ref: '#/components/parameters/versionHeader'
+        - $ref: '#/components/parameters/id'
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Request status OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - data
+                properties:
+                  status:
+                    $ref: '#/components/schemas/Status'
+                  meta:
+                    type: object
+                  errors:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Error'
+                  data:
+                    $ref: '#/components/schemas/User'
+                  included:
+                    type: object
+                    properties:
+                      emails:
+                        description: Emails that belong to this user.
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Email'
+                      phones:
+                        description: Phones that belong to this user.
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Phone'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  parameters:
+    localizationHeader:
+      in: header
+      name: Accept-Language
+      schema:
+        title: Locale
+        enum:
+          - en
+          - ru
+          - ua
+          - pl
+      required: true
+    deviceHeader:
+      in: header
+      name: User-Agent
+      schema:
+        title: Device
+        enum:
+          - IOS
+          - Android
+          - Web
+      required: true
+    versionHeader:
+      in: header
+      name: Accept-Version
+      schema:
+        type: string
+      required: true
+    authorizationHeader:
+      in: header
+      name: Authorization
+      schema:
+        type: string
+        format: bearer
+      description: Bearer token
+      required: true
+    provider:
+      in: path
+      required: true
+      name: provider
+      schema:
+        type: string
+      description: The provider from the list of available providers.
+      example: google
+    id:
+      in: path
+      required: true
+      name: id
+      schema:
+        type: string
+      description: The of an entity
+      example: 123e4567-e89b-12d3-a456-426614174000
+    pageOffset:
+      in: query
+      name: 'page[offset]'
+      schema:
+        type: integer
+      description: The number of items to skip before starting to collect the result set
+    pageLimit:
+      in: query
+      name: 'page[limit]'
+      schema:
+        type: integer
+      description: The numbers of items to return
+    pageOrder:
+      in: query
+      name: 'page[order]'
+      schema:
+        $ref: '#/components/schemas/SortOrder'
+      description: The order of the result set
+    pageOrderBy:
+      in: query
+      name: 'page[order_by]'
+      schema:
+        type: string
+      description: The field to order the result set by
+    searchFirstName:
+      in: query
+      name: 'search[first_name]'
+      schema:
+        type: string
+        example: Jon
+      description: First name of an author to return news for
+    searchLastName:
+      in: query
+      name: 'search[last_name]'
+      schema:
+        type: string
+        example: Doe
+      description: Last name of an author to return news for
+    filterCity:
+      in: query
+      name: 'filter[city]'
+      schema:
+        type: string
+        example: Kiev
+      description: City to filter news by
+  schemas:
+    SortOrder:
+      title: SortOrder
+      enum:
+        - asc
+        - desc
+      description: |
+        Sort order:
+         * `asc` - Ascending, from A to Z
+         * `desc` - Descending, from Z to A
+    UserRole:
+      title: UserRole
+      enum:
+        - VIEWER
+        - REACT_VIEWER
+        - ADMIN
+    UserStatus:
+      title: UserStatus
+      enum:
+        - ACTIVE
+        - INACTIVE
+        - UNVERIFIED
+    EntityType:
+      title: EntityType
+      enum:
+        - USERS
+        - EMAILS
+        - PHONES
+        - NEWS
+        - NEWS_MEDIA
+        - NEWS_MEDIA_RESOURCES
+        - CREDENTIALS
+        - TOKEN_PAIR
+    EntityUUID:
+      type: string
+      example: 123e4567-e89b-12d3-a456-426614174000
+    RelatedEntity:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/EntityUUID'
+        type:
+          $ref: '#/components/schemas/EntityType'
+    RelatedLinks:
+      type: object
+      required:
+        - self
+        - related
+      properties:
+        self:
+          type: string
+          example: v1/users/123e4567-e89b-12d3-a456-426614174000
+          description: The self link of the resource
+        related:
+          type: string
+          example: v1/news/d3d767e1-8795-43d1-a9c6-34296abd78a0
+          description: The related link of the resource (might think of it as of parent link)
+    Credentials:
+      type: object
+      required:
+        - id
+        - type
+        - attributes
+      properties:
+        id:
+          $ref: '#/components/schemas/EntityUUID'
+        type:
+          $ref: '#/components/schemas/EntityType'
+        attributes:
+          type: object
+          required:
+            - email
+            - password
+          properties:
+            email:
+              type: string
+              example: test@example.com
+            password:
+              type: string
+              example: password
+    TokenPair:
+      type: object
+      required:
+        - type
+        - attributes
+      properties:
+        type:
+          $ref: '#/components/schemas/EntityType'
+        attributes:
+          required:
+            - access_token
+            - refresh_token
+          properties:
+            access_token:
+              type: string
+              example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+            refresh_token:
+              type: string
+              example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+    Page:
+      type: object
+      properties:
+        offset:
+          type: integer
+          format: int64
+          example: 0
+        limit:
+          type: integer
+          format: int64
+          example: 10
+        orderby:
+          type: string
+          example: id
+        order:
+          type: string
+          enum:
+            - asc
+            - desc
+          example: asc
+        total:
+          type: integer
+          format: int64
+          example: 100
+    Links:
+      type: object
+      required:
+        - self
+        - next
+        - prev
+      properties:
+        self:
+          type: string
+          example: 'v1/news?page[offset]=0&page[limit]=10'
+        next:
+          type: string
+          example: 'v1/news?page[offset]=10&page[limit]=10'
+        prev:
+          type: string
+          example: 'v1/news?page[offset]=0&page[limit]=10'
+        first:
+          type: string
+          example: 'v1/news?page[offset]=0&page[limit]=10'
+        last:
+          type: string
+          example: 'v1/news?page[offset]=0&page[limit]=10'
+    Status:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+          example: 200
+        message:
+          type: string
+          example: Server runs successfully
+    Error:
+      type: object
+      required:
+        - code
+        - error
+      properties:
+        code:
+          type: integer
+          format: int32
+          example: 123
+        error:
+          type: string
+          example: Invalid data provided
+    AddNews:
+      type: object
+      required:
+        - type
+        - attributes
+        - relationships
+      properties:
+        type:
+          $ref: '#/components/schemas/EntityType'
+        attributes:
+          type: object
+          required:
+            - media
+          properties:
+            media:
+              $ref: '#/components/schemas/NewsMedia'
+        relationships:
+          description: Relationships of the news to add.
+          type: object
+          required:
+            - author
+          properties:
+            author:
+              description: Author of the news.
+              type: object
+              properties:
+                data:
+                  $ref: '#/components/schemas/RelatedEntity'
+    News:
+      type: object
+      required:
+        - id
+        - type
+        - attributes
+        - relationships
+      properties:
+        id:
+          $ref: '#/components/schemas/EntityUUID'
+        type:
+          $ref: '#/components/schemas/EntityType'
+        attributes:
+          type: object
+          required:
+            - created_at
+          properties:
+            created_at:
+              type: string
+              format: date-time
+              example: '2020-01-01T00:00:00Z'
+            updated_at:
+              type: string
+              format: date-time
+              example: '2020-01-01T00:00:00Z'
+            media:
+              $ref: '#/components/schemas/NewsMedia'
+        relationships:
+          type: object
+          required:
+            - author
+          properties:
+            author:
+              type: object
+              properties:
+                links:
+                  $ref: '#/components/schemas/RelatedLinks'
+                data:
+                  $ref: '#/components/schemas/RelatedEntity'
+    NewsMedia:
+      type: object
+      properties:
+        title:
+          type: string
+          example: IPhone
+        text:
+          type: string
+          example: IPhone is a new phone
+        resources:
+          type: array
+          items:
+            $ref: '#/components/schemas/NewsMediaResource'
+    NewsMediaResource:
+      type: object
+      properties:
+        type:
+          type: string
+          example: image
+        url:
+          type: string
+          example: 'https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png'
+        meta:
+          description: Any meta information
+          type: object
+    AddUser:
+      type: object
+      required:
+        - type
+        - attributes
+      properties:
+        type:
+          $ref: '#/components/schemas/EntityType'
+        attributes:
+          type: object
+          required:
+            - email
+            - password
+          properties:
+            email:
+              type: string
+              example: example@gmail.com
+            phone:
+              type: string
+              example: '+380935123456'
+            username:
+              type: string
+              example: admin
+            password:
+              type: string
+              example: '123456'
+              description: 'Password must be at least 8 characters long, contain at least 2 numbers and 2 uppercase letters, and 1 special symbol.'
+            first_name:
+              type: string
+              example: John
+            last_name:
+              type: string
+              example: Doe
+    User:
+      type: object
+      required:
+        - id
+        - type
+        - attributes
+        - relationships
+      properties:
+        id:
+          $ref: '#/components/schemas/EntityUUID'
+        type:
+          $ref: '#/components/schemas/EntityType'
+        attributes:
+          type: object
+          required:
+            - created_at
+            - status
+            - role
+            - password
+          properties:
+            created_at:
+              type: string
+              format: date-time
+              example: '2020-01-01T00:00:00Z'
+            updated_at:
+              type: string
+              format: date-time
+              example: '2020-01-01T00:00:00Z'
+            username:
+              type: string
+              example: admin
+            first_name:
+              type: string
+              example: John
+            last_name:
+              type: string
+              example: Doe
+            status:
+              $ref: '#/components/schemas/UserStatus'
+            role:
+              type: array
+              items:
+                $ref: '#/components/schemas/UserRole'
+        relationships:
+          type: object
+          required:
+            - emails
+          properties:
+            emails:
+              description: Emails that belong to this user.
+              type: object
+              properties:
+                data:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/RelatedEntity'
+            phones:
+              description: Phones that belong to this user.
+              type: object
+              properties:
+                data:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/RelatedEntity'
+    AddEmail:
+      type: object
+      required:
+        - type
+        - attributes
+        - relationships
+      properties:
+        type:
+          $ref: '#/components/schemas/EntityType'
+        attributes:
+          type: object
+          required:
+            - email
+          properties:
+            email:
+              type: string
+              example: test@example.com
+        relationships:
+          type: object
+          required:
+            - user
+          properties:
+            user:
+              type: object
+              properties:
+                data:
+                  $ref: '#/components/schemas/RelatedEntity'
+    Email:
+      type: object
+      required:
+        - id
+        - type
+        - attributes
+        - relationships
+      properties:
+        id:
+          type: string
+          example: 123e4567-e89b-12d3-a456-426614174000
+        type:
+          $ref: '#/components/schemas/EntityType'
+        attributes:
+          type: object
+          required:
+            - email
+          properties:
+            email:
+              type: string
+              example: jon.doe@example.com
+            is_verified:
+              type: boolean
+              example: true
+            is_primary:
+              type: boolean
+              example: true
+        relationships:
+          type: object
+          required:
+            - user
+          properties:
+            user:
+              description: User that owns this email.
+              type: object
+              properties:
+                links:
+                  $ref: '#/components/schemas/RelatedLinks'
+                data:
+                  $ref: '#/components/schemas/RelatedEntity'
+    AddPhone:
+      type: object
+      required:
+        - type
+        - attributes
+        - relationships
+      properties:
+        type:
+          $ref: '#/components/schemas/EntityType'
+        attributes:
+          type: object
+          required:
+            - phone
+          properties:
+            subscriber_number:
+              type: string
+              description: Phone number of the subscriber.
+              example: 935123456
+            country_code:
+              type: string
+              description: Country code of the subscriber.
+              example: 38
+            extension:
+              type: string
+              description: Extension of the subscriber.
+              example: 4025
+        relationships:
+          type: object
+          required:
+            - user
+          properties:
+            user:
+              type: object
+              properties:
+                data:
+                  $ref: '#/components/schemas/RelatedEntity'
+    Phone:
+      type: object
+      required:
+        - id
+        - type
+        - attributes
+        - relationships
+      properties:
+        id:
+          $ref: '#/components/schemas/EntityUUID'
+        type:
+          $ref: '#/components/schemas/EntityType'
+        attributes:
+          type: object
+          required:
+            - subscriber_number
+            - user_id
+          properties:
+            subscriber_number:
+              type: string
+              example: '0664023252'
+            country_code:
+              type: string
+              example: '+38'
+            extension:
+              type: string
+              example: '4025'
+            verified:
+              type: boolean
+              example: true
+            primary_flag:
+              type: boolean
+              example: true
+        relationships:
+          type: object
+          required:
+            - user
+          properties:
+            user:
+              description: User that owns this phone.
+              type: object
+              properties:
+                links:
+                  $ref: '#/components/schemas/RelatedLinks'
+                data:
+                  $ref: '#/components/schemas/RelatedEntity'
+  responses:
+    UnauthorizedError:
+      description: Access token is missing or invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 401
+                  message:
+                    type: string
+                    example: User unauthorized
+    InternalServerError:
+      description: Something is wrong on the server
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 500
+                  message:
+                    type: string
+                    example: Something went wrong
+    BadRequestError:
+      description: Something is wrong with the data provided
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: Bad request

@@ -54,8 +54,8 @@ func Test_Decode(t *testing.T) {
 			in:   "page[limit]=12&page[offset]=12",
 			out: testEmbeded{
 				PageParams: params.PageParams{
-					Limit:  convert.ToPtr[int32](12),
-					Offset: convert.ToPtr[int32](12),
+					Limit:  convert.ToPtr[int64](12),
+					Offset: convert.ToPtr[int64](12),
 				},
 			},
 		},

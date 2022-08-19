@@ -4,14 +4,15 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Email** | **string** |  | 
-**Password** | **string** |  | 
+**Id** | **string** |  | 
+**Type** | [**EntityType**](EntityType.md) |  | 
+**Attributes** | [**CredentialsAttributes**](CredentialsAttributes.md) |  | 
 
 ## Methods
 
 ### NewCredentials
 
-`func NewCredentials(email string, password string, ) *Credentials`
+`func NewCredentials(id string, type_ EntityType, attributes CredentialsAttributes, ) *Credentials`
 
 NewCredentials instantiates a new Credentials object
 This constructor will assign default values to properties that have it defined,
@@ -26,44 +27,64 @@ NewCredentialsWithDefaults instantiates a new Credentials object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetEmail
+### GetId
 
-`func (o *Credentials) GetEmail() string`
+`func (o *Credentials) GetId() string`
 
-GetEmail returns the Email field if non-nil, zero value otherwise.
+GetId returns the Id field if non-nil, zero value otherwise.
 
-### GetEmailOk
+### GetIdOk
 
-`func (o *Credentials) GetEmailOk() (*string, bool)`
+`func (o *Credentials) GetIdOk() (*string, bool)`
 
-GetEmailOk returns a tuple with the Email field if it's non-nil, zero value otherwise
+GetIdOk returns a tuple with the Id field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetEmail
+### SetId
 
-`func (o *Credentials) SetEmail(v string)`
+`func (o *Credentials) SetId(v string)`
 
-SetEmail sets Email field to given value.
+SetId sets Id field to given value.
 
 
-### GetPassword
+### GetType
 
-`func (o *Credentials) GetPassword() string`
+`func (o *Credentials) GetType() EntityType`
 
-GetPassword returns the Password field if non-nil, zero value otherwise.
+GetType returns the Type field if non-nil, zero value otherwise.
 
-### GetPasswordOk
+### GetTypeOk
 
-`func (o *Credentials) GetPasswordOk() (*string, bool)`
+`func (o *Credentials) GetTypeOk() (*EntityType, bool)`
 
-GetPasswordOk returns a tuple with the Password field if it's non-nil, zero value otherwise
+GetTypeOk returns a tuple with the Type field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetPassword
+### SetType
 
-`func (o *Credentials) SetPassword(v string)`
+`func (o *Credentials) SetType(v EntityType)`
 
-SetPassword sets Password field to given value.
+SetType sets Type field to given value.
+
+
+### GetAttributes
+
+`func (o *Credentials) GetAttributes() CredentialsAttributes`
+
+GetAttributes returns the Attributes field if non-nil, zero value otherwise.
+
+### GetAttributesOk
+
+`func (o *Credentials) GetAttributesOk() (*CredentialsAttributes, bool)`
+
+GetAttributesOk returns a tuple with the Attributes field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAttributes
+
+`func (o *Credentials) SetAttributes(v CredentialsAttributes)`
+
+SetAttributes sets Attributes field to given value.
 
 
 

@@ -1,0 +1,40 @@
+type: object
+required:
+  - id
+  - type
+  - attributes
+  - relationships
+properties:
+  id:
+    type: string
+    example: '123e4567-e89b-12d3-a456-426614174000'
+  type:
+    $ref: './Enums.yaml#/EntityType'
+  attributes:
+    type: object
+    required:
+      - email
+    properties:
+      email:
+        type: string
+        example: 'jon.doe@example.com'
+      is_verified:
+        type: boolean
+        example: true
+      is_primary:
+        type: boolean
+        example: true
+  relationships:
+    type: object
+    required:
+      - user
+    properties:
+      user:
+        # TODO: make this a reference to the user and reuse where possible
+        description: User that owns this email.
+        type: object
+        properties:
+          links:
+            $ref: './RelatedLinks.yaml'
+          data:
+            $ref: './RelatedEntity.yaml'

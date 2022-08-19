@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **Meta** | Pointer to **map[string]interface{}** |  | [optional] 
 **Errors** | Pointer to [**[]Error**](Error.md) |  | [optional] 
 **Data** | [**NewsGet200ResponseData**](NewsGet200ResponseData.md) |  | 
+**Included** | Pointer to [**NewsGet200ResponseIncluded**](NewsGet200ResponseIncluded.md) |  | [optional] 
 
 ## Methods
 
@@ -174,6 +175,31 @@ and a boolean to check if the value has been set.
 
 SetData sets Data field to given value.
 
+
+### GetIncluded
+
+`func (o *NewsGet200Response) GetIncluded() NewsGet200ResponseIncluded`
+
+GetIncluded returns the Included field if non-nil, zero value otherwise.
+
+### GetIncludedOk
+
+`func (o *NewsGet200Response) GetIncludedOk() (*NewsGet200ResponseIncluded, bool)`
+
+GetIncludedOk returns a tuple with the Included field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIncluded
+
+`func (o *NewsGet200Response) SetIncluded(v NewsGet200ResponseIncluded)`
+
+SetIncluded sets Included field to given value.
+
+### HasIncluded
+
+`func (o *NewsGet200Response) HasIncluded() bool`
+
+HasIncluded returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

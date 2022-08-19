@@ -16,10 +16,11 @@ import (
 
 // UsersIdGet200Response struct for UsersIdGet200Response
 type UsersIdGet200Response struct {
-	Status *Status                `json:"status,omitempty"`
-	Meta   map[string]interface{} `json:"meta,omitempty"`
-	Errors []Error                `json:"errors,omitempty"`
-	Data   User                   `json:"data"`
+	Status   *Status                        `json:"status,omitempty"`
+	Meta     map[string]interface{}         `json:"meta,omitempty"`
+	Errors   []Error                        `json:"errors,omitempty"`
+	Data     User                           `json:"data"`
+	Included *UsersIdGet200ResponseIncluded `json:"included,omitempty"`
 }
 
 // NewUsersIdGet200Response instantiates a new UsersIdGet200Response object
@@ -160,6 +161,38 @@ func (o *UsersIdGet200Response) SetData(v User) {
 	o.Data = v
 }
 
+// GetIncluded returns the Included field value if set, zero value otherwise.
+func (o *UsersIdGet200Response) GetIncluded() UsersIdGet200ResponseIncluded {
+	if o == nil || o.Included == nil {
+		var ret UsersIdGet200ResponseIncluded
+		return ret
+	}
+	return *o.Included
+}
+
+// GetIncludedOk returns a tuple with the Included field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UsersIdGet200Response) GetIncludedOk() (*UsersIdGet200ResponseIncluded, bool) {
+	if o == nil || o.Included == nil {
+		return nil, false
+	}
+	return o.Included, true
+}
+
+// HasIncluded returns a boolean if a field has been set.
+func (o *UsersIdGet200Response) HasIncluded() bool {
+	if o != nil && o.Included != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetIncluded gets a reference to the given UsersIdGet200ResponseIncluded and assigns it to the Included field.
+func (o *UsersIdGet200Response) SetIncluded(v UsersIdGet200ResponseIncluded) {
+	o.Included = &v
+}
+
 func (o UsersIdGet200Response) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Status != nil {
@@ -173,6 +206,9 @@ func (o UsersIdGet200Response) MarshalJSON() ([]byte, error) {
 	}
 	if true {
 		toSerialize["data"] = o.Data
+	}
+	if o.Included != nil {
+		toSerialize["included"] = o.Included
 	}
 	return json.Marshal(toSerialize)
 }
