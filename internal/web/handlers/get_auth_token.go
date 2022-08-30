@@ -9,7 +9,6 @@ import (
 	"github.com/BOOST-2021/boost-app-back/internal/web/requests"
 	"github.com/BOOST-2021/boost-app-back/internal/web/responses"
 	webconvert "github.com/BOOST-2021/boost-app-back/internal/web/utils/convert"
-	"github.com/BOOST-2021/boost-app-back/resources"
 )
 
 func GetAuthToken(w http.ResponseWriter, r *http.Request) {
@@ -46,7 +45,5 @@ func GetAuthToken(w http.ResponseWriter, r *http.Request) {
 		render.InternalServerError(w)
 		return
 	}
-	render.Success(w, &resources.AuthPost200Response{
-		Data: webconvert.ToResponseTokenPair(tokenPair),
-	})
+	render.Success(w, webconvert.ToResponseTokenPair(tokenPair))
 }
