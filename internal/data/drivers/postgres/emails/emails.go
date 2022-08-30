@@ -28,8 +28,15 @@ func New(cfg config.Config) queriers.EmailsProvider {
 }
 
 func (u emailsProvider) AddEmailsBatch(_ context.Context, emails []model.Email) error {
-	if err := u.db.Omit(postgres.ID).Create(&emails).Error; err != nil {
+	if err := u.db.Create(&emails).Error; err != nil {
 		return errors.Wrap(err, "failed to insert emails")
 	}
 	return nil
+}
+
+func (u emailsProvider) AddEmail(_ context.Context, email model.Email) (*model.Email, error) {
+	if err := u.db.Create(&email).Error; err != nil {
+		return nil, errors.Wrap(err, "failed to insert email")
+	}
+	return &email, nil
 }

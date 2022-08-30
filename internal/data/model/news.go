@@ -10,7 +10,8 @@ import (
 )
 
 type News struct {
-	ID        uuid.UUID  `gorm:"column:id"`
+	// TODO: don't like we need to define this both here and in migration, refactor!!!
+	ID        uuid.UUID  `gorm:"column:id;default:uuid_generate_v4()"`
 	CreatedAt time.Time  `gorm:"column:created_at"`
 	UpdatedAt *time.Time `gorm:"column:updated_at"`
 

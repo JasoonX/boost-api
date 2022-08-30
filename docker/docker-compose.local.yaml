@@ -1,6 +1,7 @@
 version: "3.9"
 services:
   boost-api:
+    build: ../
     image: stepancons/boost-api:latest
     container_name: boost-api
     ports:

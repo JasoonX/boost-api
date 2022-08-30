@@ -5,7 +5,7 @@ import (
 )
 
 type Phone struct {
-	ID               uuid.UUID `gorm:"column:id"`
+	ID               uuid.UUID `gorm:"column:id;default:uuid_generate_v4()"`
 	SubscriberNumber string    `gorm:"column:subscriber_number"`
 	Extension        *string   `gorm:"column:extension"`
 	CountryCode      *string   `gorm:"column:country_code"`

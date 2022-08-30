@@ -30,7 +30,7 @@ var (
 )
 
 type User struct {
-	ID        uuid.UUID  `gorm:"column:id"`
+	ID        uuid.UUID  `gorm:"column:id;default:uuid_generate_v4()"`
 	CreatedAt time.Time  `gorm:"column:created_at"`
 	UpdatedAt *time.Time `gorm:"column:updated_at"`
 

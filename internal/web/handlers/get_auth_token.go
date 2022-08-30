@@ -33,6 +33,7 @@ func GetAuthToken(w http.ResponseWriter, r *http.Request) {
 
 	if !auth.CheckPasswordHash(req.Body.Data.Attributes.Password, user.PasswordHash) {
 		render.Forbidden(w, responses.Reason{Reason: "invalid password"})
+		return
 	}
 
 	authProvider := ctx.AuthProvider(r)

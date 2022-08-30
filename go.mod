@@ -6,6 +6,7 @@ require (
 	github.com/brianvoe/gofakeit/v6 v6.16.0
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/go-chi/chi/v5 v5.0.7
+	github.com/go-chi/cors v1.2.1
 	github.com/go-ozzo/ozzo-validation/v4 v4.3.0
 	github.com/google/uuid v1.1.2
 	github.com/lib/pq v1.10.4

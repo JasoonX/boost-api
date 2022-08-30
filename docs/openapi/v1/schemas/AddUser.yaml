@@ -15,15 +15,14 @@ properties:
         type: string
         example: 'example@gmail.com'
       phone:
-        type: string
-        example: '+380935123456'
+        $ref: './AddPhoneAttributes.yaml'
       username:
         type: string
         example: 'admin'
       password:
         type: string
         example: '123456'
-        description: 'Password must be at least 8 characters long, contain at least 2 numbers and 2 uppercase letters, and 1 special symbol.'
+        description: 'Password must be at least 8 characters long, contain at least 1 number and 1 uppercase letter, and 1 special symbol.'
       first_name:
         type: string
         example: 'John'

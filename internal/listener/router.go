@@ -2,9 +2,11 @@ package listener
 
 import (
 	"fmt"
+	"net/http"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	"github.com/go-chi/cors"
 	"github.com/markbates/goth"
 	"github.com/markbates/goth/providers/google"
 
@@ -35,6 +37,13 @@ func (l *service) setupRouter() {
 			ctx.CtxDataProvider(store.New(l.cfg)),
 			ctx.CtxAuthProvider(auth.New(l.cfg)),
 		),
+		cors.Handler(cors.Options{
+			AllowedOrigins:   []string{"https://*", "http://*"},
+			AllowedMethods:   []string{http.MethodGet, http.MethodPost, http.MethodPut, http.MethodDelete, http.MethodOptions},
+			AllowedHeaders:   []string{web.HeaderAccept, web.HeaderAuthorization, web.HeaderContentType, web.HeaderLocalization, web.HeaderDevice, web.HeaderVersion},
+			AllowCredentials: false,
+			MaxAge:           300, // Maximum value not ignored by any of major browsers
+		}),
 	)
 
 	l.router.Get("/healthcheck", handlers.GetHealthcheck)
@@ -47,7 +56,7 @@ func (l *service) setupRouter() {
 		r.With(web.SSOProviderContext).Get(fmt.Sprintf("/auth/{%s}/callback", web.SSOProviderPathParam), handlers.GetAuthProviderCallback)
 
 		// Users
-		r.Post("/users/add", handlers.AddUser)
+		r.Post("/users", handlers.AddUser)
 
 		// News
 		r.With(web.Paginate, middlewares.Doorman(l.cfg, model.UserRoleViewer, model.UserRoleReactViewer)).Get("/news", handlers.GetNews)

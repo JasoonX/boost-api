@@ -2,6 +2,7 @@ package users
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/google/uuid"
 	"github.com/pkg/errors"
@@ -33,8 +34,8 @@ func New(cfg config.Config) queriers.UsersProvider {
 }
 
 func (u usersProvider) AddUser(_ context.Context, user model.User) (*model.User, error) {
-	if err := u.db.Omit(postgres.ID).Create(&user).Error; err != nil {
-		return nil, errors.Wrap(err, "failed to insert users")
+	if err := u.db.Create(&user).Error; err != nil {
+		return nil, errors.Wrap(err, "failed to insert user")
 	}
 	return &user, nil
 }
@@ -52,7 +53,8 @@ func (u usersProvider) GetUserByID(_ context.Context, id uuid.UUID) (*model.User
 
 func (u usersProvider) GetUserByEmail(_ context.Context, email string) (*model.User, error) {
 	var out model.User
-	if err := u.db.Model(userModel).Preload(emails.Emails).Where("email = ?", email).First(&out).Error; err != nil {
+	// TODO: refactor all joins
+	if err := u.db.Model(userModel).Joins(fmt.Sprintf("LEFT JOIN %s on %s.email = ?", emails.Emails, emails.Emails), email).First(&out).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, data.ErrNotFound
 		}

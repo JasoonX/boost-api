@@ -5,7 +5,7 @@ import (
 )
 
 type Email struct {
-	ID         uuid.UUID `gorm:"column:id"`
+	ID         uuid.UUID `gorm:"column:id;default:uuid_generate_v4()"`
 	Email      string    `gorm:"column:email"`
 	IsVerified bool      `gorm:"column:is_verified"`
 	IsPrimary  bool      `gorm:"column:is_primary"`

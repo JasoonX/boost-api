@@ -156,6 +156,8 @@ paths:
                         $ref: '#/components/schemas/User'
         '401':
           $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
         '500':
           $ref: '#/components/responses/InternalServerError'
     post:
@@ -191,6 +193,8 @@ paths:
           $ref: '#/components/responses/BadRequestError'
         '401':
           $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
         '500':
           $ref: '#/components/responses/InternalServerError'
   /users:
@@ -233,8 +237,6 @@ paths:
                     $ref: '#/components/schemas/User'
         '400':
           $ref: '#/components/responses/BadRequestError'
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
         '500':
           $ref: '#/components/responses/InternalServerError'
   '/users/{id}':
@@ -284,6 +286,8 @@ paths:
                           $ref: '#/components/schemas/Phone'
         '401':
           $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
         '500':
           $ref: '#/components/responses/InternalServerError'
 components:
@@ -554,12 +558,17 @@ components:
         - error
       properties:
         code:
-          type: integer
-          format: int32
-          example: 123
-        error:
           type: string
-          example: Invalid data provided
+          example: 123
+        source:
+          type: object
+          example: '{"pointer": "data/attributes/first_name"}'
+        title:
+          type: string
+          example: This is an error
+        detail:
+          type: object
+          example: '{"data": {"password": "missing special character"}}'
     AddNews:
       type: object
       required:
@@ -670,15 +679,14 @@ components:
               type: string
               example: example@gmail.com
             phone:
-              type: string
-              example: '+380935123456'
+              $ref: '#/components/schemas/AddPhoneAttributes'
             username:
               type: string
               example: admin
             password:
               type: string
               example: '123456'
-              description: 'Password must be at least 8 characters long, contain at least 2 numbers and 2 uppercase letters, and 1 special symbol.'
+              description: 'Password must be at least 8 characters long, contain at least 1 number and 1 uppercase letter, and 1 special symbol.'
             first_name:
               type: string
               example: John
@@ -772,6 +780,7 @@ components:
             - user
           properties:
             user:
+              description: User who owns this email
               type: object
               properties:
                 data:
@@ -816,6 +825,24 @@ components:
                   $ref: '#/components/schemas/RelatedLinks'
                 data:
                   $ref: '#/components/schemas/RelatedEntity'
+    AddPhoneAttributes:
+      type: object
+      required:
+        - subscriber_number
+        - country_code
+      properties:
+        subscriber_number:
+          type: string
+          description: Phone number of the subscriber.
+          example: 935123456
+        country_code:
+          type: string
+          description: Country code of the subscriber.
+          example: 38
+        extension:
+          type: string
+          description: Extension of the subscriber.
+          example: 4025
     AddPhone:
       type: object
       required:
@@ -826,28 +853,14 @@ components:
         type:
           $ref: '#/components/schemas/EntityType'
         attributes:
-          type: object
-          required:
-            - phone
-          properties:
-            subscriber_number:
-              type: string
-              description: Phone number of the subscriber.
-              example: 935123456
-            country_code:
-              type: string
-              description: Country code of the subscriber.
-              example: 38
-            extension:
-              type: string
-              description: Extension of the subscriber.
-              example: 4025
+          $ref: '#/components/schemas/AddPhoneAttributes'
         relationships:
           type: object
           required:
             - user
           properties:
             user:
+              description: User who owns this phone
               type: object
               properties:
                 data:
@@ -947,3 +960,19 @@ components:
                   message:
                     type: string
                     example: Bad request
+    ForbiddenError:
+      description: Access token is invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 403
+                  message:
+                    type: string
+                    example: User access forbidden

@@ -4,9 +4,14 @@ required:
   - error
 properties:
   code:
-    type: integer
-    format: int32
-    example: 123
-  error:
     type: string
-    example: 'Invalid data provided'
+    example: 123
+  source:
+    type: object
+    example: '{"pointer": "data/attributes/first_name"}'
+  title:
+    type: string
+    example: 'This is an error'
+  detail:
+    type: object
+    example: '{"data": {"password": "missing special character"}}'

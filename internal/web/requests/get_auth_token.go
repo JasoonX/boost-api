@@ -15,7 +15,7 @@ type GetAuthTokenRequest struct {
 
 func NewGetAuthTokenRequest(r *http.Request) (*GetAuthTokenRequest, error) {
 	req := GetAuthTokenRequest{}
-	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+	if err := json.NewDecoder(r.Body).Decode(&req.Body); err != nil {
 		return nil, errors.Wrap(err, "failed to decode creds")
 	}
 	return &req, nil

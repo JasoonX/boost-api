@@ -28,8 +28,15 @@ func New(cfg config.Config) queriers.PhonesProvider {
 }
 
 func (u phonesProvider) AddPhonesBatch(_ context.Context, phones []model.Phone) error {
-	if err := u.db.Omit(postgres.ID).Create(&phones).Error; err != nil {
+	if err := u.db.Create(&phones).Error; err != nil {
 		return errors.Wrap(err, "failed to insert phones")
 	}
 	return nil
+}
+
+func (u phonesProvider) AddPhone(_ context.Context, phone model.Phone) (*model.Phone, error) {
+	if err := u.db.Create(&phone).Error; err != nil {
+		return nil, errors.Wrap(err, "failed to insert phone")
+	}
+	return &phone, nil
 }

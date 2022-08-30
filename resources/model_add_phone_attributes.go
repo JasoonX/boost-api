@@ -17,9 +17,9 @@ import (
 // AddPhoneAttributes struct for AddPhoneAttributes
 type AddPhoneAttributes struct {
 	// Phone number of the subscriber.
-	SubscriberNumber *string `json:"subscriber_number,omitempty"`
+	SubscriberNumber string `json:"subscriber_number"`
 	// Country code of the subscriber.
-	CountryCode *string `json:"country_code,omitempty"`
+	CountryCode string `json:"country_code"`
 	// Extension of the subscriber.
 	Extension *string `json:"extension,omitempty"`
 }
@@ -28,8 +28,10 @@ type AddPhoneAttributes struct {
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAddPhoneAttributes() *AddPhoneAttributes {
+func NewAddPhoneAttributes(subscriberNumber string, countryCode string) *AddPhoneAttributes {
 	this := AddPhoneAttributes{}
+	this.SubscriberNumber = subscriberNumber
+	this.CountryCode = countryCode
 	return &this
 }
 
@@ -41,68 +43,52 @@ func NewAddPhoneAttributesWithDefaults() *AddPhoneAttributes {
 	return &this
 }
 
-// GetSubscriberNumber returns the SubscriberNumber field value if set, zero value otherwise.
+// GetSubscriberNumber returns the SubscriberNumber field value
 func (o *AddPhoneAttributes) GetSubscriberNumber() string {
-	if o == nil || o.SubscriberNumber == nil {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.SubscriberNumber
+
+	return o.SubscriberNumber
 }
 
-// GetSubscriberNumberOk returns a tuple with the SubscriberNumber field value if set, nil otherwise
+// GetSubscriberNumberOk returns a tuple with the SubscriberNumber field value
 // and a boolean to check if the value has been set.
 func (o *AddPhoneAttributes) GetSubscriberNumberOk() (*string, bool) {
-	if o == nil || o.SubscriberNumber == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.SubscriberNumber, true
+	return &o.SubscriberNumber, true
 }
 
-// HasSubscriberNumber returns a boolean if a field has been set.
-func (o *AddPhoneAttributes) HasSubscriberNumber() bool {
-	if o != nil && o.SubscriberNumber != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetSubscriberNumber gets a reference to the given string and assigns it to the SubscriberNumber field.
+// SetSubscriberNumber sets field value
 func (o *AddPhoneAttributes) SetSubscriberNumber(v string) {
-	o.SubscriberNumber = &v
+	o.SubscriberNumber = v
 }
 
-// GetCountryCode returns the CountryCode field value if set, zero value otherwise.
+// GetCountryCode returns the CountryCode field value
 func (o *AddPhoneAttributes) GetCountryCode() string {
-	if o == nil || o.CountryCode == nil {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.CountryCode
+
+	return o.CountryCode
 }
 
-// GetCountryCodeOk returns a tuple with the CountryCode field value if set, nil otherwise
+// GetCountryCodeOk returns a tuple with the CountryCode field value
 // and a boolean to check if the value has been set.
 func (o *AddPhoneAttributes) GetCountryCodeOk() (*string, bool) {
-	if o == nil || o.CountryCode == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.CountryCode, true
+	return &o.CountryCode, true
 }
 
-// HasCountryCode returns a boolean if a field has been set.
-func (o *AddPhoneAttributes) HasCountryCode() bool {
-	if o != nil && o.CountryCode != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetCountryCode gets a reference to the given string and assigns it to the CountryCode field.
+// SetCountryCode sets field value
 func (o *AddPhoneAttributes) SetCountryCode(v string) {
-	o.CountryCode = &v
+	o.CountryCode = v
 }
 
 // GetExtension returns the Extension field value if set, zero value otherwise.
@@ -139,10 +125,10 @@ func (o *AddPhoneAttributes) SetExtension(v string) {
 
 func (o AddPhoneAttributes) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
-	if o.SubscriberNumber != nil {
+	if true {
 		toSerialize["subscriber_number"] = o.SubscriberNumber
 	}
-	if o.CountryCode != nil {
+	if true {
 		toSerialize["country_code"] = o.CountryCode
 	}
 	if o.Extension != nil {

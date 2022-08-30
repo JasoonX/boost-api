@@ -5,9 +5,9 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Email** | **string** |  | 
-**Phone** | Pointer to **string** |  | [optional] 
+**Phone** | Pointer to [**AddPhoneAttributes**](AddPhoneAttributes.md) |  | [optional] 
 **Username** | Pointer to **string** |  | [optional] 
-**Password** | **string** | Password must be at least 8 characters long, contain at least 2 numbers and 2 uppercase letters, and 1 special symbol. | 
+**Password** | **string** | Password must be at least 8 characters long, contain at least 1 number and 1 uppercase letter, and 1 special symbol. | 
 **FirstName** | Pointer to **string** |  | [optional] 
 **LastName** | Pointer to **string** |  | [optional] 
 
@@ -52,20 +52,20 @@ SetEmail sets Email field to given value.
 
 ### GetPhone
 
-`func (o *AddUserAttributes) GetPhone() string`
+`func (o *AddUserAttributes) GetPhone() AddPhoneAttributes`
 
 GetPhone returns the Phone field if non-nil, zero value otherwise.
 
 ### GetPhoneOk
 
-`func (o *AddUserAttributes) GetPhoneOk() (*string, bool)`
+`func (o *AddUserAttributes) GetPhoneOk() (*AddPhoneAttributes, bool)`
 
 GetPhoneOk returns a tuple with the Phone field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetPhone
 
-`func (o *AddUserAttributes) SetPhone(v string)`
+`func (o *AddUserAttributes) SetPhone(v AddPhoneAttributes)`
 
 SetPhone sets Phone field to given value.
 

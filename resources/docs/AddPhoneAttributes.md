@@ -4,15 +4,15 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**SubscriberNumber** | Pointer to **string** | Phone number of the subscriber. | [optional] 
-**CountryCode** | Pointer to **string** | Country code of the subscriber. | [optional] 
+**SubscriberNumber** | **string** | Phone number of the subscriber. | 
+**CountryCode** | **string** | Country code of the subscriber. | 
 **Extension** | Pointer to **string** | Extension of the subscriber. | [optional] 
 
 ## Methods
 
 ### NewAddPhoneAttributes
 
-`func NewAddPhoneAttributes() *AddPhoneAttributes`
+`func NewAddPhoneAttributes(subscriberNumber string, countryCode string, ) *AddPhoneAttributes`
 
 NewAddPhoneAttributes instantiates a new AddPhoneAttributes object
 This constructor will assign default values to properties that have it defined,
@@ -46,11 +46,6 @@ and a boolean to check if the value has been set.
 
 SetSubscriberNumber sets SubscriberNumber field to given value.
 
-### HasSubscriberNumber
-
-`func (o *AddPhoneAttributes) HasSubscriberNumber() bool`
-
-HasSubscriberNumber returns a boolean if a field has been set.
 
 ### GetCountryCode
 
@@ -71,11 +66,6 @@ and a boolean to check if the value has been set.
 
 SetCountryCode sets CountryCode field to given value.
 
-### HasCountryCode
-
-`func (o *AddPhoneAttributes) HasCountryCode() bool`
-
-HasCountryCode returns a boolean if a field has been set.
 
 ### GetExtension
 

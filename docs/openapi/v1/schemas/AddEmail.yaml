@@ -20,6 +20,7 @@ properties:
       - user
     properties:
       user:
+        description: User who owns this email
         type: object
         properties:
           data:

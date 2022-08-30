@@ -14,30 +14,30 @@ import (
 	"encoding/json"
 )
 
-// AddEmailRelationshipsUser User who owns this email
-type AddEmailRelationshipsUser struct {
+// AddPhoneRelationshipsUser User who owns this phone
+type AddPhoneRelationshipsUser struct {
 	Data *RelatedEntity `json:"data,omitempty"`
 }
 
-// NewAddEmailRelationshipsUser instantiates a new AddEmailRelationshipsUser object
+// NewAddPhoneRelationshipsUser instantiates a new AddPhoneRelationshipsUser object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAddEmailRelationshipsUser() *AddEmailRelationshipsUser {
-	this := AddEmailRelationshipsUser{}
+func NewAddPhoneRelationshipsUser() *AddPhoneRelationshipsUser {
+	this := AddPhoneRelationshipsUser{}
 	return &this
 }
 
-// NewAddEmailRelationshipsUserWithDefaults instantiates a new AddEmailRelationshipsUser object
+// NewAddPhoneRelationshipsUserWithDefaults instantiates a new AddPhoneRelationshipsUser object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewAddEmailRelationshipsUserWithDefaults() *AddEmailRelationshipsUser {
-	this := AddEmailRelationshipsUser{}
+func NewAddPhoneRelationshipsUserWithDefaults() *AddPhoneRelationshipsUser {
+	this := AddPhoneRelationshipsUser{}
 	return &this
 }
 
 // GetData returns the Data field value if set, zero value otherwise.
-func (o *AddEmailRelationshipsUser) GetData() RelatedEntity {
+func (o *AddPhoneRelationshipsUser) GetData() RelatedEntity {
 	if o == nil || o.Data == nil {
 		var ret RelatedEntity
 		return ret
@@ -47,7 +47,7 @@ func (o *AddEmailRelationshipsUser) GetData() RelatedEntity {
 
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *AddEmailRelationshipsUser) GetDataOk() (*RelatedEntity, bool) {
+func (o *AddPhoneRelationshipsUser) GetDataOk() (*RelatedEntity, bool) {
 	if o == nil || o.Data == nil {
 		return nil, false
 	}
@@ -55,7 +55,7 @@ func (o *AddEmailRelationshipsUser) GetDataOk() (*RelatedEntity, bool) {
 }
 
 // HasData returns a boolean if a field has been set.
-func (o *AddEmailRelationshipsUser) HasData() bool {
+func (o *AddPhoneRelationshipsUser) HasData() bool {
 	if o != nil && o.Data != nil {
 		return true
 	}
@@ -64,11 +64,11 @@ func (o *AddEmailRelationshipsUser) HasData() bool {
 }
 
 // SetData gets a reference to the given RelatedEntity and assigns it to the Data field.
-func (o *AddEmailRelationshipsUser) SetData(v RelatedEntity) {
+func (o *AddPhoneRelationshipsUser) SetData(v RelatedEntity) {
 	o.Data = &v
 }
 
-func (o AddEmailRelationshipsUser) MarshalJSON() ([]byte, error) {
+func (o AddPhoneRelationshipsUser) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Data != nil {
 		toSerialize["data"] = o.Data
@@ -76,38 +76,38 @@ func (o AddEmailRelationshipsUser) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-type NullableAddEmailRelationshipsUser struct {
-	value *AddEmailRelationshipsUser
+type NullableAddPhoneRelationshipsUser struct {
+	value *AddPhoneRelationshipsUser
 	isSet bool
 }
 
-func (v NullableAddEmailRelationshipsUser) Get() *AddEmailRelationshipsUser {
+func (v NullableAddPhoneRelationshipsUser) Get() *AddPhoneRelationshipsUser {
 	return v.value
 }
 
-func (v *NullableAddEmailRelationshipsUser) Set(val *AddEmailRelationshipsUser) {
+func (v *NullableAddPhoneRelationshipsUser) Set(val *AddPhoneRelationshipsUser) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableAddEmailRelationshipsUser) IsSet() bool {
+func (v NullableAddPhoneRelationshipsUser) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableAddEmailRelationshipsUser) Unset() {
+func (v *NullableAddPhoneRelationshipsUser) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableAddEmailRelationshipsUser(val *AddEmailRelationshipsUser) *NullableAddEmailRelationshipsUser {
-	return &NullableAddEmailRelationshipsUser{value: val, isSet: true}
+func NewNullableAddPhoneRelationshipsUser(val *AddPhoneRelationshipsUser) *NullableAddPhoneRelationshipsUser {
+	return &NullableAddPhoneRelationshipsUser{value: val, isSet: true}
 }
 
-func (v NullableAddEmailRelationshipsUser) MarshalJSON() ([]byte, error) {
+func (v NullableAddPhoneRelationshipsUser) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableAddEmailRelationshipsUser) UnmarshalJSON(src []byte) error {
+func (v *NullableAddPhoneRelationshipsUser) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

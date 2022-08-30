@@ -76,7 +76,7 @@ func (p newsProvider) IndexNews(ctx context.Context, id uuid.UUID, title, text, 
 }
 
 func (p newsProvider) AddNewsBatch(_ context.Context, news []model.News) error {
-	if err := p.db.Omit(postgres.ID).Create(&news).Error; err != nil {
+	if err := p.db.Create(&news).Error; err != nil {
 		return errors.Wrap(err, "failed to insert news")
 	}
 	return nil

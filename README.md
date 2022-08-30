@@ -14,7 +14,7 @@ How to run locally:
 # Running server with db locally
 ```
 cd docker
-docker-compose -f docker-compose.local.yaml up
+docker-compose -f docker-compose.local.yaml up --build
 ```
 (hit localhost:8080/v1/news or localhost:8080/healthcheck for test)
 

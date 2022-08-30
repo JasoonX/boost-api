@@ -21,7 +21,7 @@ function generate_openapi {
 }
 
 function cleanup_pre {
-  rm -rf ".${GENERATED}"
+  find ".${GENERATED}" -type f ! -name "*.keep.go" -exec rm -rf {} \;
   mkdir -p ".${GENERATED}"
 }
 

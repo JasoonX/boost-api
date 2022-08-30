@@ -47,6 +47,8 @@ AddEmail:
   $ref: './AddEmail.yaml'
 Email:
   $ref: './Email.yaml'
+AddPhoneAttributes:
+  $ref: './AddPhoneAttributes.yaml'
 AddPhone:
   $ref: './AddPhone.yaml'
 Phone:

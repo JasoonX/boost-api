@@ -16,10 +16,10 @@ import (
 
 // AddUserAttributes struct for AddUserAttributes
 type AddUserAttributes struct {
-	Email    string  `json:"email"`
-	Phone    *string `json:"phone,omitempty"`
-	Username *string `json:"username,omitempty"`
-	// Password must be at least 8 characters long, contain at least 2 numbers and 2 uppercase letters, and 1 special symbol.
+	Email    string              `json:"email"`
+	Phone    *AddPhoneAttributes `json:"phone,omitempty"`
+	Username *string             `json:"username,omitempty"`
+	// Password must be at least 8 characters long, contain at least 1 number and 1 uppercase letter, and 1 special symbol.
 	Password  string  `json:"password"`
 	FirstName *string `json:"first_name,omitempty"`
 	LastName  *string `json:"last_name,omitempty"`
@@ -69,9 +69,9 @@ func (o *AddUserAttributes) SetEmail(v string) {
 }
 
 // GetPhone returns the Phone field value if set, zero value otherwise.
-func (o *AddUserAttributes) GetPhone() string {
+func (o *AddUserAttributes) GetPhone() AddPhoneAttributes {
 	if o == nil || o.Phone == nil {
-		var ret string
+		var ret AddPhoneAttributes
 		return ret
 	}
 	return *o.Phone
@@ -79,7 +79,7 @@ func (o *AddUserAttributes) GetPhone() string {
 
 // GetPhoneOk returns a tuple with the Phone field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *AddUserAttributes) GetPhoneOk() (*string, bool) {
+func (o *AddUserAttributes) GetPhoneOk() (*AddPhoneAttributes, bool) {
 	if o == nil || o.Phone == nil {
 		return nil, false
 	}
@@ -95,8 +95,8 @@ func (o *AddUserAttributes) HasPhone() bool {
 	return false
 }
 
-// SetPhone gets a reference to the given string and assigns it to the Phone field.
-func (o *AddUserAttributes) SetPhone(v string) {
+// SetPhone gets a reference to the given AddPhoneAttributes and assigns it to the Phone field.
+func (o *AddUserAttributes) SetPhone(v AddPhoneAttributes) {
 	o.Phone = &v
 }
 

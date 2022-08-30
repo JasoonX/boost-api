@@ -3,15 +3,16 @@ package handlers
 import (
 	"net/http"
 
+	"github.com/lib/pq"
+
 	"github.com/BOOST-2021/boost-app-back/internal/auth"
-	"github.com/BOOST-2021/boost-app-back/internal/common"
+	"github.com/BOOST-2021/boost-app-back/internal/common/convert"
 	"github.com/BOOST-2021/boost-app-back/internal/data/model"
 	"github.com/BOOST-2021/boost-app-back/internal/web/ctx"
 	"github.com/BOOST-2021/boost-app-back/internal/web/render"
 	"github.com/BOOST-2021/boost-app-back/internal/web/requests"
-	"github.com/BOOST-2021/boost-app-back/internal/web/responses"
+	"github.com/BOOST-2021/boost-app-back/internal/web/utils"
 	webconvert "github.com/BOOST-2021/boost-app-back/internal/web/utils/convert"
-	"github.com/BOOST-2021/boost-app-back/resources"
 )
 
 func AddUser(w http.ResponseWriter, r *http.Request) {
@@ -20,13 +21,12 @@ func AddUser(w http.ResponseWriter, r *http.Request) {
 
 	req, err := requests.NewAddUserRequest(r)
 	if err != nil {
+		if valErrors, err := utils.UnwrapValidationErrors(err); err == nil {
+			render.BadRequest(w, valErrors)
+			return
+		}
 		log.WithError(err).Error("failed to get add user request")
-		render.BadRequest(w, responses.JSONServerErrors{
-			&resources.Error{
-				Code:  111,
-				Error: string(common.MustMarshal(err)),
-			},
-		}, nil)
+		render.InternalServerError(w)
 		return
 	}
 
@@ -40,11 +40,37 @@ func AddUser(w http.ResponseWriter, r *http.Request) {
 		LastName:     req.Body.Data.Attributes.LastName,
 		PasswordHash: pass,
 		Status:       model.UserStatusUnverified,
+		// TODO: refactor that
+		Role: pq.StringArray{string(model.UserRoleViewer)},
 	})
 	if err != nil {
 		log.WithError(err).Error("failed to add new user")
 		render.InternalServerError(w)
 		return
+	}
+
+	newEmail, err := provider.EmailsProvider().AddEmail(reqCtx, model.Email{
+		Email:      req.Body.Data.Attributes.Email,
+		IsVerified: false,
+		IsPrimary:  true,
+		UserID:     newUser.ID,
+	})
+
+	newPhone, err := provider.PhonesProvider().AddPhone(reqCtx, model.Phone{
+		SubscriberNumber: req.Body.Data.Attributes.Phone.SubscriberNumber,
+		CountryCode:      &req.Body.Data.Attributes.Phone.CountryCode,
+		Extension:        req.Body.Data.Attributes.Phone.Extension,
+		IsVerified:       false,
+		IsPrimary:        true,
+		UserID:           newUser.ID,
+	})
+
+	newUser.Emails = []model.Email{
+		convert.FromPtr(newEmail),
+	}
+
+	newUser.Phones = []model.Phone{
+		convert.FromPtr(newPhone),
 	}
 
 	render.Success(w, webconvert.ToResponseUser(newUser))

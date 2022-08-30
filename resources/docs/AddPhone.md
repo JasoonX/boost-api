@@ -6,13 +6,13 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Type** | [**EntityType**](EntityType.md) |  | 
 **Attributes** | [**AddPhoneAttributes**](AddPhoneAttributes.md) |  | 
-**Relationships** | [**AddEmailRelationships**](AddEmailRelationships.md) |  | 
+**Relationships** | [**AddPhoneRelationships**](AddPhoneRelationships.md) |  | 
 
 ## Methods
 
 ### NewAddPhone
 
-`func NewAddPhone(type_ EntityType, attributes AddPhoneAttributes, relationships AddEmailRelationships, ) *AddPhone`
+`func NewAddPhone(type_ EntityType, attributes AddPhoneAttributes, relationships AddPhoneRelationships, ) *AddPhone`
 
 NewAddPhone instantiates a new AddPhone object
 This constructor will assign default values to properties that have it defined,
@@ -69,20 +69,20 @@ SetAttributes sets Attributes field to given value.
 
 ### GetRelationships
 
-`func (o *AddPhone) GetRelationships() AddEmailRelationships`
+`func (o *AddPhone) GetRelationships() AddPhoneRelationships`
 
 GetRelationships returns the Relationships field if non-nil, zero value otherwise.
 
 ### GetRelationshipsOk
 
-`func (o *AddPhone) GetRelationshipsOk() (*AddEmailRelationships, bool)`
+`func (o *AddPhone) GetRelationshipsOk() (*AddPhoneRelationships, bool)`
 
 GetRelationshipsOk returns a tuple with the Relationships field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetRelationships
 
-`func (o *AddPhone) SetRelationships(v AddEmailRelationships)`
+`func (o *AddPhone) SetRelationships(v AddPhoneRelationships)`
 
 SetRelationships sets Relationships field to given value.
 

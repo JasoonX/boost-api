@@ -30,7 +30,7 @@ func New(cfg config.Config) queriers.LocationsProvider {
 }
 
 func (p locationsProvider) AddLocationsBatch(_ context.Context, locations []model.Location) error {
-	if err := p.db.Omit(postgres.ID).Create(&locations).Error; err != nil {
+	if err := p.db.Create(&locations).Error; err != nil {
 		return errors.Wrap(err, "failed to insert locations")
 	}
 	return nil

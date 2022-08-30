@@ -16,18 +16,19 @@ import (
 
 // Error struct for Error
 type Error struct {
-	Code  int32  `json:"code"`
-	Error string `json:"error"`
+	Code   string                 `json:"code"`
+	Source map[string]interface{} `json:"source,omitempty"`
+	Title  *string                `json:"title,omitempty"`
+	Detail map[string]interface{} `json:"detail,omitempty"`
 }
 
 // NewError instantiates a new Error object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewError(code int32, error_ string) *Error {
+func NewError(code string) *Error {
 	this := Error{}
 	this.Code = code
-	this.Error = error_
 	return &this
 }
 
@@ -40,9 +41,9 @@ func NewErrorWithDefaults() *Error {
 }
 
 // GetCode returns the Code field value
-func (o *Error) GetCode() int32 {
+func (o *Error) GetCode() string {
 	if o == nil {
-		var ret int32
+		var ret string
 		return ret
 	}
 
@@ -51,7 +52,7 @@ func (o *Error) GetCode() int32 {
 
 // GetCodeOk returns a tuple with the Code field value
 // and a boolean to check if the value has been set.
-func (o *Error) GetCodeOk() (*int32, bool) {
+func (o *Error) GetCodeOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -59,32 +60,104 @@ func (o *Error) GetCodeOk() (*int32, bool) {
 }
 
 // SetCode sets field value
-func (o *Error) SetCode(v int32) {
+func (o *Error) SetCode(v string) {
 	o.Code = v
 }
 
-// GetError returns the Error field value
-func (o *Error) GetError() string {
-	if o == nil {
+// GetSource returns the Source field value if set, zero value otherwise.
+func (o *Error) GetSource() map[string]interface{} {
+	if o == nil || o.Source == nil {
+		var ret map[string]interface{}
+		return ret
+	}
+	return o.Source
+}
+
+// GetSourceOk returns a tuple with the Source field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Error) GetSourceOk() (map[string]interface{}, bool) {
+	if o == nil || o.Source == nil {
+		return nil, false
+	}
+	return o.Source, true
+}
+
+// HasSource returns a boolean if a field has been set.
+func (o *Error) HasSource() bool {
+	if o != nil && o.Source != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetSource gets a reference to the given map[string]interface{} and assigns it to the Source field.
+func (o *Error) SetSource(v map[string]interface{}) {
+	o.Source = v
+}
+
+// GetTitle returns the Title field value if set, zero value otherwise.
+func (o *Error) GetTitle() string {
+	if o == nil || o.Title == nil {
 		var ret string
 		return ret
 	}
-
-	return o.Error
+	return *o.Title
 }
 
-// GetErrorOk returns a tuple with the Error field value
+// GetTitleOk returns a tuple with the Title field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Error) GetErrorOk() (*string, bool) {
-	if o == nil {
+func (o *Error) GetTitleOk() (*string, bool) {
+	if o == nil || o.Title == nil {
 		return nil, false
 	}
-	return &o.Error, true
+	return o.Title, true
 }
 
-// SetError sets field value
-func (o *Error) SetError(v string) {
-	o.Error = v
+// HasTitle returns a boolean if a field has been set.
+func (o *Error) HasTitle() bool {
+	if o != nil && o.Title != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetTitle gets a reference to the given string and assigns it to the Title field.
+func (o *Error) SetTitle(v string) {
+	o.Title = &v
+}
+
+// GetDetail returns the Detail field value if set, zero value otherwise.
+func (o *Error) GetDetail() map[string]interface{} {
+	if o == nil || o.Detail == nil {
+		var ret map[string]interface{}
+		return ret
+	}
+	return o.Detail
+}
+
+// GetDetailOk returns a tuple with the Detail field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Error) GetDetailOk() (map[string]interface{}, bool) {
+	if o == nil || o.Detail == nil {
+		return nil, false
+	}
+	return o.Detail, true
+}
+
+// HasDetail returns a boolean if a field has been set.
+func (o *Error) HasDetail() bool {
+	if o != nil && o.Detail != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetDetail gets a reference to the given map[string]interface{} and assigns it to the Detail field.
+func (o *Error) SetDetail(v map[string]interface{}) {
+	o.Detail = v
 }
 
 func (o Error) MarshalJSON() ([]byte, error) {
@@ -92,8 +165,14 @@ func (o Error) MarshalJSON() ([]byte, error) {
 	if true {
 		toSerialize["code"] = o.Code
 	}
-	if true {
-		toSerialize["error"] = o.Error
+	if o.Source != nil {
+		toSerialize["source"] = o.Source
+	}
+	if o.Title != nil {
+		toSerialize["title"] = o.Title
+	}
+	if o.Detail != nil {
+		toSerialize["detail"] = o.Detail
 	}
 	return json.Marshal(toSerialize)
 }

@@ -5,7 +5,6 @@ import (
 	"net/http"
 
 	"github.com/go-ozzo/ozzo-validation/v4"
-	"github.com/go-ozzo/ozzo-validation/v4/is"
 	"github.com/pkg/errors"
 
 	"github.com/BOOST-2021/boost-app-back/resources"
@@ -15,14 +14,10 @@ type AddUserRequest struct {
 	Body resources.UsersPostRequest
 }
 
-// TODO: full validation
 func (r AddUserRequest) Validate() error {
-	return validation.Errors{
-		"body":     validation.Validate(&r.Body, validation.Required),
-		"data":     validation.Validate(&r.Body.Data, validation.Required),
-		"email":    validation.Validate(&r.Body.Data.Attributes.Email, validation.Required, is.Email),
-		"password": validation.Validate(&r.Body.Data.Attributes.Password, validation.Required, validation.Length(8, 32)),
-	}.Filter()
+	return validation.ValidateStruct(&r.Body,
+		validation.Field(&r.Body.Data),
+	)
 }
 
 func NewAddUserRequest(r *http.Request) (*AddUserRequest, error) {

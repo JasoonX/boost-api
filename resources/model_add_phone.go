@@ -18,14 +18,14 @@ import (
 type AddPhone struct {
 	Type          EntityType            `json:"type"`
 	Attributes    AddPhoneAttributes    `json:"attributes"`
-	Relationships AddEmailRelationships `json:"relationships"`
+	Relationships AddPhoneRelationships `json:"relationships"`
 }
 
 // NewAddPhone instantiates a new AddPhone object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAddPhone(type_ EntityType, attributes AddPhoneAttributes, relationships AddEmailRelationships) *AddPhone {
+func NewAddPhone(type_ EntityType, attributes AddPhoneAttributes, relationships AddPhoneRelationships) *AddPhone {
 	this := AddPhone{}
 	this.Type = type_
 	this.Attributes = attributes
@@ -90,9 +90,9 @@ func (o *AddPhone) SetAttributes(v AddPhoneAttributes) {
 }
 
 // GetRelationships returns the Relationships field value
-func (o *AddPhone) GetRelationships() AddEmailRelationships {
+func (o *AddPhone) GetRelationships() AddPhoneRelationships {
 	if o == nil {
-		var ret AddEmailRelationships
+		var ret AddPhoneRelationships
 		return ret
 	}
 
@@ -101,7 +101,7 @@ func (o *AddPhone) GetRelationships() AddEmailRelationships {
 
 // GetRelationshipsOk returns a tuple with the Relationships field value
 // and a boolean to check if the value has been set.
-func (o *AddPhone) GetRelationshipsOk() (*AddEmailRelationships, bool) {
+func (o *AddPhone) GetRelationshipsOk() (*AddPhoneRelationships, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -109,7 +109,7 @@ func (o *AddPhone) GetRelationshipsOk() (*AddEmailRelationships, bool) {
 }
 
 // SetRelationships sets field value
-func (o *AddPhone) SetRelationships(v AddEmailRelationships) {
+func (o *AddPhone) SetRelationships(v AddPhoneRelationships) {
 	o.Relationships = v
 }
 

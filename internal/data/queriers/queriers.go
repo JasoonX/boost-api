@@ -36,10 +36,14 @@ type NewsProvider interface {
 }
 
 type EmailsProvider interface {
+	AddEmail(ctx context.Context, email model.Email) (*model.Email, error)
+
 	AddEmailsBatch(ctx context.Context, emails []model.Email) error
 }
 
 type PhonesProvider interface {
+	AddPhone(ctx context.Context, phone model.Phone) (*model.Phone, error)
+
 	AddPhonesBatch(ctx context.Context, phones []model.Phone) error
 }
 
