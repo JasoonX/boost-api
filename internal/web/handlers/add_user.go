@@ -4,15 +4,19 @@ import (
 	"net/http"
 
 	"github.com/lib/pq"
+	"github.com/pkg/errors"
 
 	"github.com/BOOST-2021/boost-app-back/internal/auth"
 	"github.com/BOOST-2021/boost-app-back/internal/common/convert"
+	"github.com/BOOST-2021/boost-app-back/internal/data"
 	"github.com/BOOST-2021/boost-app-back/internal/data/model"
 	"github.com/BOOST-2021/boost-app-back/internal/web/ctx"
 	"github.com/BOOST-2021/boost-app-back/internal/web/render"
 	"github.com/BOOST-2021/boost-app-back/internal/web/requests"
+	"github.com/BOOST-2021/boost-app-back/internal/web/responses"
 	"github.com/BOOST-2021/boost-app-back/internal/web/utils"
 	webconvert "github.com/BOOST-2021/boost-app-back/internal/web/utils/convert"
+	"github.com/BOOST-2021/boost-app-back/resources"
 )
 
 func AddUser(w http.ResponseWriter, r *http.Request) {
@@ -32,7 +36,25 @@ func AddUser(w http.ResponseWriter, r *http.Request) {
 
 	provider := ctx.DataProvider(r)
 
+	if _, err := provider.EmailsProvider().GetEmail(reqCtx, req.Body.Data.Attributes.Email); err != nil {
+		if !errors.Is(err, data.ErrNotFound) {
+			// TODO: fixme
+			duplicateError := resources.NewErrorWithDefaults()
+			duplicateError.SetDetail(map[string]interface{}{
+				"reason": "email already exists",
+			})
+			render.BadRequest(w, responses.JSONServerErrors{
+				duplicateError,
+			})
+			return
+		}
+	}
+
 	pass, err := auth.HashPassword(req.Body.Data.Attributes.Password)
+	if err != nil {
+		log.WithError(err).Error("failed to hash password")
+		render.InternalServerError(w)
+	}
 
 	newUser, err := provider.UsersProvider().AddUser(reqCtx, model.User{
 		Username:     req.Body.Data.Attributes.Username,
@@ -84,5 +106,18 @@ func AddUser(w http.ResponseWriter, r *http.Request) {
 		convert.FromPtr(newEmail),
 	}
 
-	render.Success(w, webconvert.ToResponseUser(newUser))
+	authProvider := ctx.AuthProvider(r)
+	tokenPair, err := authProvider.GenerateTokenPair(auth.UserInfo{
+		Email: req.Body.Data.Attributes.Email,
+		Roles: newUser.RolesStrings(),
+	})
+	if err != nil {
+		log.WithError(err).Error("failed to generate token pair")
+		render.InternalServerError(w)
+		return
+	}
+	render.Success(w, resources.UsersPost201ResponseData{
+		User:      convert.FromPtr(webconvert.ToResponseUser(newUser)),
+		TokenPair: webconvert.ToResponseTokenPair(tokenPair),
+	})
 }

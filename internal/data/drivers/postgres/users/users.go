@@ -54,7 +54,7 @@ func (u usersProvider) GetUserByID(_ context.Context, id uuid.UUID) (*model.User
 func (u usersProvider) GetUserByEmail(_ context.Context, email string) (*model.User, error) {
 	var out model.User
 	// TODO: refactor all joins
-	if err := u.db.Model(userModel).Joins(fmt.Sprintf("LEFT JOIN %s on %s.email = ?", emails.Emails, emails.Emails), email).First(&out).Error; err != nil {
+	if err := u.db.Model(userModel).Joins(fmt.Sprintf("LEFT JOIN %s on %s.user_id = %s.id", emails.Emails, emails.Emails, Users)).First(&out, fmt.Sprintf("%s.email = ?", emails.Emails), email).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, data.ErrNotFound
 		}

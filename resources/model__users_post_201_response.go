@@ -16,10 +16,10 @@ import (
 
 // UsersPost201Response struct for UsersPost201Response
 type UsersPost201Response struct {
-	Status *Status                `json:"status,omitempty"`
-	Meta   map[string]interface{} `json:"meta,omitempty"`
-	Errors []Error                `json:"errors,omitempty"`
-	Data   *User                  `json:"data,omitempty"`
+	Status *Status                   `json:"status,omitempty"`
+	Meta   map[string]interface{}    `json:"meta,omitempty"`
+	Errors []Error                   `json:"errors,omitempty"`
+	Data   *UsersPost201ResponseData `json:"data,omitempty"`
 }
 
 // NewUsersPost201Response instantiates a new UsersPost201Response object
@@ -136,9 +136,9 @@ func (o *UsersPost201Response) SetErrors(v []Error) {
 }
 
 // GetData returns the Data field value if set, zero value otherwise.
-func (o *UsersPost201Response) GetData() User {
+func (o *UsersPost201Response) GetData() UsersPost201ResponseData {
 	if o == nil || o.Data == nil {
-		var ret User
+		var ret UsersPost201ResponseData
 		return ret
 	}
 	return *o.Data
@@ -146,7 +146,7 @@ func (o *UsersPost201Response) GetData() User {
 
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *UsersPost201Response) GetDataOk() (*User, bool) {
+func (o *UsersPost201Response) GetDataOk() (*UsersPost201ResponseData, bool) {
 	if o == nil || o.Data == nil {
 		return nil, false
 	}
@@ -162,8 +162,8 @@ func (o *UsersPost201Response) HasData() bool {
 	return false
 }
 
-// SetData gets a reference to the given User and assigns it to the Data field.
-func (o *UsersPost201Response) SetData(v User) {
+// SetData gets a reference to the given UsersPost201ResponseData and assigns it to the Data field.
+func (o *UsersPost201Response) SetData(v UsersPost201ResponseData) {
 	o.Data = &v
 }
 

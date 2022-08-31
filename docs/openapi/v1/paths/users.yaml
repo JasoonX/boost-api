@@ -33,7 +33,15 @@ post:
                 items:
                   $ref: '../schemas/Error.yaml'
               data:
-                $ref: '../schemas/User.yaml'
+                type: object
+                required:
+                  - user
+                  - token_pair
+                properties:
+                  user:
+                    $ref: '../schemas/User.yaml'
+                  token_pair:
+                    $ref: '../schemas/TokenPair.yaml'
     '400':
       $ref: '../responses/BadRequestError.yaml'
     '500':

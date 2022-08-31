@@ -67,7 +67,8 @@ func NewDatabaser(conn, driver string) Databaser {
 }
 
 func (d *databaser) DB() *gorm.DB {
-	return d.db
+	// TODO: turn this off for prod
+	return d.db.Debug()
 }
 
 func (d *databaser) Driver() string {

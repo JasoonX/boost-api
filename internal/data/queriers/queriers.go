@@ -36,6 +36,8 @@ type NewsProvider interface {
 }
 
 type EmailsProvider interface {
+	GetEmail(ctx context.Context, email string) (*model.Email, error)
+
 	AddEmail(ctx context.Context, email model.Email) (*model.Email, error)
 
 	AddEmailsBatch(ctx context.Context, emails []model.Email) error

@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **Status** | Pointer to [**Status**](Status.md) |  | [optional] 
 **Meta** | Pointer to **map[string]interface{}** |  | [optional] 
 **Errors** | Pointer to [**[]Error**](Error.md) |  | [optional] 
-**Data** | Pointer to [**User**](User.md) |  | [optional] 
+**Data** | Pointer to [**UsersPost201ResponseData**](UsersPost201ResponseData.md) |  | [optional] 
 
 ## Methods
 
@@ -105,20 +105,20 @@ HasErrors returns a boolean if a field has been set.
 
 ### GetData
 
-`func (o *UsersPost201Response) GetData() User`
+`func (o *UsersPost201Response) GetData() UsersPost201ResponseData`
 
 GetData returns the Data field if non-nil, zero value otherwise.
 
 ### GetDataOk
 
-`func (o *UsersPost201Response) GetDataOk() (*User, bool)`
+`func (o *UsersPost201Response) GetDataOk() (*UsersPost201ResponseData, bool)`
 
 GetDataOk returns a tuple with the Data field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetData
 
-`func (o *UsersPost201Response) SetData(v User)`
+`func (o *UsersPost201Response) SetData(v UsersPost201ResponseData)`
 
 SetData sets Data field to given value.
 

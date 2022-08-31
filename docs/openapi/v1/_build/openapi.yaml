@@ -234,7 +234,15 @@ paths:
                     items:
                       $ref: '#/components/schemas/Error'
                   data:
-                    $ref: '#/components/schemas/User'
+                    type: object
+                    required:
+                      - user
+                      - token_pair
+                    properties:
+                      user:
+                        $ref: '#/components/schemas/User'
+                      token_pair:
+                        $ref: '#/components/schemas/TokenPair'
         '400':
           $ref: '#/components/responses/BadRequestError'
         '500':
@@ -453,7 +461,6 @@ components:
     Credentials:
       type: object
       required:
-        - id
         - type
         - attributes
       properties:

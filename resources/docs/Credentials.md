@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | **string** |  | 
+**Id** | Pointer to **string** |  | [optional] 
 **Type** | [**EntityType**](EntityType.md) |  | 
 **Attributes** | [**CredentialsAttributes**](CredentialsAttributes.md) |  | 
 
@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 
 ### NewCredentials
 
-`func NewCredentials(id string, type_ EntityType, attributes CredentialsAttributes, ) *Credentials`
+`func NewCredentials(type_ EntityType, attributes CredentialsAttributes, ) *Credentials`
 
 NewCredentials instantiates a new Credentials object
 This constructor will assign default values to properties that have it defined,
@@ -46,6 +46,11 @@ and a boolean to check if the value has been set.
 
 SetId sets Id field to given value.
 
+### HasId
+
+`func (o *Credentials) HasId() bool`
+
+HasId returns a boolean if a field has been set.
 
 ### GetType
 
