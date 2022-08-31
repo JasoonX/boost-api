@@ -55,22 +55,33 @@ func AddUser(w http.ResponseWriter, r *http.Request) {
 		IsPrimary:  true,
 		UserID:     newUser.ID,
 	})
+	if err != nil {
+		log.WithError(err).Error("failed to add email")
+		render.InternalServerError(w)
+		return
+	}
 
-	newPhone, err := provider.PhonesProvider().AddPhone(reqCtx, model.Phone{
-		SubscriberNumber: req.Body.Data.Attributes.Phone.SubscriberNumber,
-		CountryCode:      &req.Body.Data.Attributes.Phone.CountryCode,
-		Extension:        req.Body.Data.Attributes.Phone.Extension,
-		IsVerified:       false,
-		IsPrimary:        true,
-		UserID:           newUser.ID,
-	})
+	if req.Body.Data.Attributes.HasPhone() {
+		newPhone, err := provider.PhonesProvider().AddPhone(reqCtx, model.Phone{
+			SubscriberNumber: req.Body.Data.Attributes.Phone.SubscriberNumber,
+			CountryCode:      &req.Body.Data.Attributes.Phone.CountryCode,
+			Extension:        req.Body.Data.Attributes.Phone.Extension,
+			IsVerified:       false,
+			IsPrimary:        true,
+			UserID:           newUser.ID,
+		})
+		if err != nil {
+			log.WithError(err).Error("failed to add phone")
+			render.InternalServerError(w)
+			return
+		}
+		newUser.Phones = []model.Phone{
+			convert.FromPtr(newPhone),
+		}
+	}
 
 	newUser.Emails = []model.Email{
 		convert.FromPtr(newEmail),
-	}
-
-	newUser.Phones = []model.Phone{
-		convert.FromPtr(newPhone),
 	}
 
 	render.Success(w, webconvert.ToResponseUser(newUser))
